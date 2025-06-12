@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { ThumbsUp, MessageCircle, Repeat, Send, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
@@ -38,26 +38,25 @@ export default function PostCard({ post }: PostCardProps) {
 
   return (
     <div className="relative mb-6">
-      {/* Left Action Buttons Tab */}
-      <div className="absolute top-6 left-0 z-30 w-16 bg-card border border-border rounded-lg shadow-lg p-1 flex flex-col items-center space-y-1">
-        {/* Repost Button & Count */}
+      {/* Right Action Buttons Tab */}
+      <div className="absolute top-6 right-0 z-30 w-16 bg-card border border-border rounded-lg shadow-lg p-1 flex flex-col items-center space-y-1">
+        {/* Like Button & Count */}
         <div className="flex flex-col items-center space-y-0.5">
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-green-600 hover:bg-green-600/10 w-10 h-10">
-            <Repeat className="h-5 w-5" />
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10 w-10 h-10">
+            <ThumbsUp className="h-5 w-5" />
           </Button>
-          {post.shares > 0 && <span className="text-xs text-muted-foreground">{post.shares}</span>}
+          {post.likes > 0 && <span className="text-xs text-muted-foreground">{post.likes}</span>}
         </div>
-        {/* Comment Button & Count */}
+        {/* Send Button */}
         <div className="flex flex-col items-center space-y-0.5">
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-blue-500 hover:bg-blue-500/10 w-10 h-10">
-            <MessageCircle className="h-5 w-5" />
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-indigo-600 hover:bg-indigo-600/10 w-10 h-10">
+            <Send className="h-5 w-5" />
           </Button>
-          {post.comments > 0 && <span className="text-xs text-muted-foreground">{post.comments}</span>}
         </div>
       </div>
 
       {/* Main Post Card */}
-      <Card className="shadow-sm overflow-hidden mx-16">
+      <Card className="shadow-sm overflow-hidden mr-16">
         <CardHeader className="p-4">
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-3">
@@ -71,17 +70,25 @@ export default function PostCard({ post }: PostCardProps) {
                 <p className="text-xs text-muted-foreground">{post.timestamp}</p>
               </div>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>View Post</DropdownMenuItem>
-                <DropdownMenuItem>Report Post</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="flex items-center space-x-0.5">
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-green-600 hover:bg-green-600/10">
+                <Repeat className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-blue-500 hover:bg-blue-500/10">
+                <MessageCircle className="h-4 w-4" />
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>View Post</DropdownMenuItem>
+                  <DropdownMenuItem>Report Post</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="p-4 pt-0">
@@ -101,26 +108,11 @@ export default function PostCard({ post }: PostCardProps) {
             )}
           </div>
         </CardContent>
-        {/* CardFooter removed as all actions are in side tabs */}
+        <CardFooter className="p-4 pt-2 flex items-center space-x-4 text-xs text-muted-foreground">
+            {post.comments > 0 && <span>{post.comments} Comments</span>}
+            {post.shares > 0 && <span>{post.shares} Reposts</span>}
+        </CardFooter>
       </Card>
-
-      {/* Right Action Buttons Tab */}
-      <div className="absolute top-6 right-0 z-30 w-16 bg-card border border-border rounded-lg shadow-lg p-1 flex flex-col items-center space-y-1">
-        {/* Like Button & Count */}
-        <div className="flex flex-col items-center space-y-0.5">
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10 w-10 h-10">
-            <ThumbsUp className="h-5 w-5" />
-          </Button>
-          {post.likes > 0 && <span className="text-xs text-muted-foreground">{post.likes}</span>}
-        </div>
-        {/* Send Button */}
-        <div className="flex flex-col items-center space-y-0.5">
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-indigo-600 hover:bg-indigo-600/10 w-10 h-10">
-            <Send className="h-5 w-5" />
-          </Button>
-          {/* Send typically doesn't have a count */}
-        </div>
-      </div>
     </div>
   );
 }
