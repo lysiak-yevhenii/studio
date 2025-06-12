@@ -92,6 +92,7 @@
   /* Styles for FloatingVerticalNav when in "is-flaming" state (collapsed, not active, animated bg) */
   .is-flaming {
     @apply bg-animated-flame-gradient bg-flame-gradient-size animate-flame-gradient border-white/30;
+    animation-duration: 300s !important; /* Explicit override for animation speed */
   }
 
   .is-flaming > button[aria-label*="navigation"] svg { /* Expand/collapse icon */
@@ -125,3 +126,4 @@
 
   /* Specific hover/active states for links when flaming are handled in SidebarNavLink.tsx for better control */
 }
+
