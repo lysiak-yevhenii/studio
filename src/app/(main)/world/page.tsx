@@ -3,9 +3,7 @@ import PostCard from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown, PlusCircle } from "lucide-react";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import Image from 'next/image';
+import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown } from "lucide-react";
 
 // Placeholder data for mix feed posts
 const mixFeedPosts = [
@@ -83,60 +81,9 @@ const worldPosts = [
   },
 ];
 
-// Placeholder data for reels - using rectangular placeholder images
-const reels = [
-  { id: "r1", userName: "You", imageUrl: "https://placehold.co/100x160.png", type: "add" },
-  { id: "r2", userName: "Alice", imageUrl: "https://placehold.co/100x160.png", type: "view" },
-  { id: "r3", userName: "Bob", imageUrl: "https://placehold.co/100x160.png", type: "view" },
-  { id: "r4", userName: "Charlie", imageUrl: "https://placehold.co/100x160.png", type: "view" },
-  { id: "r5", userName: "Diana", imageUrl: "https://placehold.co/100x160.png", type: "view" },
-  { id: "r6", userName: "Eve", imageUrl: "https://placehold.co/100x160.png", type: "view" },
-  { id: "r7", userName: "Frank", imageUrl: "https://placehold.co/100x160.png", type: "view" },
-];
-
 export default function WorldPage() {
   return (
     <div className="space-y-6">
-      <Card className="shadow-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-headline flex items-center">
-            <Globe className="mr-3 h-7 w-7 text-primary" />
-            Discover The World
-          </CardTitle>
-          <CardDescription>Explore posts from your network and beyond.</CardDescription>
-          <div className="pt-4">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2">Reels</h3>
-            <ScrollArea className="w-full whitespace-nowrap">
-              <div className="flex space-x-3 pb-2">
-                {reels.map(reel => (
-                  <div key={reel.id} className="flex flex-col items-center space-y-1 cursor-pointer group">
-                    <div 
-                      className={`relative w-24 h-36 rounded-md overflow-hidden border-2 group-hover:border-primary
-                        ${reel.type === 'add' ? 'border-dashed border-muted-foreground flex items-center justify-center bg-muted/30 hover:bg-muted/50' : 'border-primary'}`}
-                    >
-                      {reel.type === 'view' && (
-                        <Image 
-                          src={reel.imageUrl} 
-                          alt={`${reel.userName}'s reel`} 
-                          layout="fill" 
-                          objectFit="cover" 
-                          data-ai-hint="person reel" 
-                        />
-                      )}
-                      {reel.type === 'add' && (
-                        <PlusCircle className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
-                      )}
-                    </div>
-                    <span className="text-xs text-muted-foreground group-hover:text-primary">{reel.userName}</span>
-                  </div>
-                ))}
-              </div>
-              <ScrollBar orientation="horizontal" />
-            </ScrollArea>
-          </div>
-        </CardHeader>
-      </Card>
-
       <Tabs defaultValue="mix-feed" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="mix-feed" className="flex items-center gap-2">
