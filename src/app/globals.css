@@ -91,8 +91,7 @@
 @layer components {
   /* Styles for FloatingVerticalNav when in "is-flaming" state (collapsed, not active, animated bg) */
   .is-flaming {
-    /* Background is animated via Tailwind utility class and keyframes */
-    /* Border is set via Tailwind utility class (border-white/30) */
+    @apply bg-animated-flame-gradient bg-flame-gradient-size animate-flame-gradient border-white/30;
   }
 
   .is-flaming > button[aria-label*="navigation"] svg { /* Expand/collapse icon */

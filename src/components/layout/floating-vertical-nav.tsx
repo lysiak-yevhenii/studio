@@ -62,14 +62,8 @@ export default function FloatingVerticalNav() {
         currentLeftPositionClass,
         // Default state styles (applied when not flaming)
         !isFlaming && "bg-card border-border",
-        // Conditional styling for "flaming" state
-        isFlaming && [
-          'is-flaming', // CSS hook
-          'bg-animated-flame-gradient',
-          'bg-flame-gradient-size',
-          'animate-flame-gradient',
-          'border-white/30' // Subtle static border when flaming
-        ]
+        // Conditional styling for "flaming" state - now primarily driven by the .is-flaming class from globals.css
+        isFlaming && 'is-flaming'
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
@@ -82,7 +76,7 @@ export default function FloatingVerticalNav() {
         className={cn(
             "mb-1 self-center",
              isExpanded ? "w-auto px-2" : "w-10 h-10",
-             isFlaming ? "hover:bg-white/20" : "" 
+             isFlaming ? "hover:bg-white/20" : "" // Keep this direct hover style for the button itself
         )}
         aria-label={isExpanded ? "Collapse navigation" : "Expand navigation"}
       >
@@ -92,7 +86,7 @@ export default function FloatingVerticalNav() {
         className={cn(
           "mb-1", 
           isExpanded ? "w-full" : "w-10/12", 
-          isFlaming ? "flame-nav-separator" : "bg-border"
+          isFlaming ? "flame-nav-separator" : "bg-border" // flame-nav-separator is styled in globals.css
         )} 
       />
       <nav className="flex flex-col space-y-0.5 w-full">
