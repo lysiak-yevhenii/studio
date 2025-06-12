@@ -24,8 +24,11 @@ const DEFAULT_USER = {
 export default function UserAvatar() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState(DEFAULT_USER);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    setHasMounted(true); // Indicate component has mounted on the client
+
     // This code runs only on the client, after hydration
     const storedUser = localStorage.getItem('mockUser');
     if (storedUser) {
@@ -34,14 +37,17 @@ export default function UserAvatar() {
         setCurrentUser(parsedUser);
       } catch (e) {
         console.error("Failed to parse mockUser from localStorage", e);
-        // If parsing fails, an admin might want to clear the faulty item
-        // localStorage.removeItem('mockUser'); 
         setCurrentUser(DEFAULT_USER); // Fallback to default
       }
     } else {
       setCurrentUser(DEFAULT_USER); // Fallback if no user in localStorage
     }
-  }, []);
+  }, []); // Empty dependency array ensures this runs once on mount
+
+  // Render a placeholder on the server and initial client render to avoid hydration mismatch
+  if (!hasMounted) {
+    return <div className="h-[400px] w-[400px]" />; // Placeholder with correct dimensions
+  }
 
   const getInitials = (name: string) => {
     if (!name) return '';
