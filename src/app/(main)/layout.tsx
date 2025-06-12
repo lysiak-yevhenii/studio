@@ -1,5 +1,4 @@
 
-import Header from '@/components/layout/header';
 import FloatingVerticalNav from '@/components/layout/floating-vertical-nav';
 import FloatingVerticalNavRight from '@/components/layout/floating-vertical-nav-right';
 
@@ -10,7 +9,7 @@ export default function MainLayout({
 }) {
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      {/* <Header /> */} {/* Header component removed */}
       <FloatingVerticalNav /> 
       <FloatingVerticalNavRight />
       <main className="flex-grow container mx-auto py-6 px-4">
