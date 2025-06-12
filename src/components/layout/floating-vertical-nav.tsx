@@ -48,7 +48,7 @@ export default function FloatingVerticalNav() {
   return (
     <div
       className={cn(
-        "fixed top-1/2 -translate-y-1/2 z-40 bg-card border shadow-xl rounded-lg p-2 flex flex-col items-center transition-all duration-300 ease-in-out",
+        "fixed top-1/2 -translate-y-1/2 z-55 bg-card border shadow-xl rounded-lg p-2 flex flex-col items-center transition-all duration-300 ease-in-out",
         isExpanded ? "w-56 items-stretch" : "w-14 items-center",
         currentLeftPositionClass
       )}
