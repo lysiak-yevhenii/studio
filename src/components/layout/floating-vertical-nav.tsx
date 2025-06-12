@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Home, Users, Globe, PanelLeftOpen, PanelRightOpen } from 'lucide-react';
+import { Home, Users, Globe, PanelLeftOpen, PanelRightOpen, Eye } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SidebarNavLink from './sidebar-nav-link';
@@ -19,10 +19,11 @@ const navItems: NavItem[] = [
   { href: "/", label: "Home", icon: Home },
   { href: "/connections", label: "Network", icon: Users },
   { href: "/world", label: "World", icon: Globe },
+  { href: "/world-eye", label: "World Eye", icon: Eye },
 ];
 
-const collapsedHiddenLeftValue = "-left-[44px]";
-const expandedHiddenLeftValue = "-left-[212px]";
+const collapsedHiddenLeftValue = "-left-[44px]"; // w-14 (56px) - 12px (p-1 * 2) = 44px for the icon part. Visible part 12px.
+const expandedHiddenLeftValue = "-left-[212px]"; // w-56 (224px) - 12px = 212px. Visible part 12px.
 const visibleLeft = "left-2";
 
 export default function FloatingVerticalNav() {
@@ -38,17 +39,20 @@ export default function FloatingVerticalNav() {
   const isActive = isHovering || isPinned;
 
   const handleToggleExpand = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent pin toggle when clicking expand
     setIsExpanded(!isExpanded);
   };
 
   const handlePinToggle = () => {
     setIsPinned(!isPinned);
   };
-
+  
+  // Determine the correct 'left' class based on component state
+  // Default to a hidden state for SSR and initial client render to avoid hydration mismatch
   const currentLeftPositionClass = hasMounted
     ? (isActive ? visibleLeft : (isExpanded ? expandedHiddenLeftValue : collapsedHiddenLeftValue))
     : collapsedHiddenLeftValue;
+
 
   return (
     <div
@@ -59,18 +63,19 @@ export default function FloatingVerticalNav() {
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      onClick={handlePinToggle}
+      onClick={handlePinToggle} // Pin/unpin when clicking the body of the nav
     >
+      {/* Button to toggle expand/collapse, self-centers */}
       <Button
         variant="ghost"
         size="icon"
-        onClick={handleToggleExpand}
-        className="mb-1 self-center"
+        onClick={handleToggleExpand} // Only toggles expand/collapse
+        className="mb-1 self-center" // Ensures button is centered when nav is collapsed
         aria-label={isExpanded ? "Collapse navigation" : "Expand navigation"}
       >
         {isExpanded ? <PanelLeftOpen className="h-5 w-5" /> : <PanelRightOpen className="h-5 w-5" />}
       </Button>
-      <Separator className={cn("mb-1", isExpanded ? "w-full" : "w-10/12")} />
+      <Separator className={cn("mb-1", isExpanded ? "w-full" : "w-10/12")} /> {/* Full width when expanded, smaller when collapsed */}
       <nav className="flex flex-col space-y-0.5 w-full">
         {navItems.map((item) => (
           <SidebarNavLink
