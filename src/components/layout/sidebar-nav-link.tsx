@@ -9,21 +9,22 @@ import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface SidebarNavLinkProps {
-  href: string;
+  href?: string;
   label: string;
   icon: LucideIcon;
   isExpanded: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   tooltipSide?: "left" | "right" | "top" | "bottom";
 }
 
-export default function SidebarNavLink({ href, label, icon: Icon, isExpanded, tooltipSide = "right" }: SidebarNavLinkProps) {
+export default function SidebarNavLink({ href, label, icon: Icon, isExpanded, onClick, tooltipSide = "right" }: SidebarNavLinkProps) {
   const pathname = usePathname();
-  const isActive = pathname === href || (href === "/" && pathname.startsWith("/?")) || (href !== "/" && pathname.startsWith(href));
+  const isActive = href ? (pathname === href || (href === "/" && pathname.startsWith("/?")) || (href !== "/" && pathname.startsWith(href))) : false;
 
-  const linkContent = (
+  const content = (
     <>
       <Icon className={cn(
-        "h-5 w-5 shrink-0", 
+        "h-5 w-5 shrink-0",
         isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
       )} />
       <span className={cn(
@@ -38,24 +39,44 @@ export default function SidebarNavLink({ href, label, icon: Icon, isExpanded, to
     </>
   );
 
+  const buttonClasses = cn(
+    "w-full justify-start px-3 py-2 h-10",
+    isActive && href ? "bg-background shadow-sm" : "hover:bg-muted",
+    "group flex items-center" 
+  );
+
+  const renderButton = () => {
+    if (href && !onClick) {
+      return (
+        <Button
+          variant="ghost"
+          asChild
+          className={buttonClasses}
+        >
+          <Link href={href}>
+            {content}
+          </Link>
+        </Button>
+      );
+    }
+    return (
+      <Button
+        variant="ghost"
+        onClick={onClick}
+        className={buttonClasses}
+        aria-label={label}
+      >
+        {content}
+      </Button>
+    );
+  };
+
   if (!isExpanded) {
     return (
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              asChild
-              className={cn(
-                "w-full justify-start px-3 py-2 h-10",
-                 isActive ? "bg-background shadow-sm" : "hover:bg-muted",
-                "group"
-              )}
-            >
-              <Link href={href} className="flex items-center">
-                {linkContent}
-              </Link>
-            </Button>
+            {renderButton()}
           </TooltipTrigger>
           <TooltipContent side={tooltipSide} className="ml-2">
             <p>{label}</p>
@@ -65,19 +86,5 @@ export default function SidebarNavLink({ href, label, icon: Icon, isExpanded, to
     );
   }
 
-  return (
-    <Button
-      variant="ghost"
-      asChild
-      className={cn(
-        "w-full justify-start px-3 py-2 h-10",
-        isActive ? "bg-background shadow-sm" : "hover:bg-muted",
-        "group"
-      )}
-    >
-      <Link href={href} className="flex items-center">
-        {linkContent}
-      </Link>
-    </Button>
-  );
+  return renderButton();
 }

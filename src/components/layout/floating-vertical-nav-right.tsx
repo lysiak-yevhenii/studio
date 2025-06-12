@@ -2,23 +2,23 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Home, Users, Globe, UserCircle, Bell, PanelLeftOpen, PanelRightOpen } from 'lucide-react';
+import { UserCircle, Bell, PanelLeftOpen, PanelRightOpen, LogOut } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import SidebarNavLink from './sidebar-nav-link';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
-// Define navItems here or import from a shared location if they differ
-const navItems = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/connections", label: "Network", icon: Users },
-  { href: "/world", label: "World", icon: Globe },
-  { href: "/profile", label: "Profile", icon: UserCircle },
-  { href: "/notifications", label: "Notifications", icon: Bell },
-];
+interface NavItem {
+  label: string;
+  icon: LucideIcon;
+  href?: string;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
 
-const collapsedHiddenRightValue = "-right-[44px]"; // w-14 (56px) - 12px visible tab = 44px hidden
-const expandedHiddenRightValue = "-right-[212px]";   // w-56 (224px) - 12px visible tab = 212px hidden
+const collapsedHiddenRightValue = "-right-[44px]";
+const expandedHiddenRightValue = "-right-[212px]";
 const visibleRight = "right-2";
 
 export default function FloatingVerticalNavRight() {
@@ -26,15 +26,27 @@ export default function FloatingVerticalNavRight() {
   const [isHovering, setIsHovering] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('mockUser');
+    router.push('/login');
+  };
+
+  const navItems: NavItem[] = [
+    { href: "/profile", label: "Profile", icon: UserCircle },
+    { href: "/notifications", label: "Notifications", icon: Bell },
+    { label: "Log out", icon: LogOut, onClick: handleLogout },
+  ];
+
   const isActive = isHovering || isPinned;
 
   const handleToggleExpand = (e: React.MouseEvent) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     setIsExpanded(!isExpanded);
   };
 
@@ -70,12 +82,13 @@ export default function FloatingVerticalNavRight() {
       <nav className="flex flex-col space-y-0.5 w-full">
         {navItems.map((item) => (
           <SidebarNavLink
-            key={item.href}
+            key={item.label}
             href={item.href}
             label={item.label}
             icon={item.icon}
             isExpanded={isExpanded}
-            tooltipSide="left" // Tooltips should appear on the left for a right-side menu
+            onClick={item.onClick}
+            tooltipSide="left"
           />
         ))}
       </nav>
