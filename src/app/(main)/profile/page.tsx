@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -137,13 +138,13 @@ export default function ProfilePage() {
         <TabsContent value="activity">
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-xl">Recent Activity</CardTitle>
+                    <CardTitle className="text-xl">My Posts</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                 {userProfile.posts.length > 0 ? (
                     userProfile.posts.map(post => <PostCard key={post.id} post={post} />)
                 ) : (
-                    <p className="text-sm text-muted-foreground">No recent activity.</p>
+                    <p className="text-sm text-muted-foreground">No posts yet.</p>
                 )}
                 </CardContent>
             </Card>
@@ -174,3 +175,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+    
