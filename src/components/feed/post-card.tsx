@@ -84,24 +84,24 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
 
           {/* Right side: Vertical Buttons with Counts */}
-          <div className="flex flex-col space-y-3 pt-1">
+          <div className="flex flex-col space-y-3"> {/* Removed pt-1 */}
             <div className="flex flex-col items-center space-y-0.5">
               <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10 w-10 h-10">
                 <ThumbsUp className="h-5 w-5" />
               </Button>
-              <span className="text-xs text-muted-foreground">{post.likes > 0 ? post.likes : ''}</span>
+              {post.likes > 0 && <span className="text-xs text-muted-foreground">{post.likes}</span>}
             </div>
             <div className="flex flex-col items-center space-y-0.5">
               <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-green-600 hover:bg-green-600/10 w-10 h-10">
                 <Repeat className="h-5 w-5" />
               </Button>
-              <span className="text-xs text-muted-foreground">{post.shares > 0 ? post.shares : ''}</span>
+              {post.shares > 0 && <span className="text-xs text-muted-foreground">{post.shares}</span>}
             </div>
             <div className="flex flex-col items-center space-y-0.5">
               <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-blue-600 hover:bg-blue-600/10 w-10 h-10">
                 <Send className="h-5 w-5" />
               </Button>
-              {/* Send typically doesn't have a public count, so no span here unless specified */}
+              {/* Send typically doesn't have a public count */}
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@ export default function PostCard({ post }: PostCardProps) {
       <CardFooter className="p-4 border-t flex flex-col items-start space-y-2">
         <div className="flex justify-between w-full text-xs text-muted-foreground">
             {/* Likes and Shares counts are now under icons */}
-            <span>{/* Empty span to maintain spacing if needed or remove if comment count is on its own line */}</span>
+            <span></span> {/* Empty span to maintain spacing if needed or remove if comment count is on its own line */}
             <div className="space-x-2">
                 <span>{post.comments} Comments</span>
             </div>
