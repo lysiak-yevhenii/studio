@@ -38,7 +38,7 @@ export default function PostCard({ post }: PostCardProps) {
 
   return (
     <div className="relative mb-6">
-      <Card className="shadow-sm overflow-hidden mr-16"> {/* Increased right margin */}
+      <Card className="shadow-sm overflow-hidden mr-16">
         <CardHeader className="p-4">
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-3">
@@ -67,7 +67,7 @@ export default function PostCard({ post }: PostCardProps) {
         </CardHeader>
         <CardContent className="p-4 pt-0">
           {/* Main content: Text and Image */}
-          <div className="space-y-3 min-h-[36px]"> {/* Added min-height here */}
+          <div className="space-y-3 min-h-[36px]">
             <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
             {post.image && (
               <div className="mt-3 rounded-lg overflow-hidden border">
@@ -83,20 +83,18 @@ export default function PostCard({ post }: PostCardProps) {
             )}
           </div>
         </CardContent>
-        <CardFooter className="p-4 border-t">
-          <div className="flex justify-between items-center w-full">
+        <CardFooter className="p-4 border-t flex justify-between items-center">
             <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground">
               <MessageCircle className="h-4 w-4 mr-1.5" /> Comment
             </Button>
             {post.comments > 0 && (
               <span className="text-xs text-muted-foreground">{post.comments} Comments</span>
             )}
-          </div>
         </CardFooter>
       </Card>
 
       {/* Action Buttons Tab */}
-      <div className="absolute top-6 right-0 z-10 w-16 bg-card border border-border rounded-lg shadow-lg p-2 flex flex-col items-center space-y-3">
+      <div className="absolute top-6 right-0 z-10 w-16 bg-card border border-border rounded-lg shadow-lg p-1 flex flex-col items-center space-y-1">
         {/* Like Button & Count */}
         <div className="flex flex-col items-center space-y-0.5">
           <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10 w-10 h-10">
