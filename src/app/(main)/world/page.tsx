@@ -4,8 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown, PlusCircle } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import Image from 'next/image';
 
 // Placeholder data for mix feed posts
 const mixFeedPosts = [
@@ -83,20 +83,18 @@ const worldPosts = [
   },
 ];
 
-// Placeholder data for reels
+// Placeholder data for reels - using rectangular placeholder images
 const reels = [
-  { id: "r1", userName: "You", avatarUrl: "https://placehold.co/60x60.png", type: "add" },
-  { id: "r2", userName: "Alice", avatarUrl: "https://placehold.co/60x60.png?1", type: "view" },
-  { id: "r3", userName: "Bob", avatarUrl: "https://placehold.co/60x60.png?2", type: "view" },
-  { id: "r4", userName: "Charlie", avatarUrl: "https://placehold.co/60x60.png?3", type: "view" },
-  { id: "r5", userName: "Diana", avatarUrl: "https://placehold.co/60x60.png?4", type: "view" },
-  { id: "r6", userName: "Eve", avatarUrl: "https://placehold.co/60x60.png?5", type: "view" },
-  { id: "r7", userName: "Frank", avatarUrl: "https://placehold.co/60x60.png?6", type: "view" },
+  { id: "r1", userName: "You", imageUrl: "https://placehold.co/100x160.png", type: "add" },
+  { id: "r2", userName: "Alice", imageUrl: "https://placehold.co/100x160.png", type: "view" },
+  { id: "r3", userName: "Bob", imageUrl: "https://placehold.co/100x160.png", type: "view" },
+  { id: "r4", userName: "Charlie", imageUrl: "https://placehold.co/100x160.png", type: "view" },
+  { id: "r5", userName: "Diana", imageUrl: "https://placehold.co/100x160.png", type: "view" },
+  { id: "r6", userName: "Eve", imageUrl: "https://placehold.co/100x160.png", type: "view" },
+  { id: "r7", userName: "Frank", imageUrl: "https://placehold.co/100x160.png", type: "view" },
 ];
 
 export default function WorldPage() {
-  const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
-
   return (
     <div className="space-y-6">
       <Card className="shadow-md">
@@ -112,12 +110,24 @@ export default function WorldPage() {
               <div className="flex space-x-3 pb-2">
                 {reels.map(reel => (
                   <div key={reel.id} className="flex flex-col items-center space-y-1 cursor-pointer group">
-                    <Avatar className={`h-16 w-16 border-2 ${reel.type === 'add' ? 'border-dashed border-muted-foreground' : 'border-primary group-hover:border-accent'}`}>
-                      <AvatarImage src={reel.avatarUrl} alt={reel.userName} data-ai-hint="person reel" />
-                      <AvatarFallback>{getInitials(reel.userName)}</AvatarFallback>
-                    </Avatar>
+                    <div 
+                      className={`relative w-24 h-36 rounded-md overflow-hidden border-2 group-hover:border-primary
+                        ${reel.type === 'add' ? 'border-dashed border-muted-foreground flex items-center justify-center bg-muted/30 hover:bg-muted/50' : 'border-primary'}`}
+                    >
+                      {reel.type === 'view' && (
+                        <Image 
+                          src={reel.imageUrl} 
+                          alt={`${reel.userName}'s reel`} 
+                          layout="fill" 
+                          objectFit="cover" 
+                          data-ai-hint="person reel" 
+                        />
+                      )}
+                      {reel.type === 'add' && (
+                        <PlusCircle className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
+                      )}
+                    </div>
                     <span className="text-xs text-muted-foreground group-hover:text-primary">{reel.userName}</span>
-                    {reel.type === 'add' && <PlusCircle className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground group-hover:text-primary" />}
                   </div>
                 ))}
               </div>
