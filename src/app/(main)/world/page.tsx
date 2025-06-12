@@ -83,15 +83,15 @@ const worldPosts = [
   },
 ];
 
-// Placeholder data for stories
-const stories = [
-  { id: "s1", userName: "You", avatarUrl: "https://placehold.co/60x60.png", type: "add" },
-  { id: "s2", userName: "Alice", avatarUrl: "https://placehold.co/60x60.png?1", type: "view" },
-  { id: "s3", userName: "Bob", avatarUrl: "https://placehold.co/60x60.png?2", type: "view" },
-  { id: "s4", userName: "Charlie", avatarUrl: "https://placehold.co/60x60.png?3", type: "view" },
-  { id: "s5", userName: "Diana", avatarUrl: "https://placehold.co/60x60.png?4", type: "view" },
-  { id: "s6", userName: "Eve", avatarUrl: "https://placehold.co/60x60.png?5", type: "view" },
-  { id: "s7", userName: "Frank", avatarUrl: "https://placehold.co/60x60.png?6", type: "view" },
+// Placeholder data for reels
+const reels = [
+  { id: "r1", userName: "You", avatarUrl: "https://placehold.co/60x60.png", type: "add" },
+  { id: "r2", userName: "Alice", avatarUrl: "https://placehold.co/60x60.png?1", type: "view" },
+  { id: "r3", userName: "Bob", avatarUrl: "https://placehold.co/60x60.png?2", type: "view" },
+  { id: "r4", userName: "Charlie", avatarUrl: "https://placehold.co/60x60.png?3", type: "view" },
+  { id: "r5", userName: "Diana", avatarUrl: "https://placehold.co/60x60.png?4", type: "view" },
+  { id: "r6", userName: "Eve", avatarUrl: "https://placehold.co/60x60.png?5", type: "view" },
+  { id: "r7", userName: "Frank", avatarUrl: "https://placehold.co/60x60.png?6", type: "view" },
 ];
 
 export default function WorldPage() {
@@ -107,17 +107,17 @@ export default function WorldPage() {
           </CardTitle>
           <CardDescription>Explore posts from your network and beyond.</CardDescription>
           <div className="pt-4">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2">Stories</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">Reels</h3>
             <ScrollArea className="w-full whitespace-nowrap">
               <div className="flex space-x-3 pb-2">
-                {stories.map(story => (
-                  <div key={story.id} className="flex flex-col items-center space-y-1 cursor-pointer group">
-                    <Avatar className={`h-16 w-16 border-2 ${story.type === 'add' ? 'border-dashed border-muted-foreground' : 'border-primary group-hover:border-accent'}`}>
-                      <AvatarImage src={story.avatarUrl} alt={story.userName} data-ai-hint="person story" />
-                      <AvatarFallback>{getInitials(story.userName)}</AvatarFallback>
+                {reels.map(reel => (
+                  <div key={reel.id} className="flex flex-col items-center space-y-1 cursor-pointer group">
+                    <Avatar className={`h-16 w-16 border-2 ${reel.type === 'add' ? 'border-dashed border-muted-foreground' : 'border-primary group-hover:border-accent'}`}>
+                      <AvatarImage src={reel.avatarUrl} alt={reel.userName} data-ai-hint="person reel" />
+                      <AvatarFallback>{getInitials(reel.userName)}</AvatarFallback>
                     </Avatar>
-                    <span className="text-xs text-muted-foreground group-hover:text-primary">{story.userName}</span>
-                    {story.type === 'add' && <PlusCircle className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground group-hover:text-primary" />}
+                    <span className="text-xs text-muted-foreground group-hover:text-primary">{reel.userName}</span>
+                    {reel.type === 'add' && <PlusCircle className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground group-hover:text-primary" />}
                   </div>
                 ))}
               </div>
