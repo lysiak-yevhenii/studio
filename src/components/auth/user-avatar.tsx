@@ -13,26 +13,46 @@ import {
 import { UserCircle, LogOut } from 'lucide-react';
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+
+const DEFAULT_USER = {
+  name: "John Doe",
+  email: "john.doe@example.com",
+  avatarUrl: "https://placehold.co/100x100.png",
+};
 
 export default function UserAvatar() {
   const router = useRouter();
+  const [currentUser, setCurrentUser] = useState(DEFAULT_USER);
 
-  // Placeholder user data
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    avatarUrl: "https://placehold.co/100x100.png",
-  };
+  useEffect(() => {
+    // This code runs only on the client, after hydration
+    const storedUser = localStorage.getItem('mockUser');
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setCurrentUser(parsedUser);
+      } catch (e) {
+        console.error("Failed to parse mockUser from localStorage", e);
+        // If parsing fails, an admin might want to clear the faulty item
+        // localStorage.removeItem('mockUser'); 
+        setCurrentUser(DEFAULT_USER); // Fallback to default
+      }
+    } else {
+      setCurrentUser(DEFAULT_USER); // Fallback if no user in localStorage
+    }
+  }, []);
 
   const getInitials = (name: string) => {
+    if (!name) return '';
     const names = name.split(' ');
     const initials = names.map(n => n[0]).join('');
     return initials.toUpperCase();
   };
 
   const handleLogout = () => {
-    // Placeholder for actual logout logic (e.g., clearing session, tokens)
-    console.log("User logged out");
+    localStorage.removeItem('mockUser');
+    setCurrentUser(DEFAULT_USER); // Reset to default user on logout
     router.push('/login');
   };
 
@@ -41,15 +61,15 @@ export default function UserAvatar() {
       <DropdownMenuTrigger asChild>
         <button className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full">
            <Avatar className="h-8 w-8 cursor-pointer">
-            <AvatarImage src={user.avatarUrl} alt={user.name} data-ai-hint="person face" />
-            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+            <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} data-ai-hint="person face" />
+            <AvatarFallback>{getInitials(currentUser.name)}</AvatarFallback>
           </Avatar>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>
-          <div className="font-medium">{user.name}</div>
-          <div className="text-xs text-muted-foreground">{user.email}</div>
+          <div className="font-medium">{currentUser.name}</div>
+          <div className="text-xs text-muted-foreground">{currentUser.email}</div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

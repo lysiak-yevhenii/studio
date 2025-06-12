@@ -20,6 +20,11 @@ import { useToast } from "@/hooks/use-toast";
 
 const MOCK_EMAIL = "test@example.com";
 const MOCK_PASSWORD = "password";
+const MOCK_USER = {
+  name: "Test User",
+  email: MOCK_EMAIL,
+  avatarUrl: "https://placehold.co/100x100.png", // Consistent avatar
+};
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -36,9 +41,14 @@ export default function LoginPage() {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     if (email === MOCK_EMAIL && password === MOCK_PASSWORD) {
+      try {
+        localStorage.setItem('mockUser', JSON.stringify(MOCK_USER));
+      } catch (error) {
+        console.error("Failed to save mock user to localStorage", error);
+      }
       toast({
         title: "Login Successful",
-        description: "Welcome back!",
+        description: `Welcome back, ${MOCK_USER.name}!`,
       });
       router.push('/'); // Redirect to homepage
     } else {
@@ -113,4 +123,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
