@@ -23,7 +23,7 @@ const MOCK_PASSWORD = "password";
 const MOCK_USER = {
   name: "Test User",
   email: MOCK_EMAIL,
-  avatarUrl: "https://placehold.co/100x100.png", // Consistent avatar
+  avatarUrl: "https://placehold.co/400x400.png", // Consistent avatar
 };
 
 export default function LoginPage() {

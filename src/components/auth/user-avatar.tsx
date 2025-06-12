@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react';
 const DEFAULT_USER = {
   name: "John Doe",
   email: "john.doe@example.com",
-  avatarUrl: "https://placehold.co/100x100.png",
+  avatarUrl: "https://placehold.co/400x400.png",
 };
 
 export default function UserAvatar() {
@@ -60,9 +60,9 @@ export default function UserAvatar() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full">
-           <Avatar className="h-14 w-14 cursor-pointer"> {/* Increased size */}
+           <Avatar className="h-[400px] w-[400px] cursor-pointer"> {/* Increased size */}
             <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} data-ai-hint="person face" />
-            <AvatarFallback className="text-xl">{getInitials(currentUser.name)}</AvatarFallback> {/* Adjusted fallback text size if needed */}
+            <AvatarFallback className="text-9xl">{getInitials(currentUser.name)}</AvatarFallback> {/* Adjusted fallback text size */}
           </Avatar>
         </button>
       </DropdownMenuTrigger>
