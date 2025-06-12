@@ -87,21 +87,29 @@ export default function PostCard({ post }: PostCardProps) {
                 <span>{post.shares} Shares</span>
             </div>
         </div>
-        <div className="w-full grid grid-cols-4 gap-1">
-          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-            <ThumbsUp className="h-4 w-4 mr-1.5" /> Like
-          </Button>
-          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-            <MessageCircle className="h-4 w-4 mr-1.5" /> Comment
-          </Button>
-          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-            <Repeat className="h-4 w-4 mr-1.5" /> Repost
-          </Button>
-          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-            <Send className="h-4 w-4 mr-1.5" /> Send
-          </Button>
+        <div className="w-full flex justify-between items-center">
+          {/* Like and Comment buttons */}
+          <div className="flex space-x-1">
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground">
+              <ThumbsUp className="h-4 w-4 mr-1.5" /> Like
+            </Button>
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground">
+              <MessageCircle className="h-4 w-4 mr-1.5" /> Comment
+            </Button>
+          </div>
+
+          {/* Repost and Send buttons - Vertical */}
+          <div className="flex flex-col space-y-1">
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground justify-start">
+              <Repeat className="h-4 w-4 mr-1.5" /> Repost
+            </Button>
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground justify-start">
+              <Send className="h-4 w-4 mr-1.5" /> Send
+            </Button>
+          </div>
         </div>
       </CardFooter>
     </Card>
   );
 }
+
