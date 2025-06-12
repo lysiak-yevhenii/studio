@@ -37,7 +37,8 @@ export default function FloatingVerticalNav() {
   }, []);
 
   const isActive = isHovering || isPinned;
-  const isFlaming = !isExpanded && !isActive && hasMounted; // Animation only in collapsed peek state
+  // isFlaming is true only on the client after mount, and if other conditions are met
+  const isFlaming = hasMounted && !isExpanded && !isActive; 
 
   const handleToggleExpand = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -48,6 +49,7 @@ export default function FloatingVerticalNav() {
     setIsPinned(!isPinned);
   };
   
+  // currentLeftPositionClass depends on hasMounted to avoid hydration issues for positioning
   const currentLeftPositionClass = hasMounted
     ? (isActive ? visibleLeft : (isExpanded ? expandedHiddenLeftValue : collapsedHiddenLeftValue))
     : collapsedHiddenLeftValue;
@@ -56,9 +58,14 @@ export default function FloatingVerticalNav() {
     <div
       className={cn(
         "fixed top-1/2 -translate-y-1/2 z-40 border shadow-xl rounded-xl p-1 flex flex-col items-center transition-all duration-300 ease-in-out",
+        // Default background and border, rendered on server and initial client
+        "bg-card border-border", 
         isExpanded ? "w-56 items-stretch" : "w-14 items-center",
         currentLeftPositionClass,
-        isFlaming ? 'is-flaming bg-rainbow-gradient bg-400 animate-rainbow-shift' : 'bg-card border-border'
+        // Conditionally add flaming classes only on client after mount if isFlaming is true
+        // The `is-flaming` class is a marker for CSS overrides in globals.css
+        // The Tailwind bg/animate classes apply the gradient directly
+        isFlaming && 'is-flaming bg-rainbow-gradient bg-400 animate-rainbow-shift'
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
@@ -73,7 +80,16 @@ export default function FloatingVerticalNav() {
       >
         {isExpanded ? <PanelLeftOpen className="h-5 w-5" /> : <PanelRightOpen className="h-5 w-5" />}
       </Button>
-      <Separator className={cn("mb-1", isExpanded ? "w-full" : "w-10/12", isFlaming ? "flame-nav-separator" : "bg-border")} />
+      <Separator 
+        className={cn(
+          "mb-1", 
+          // Default background for separator
+          "bg-border", 
+          isExpanded ? "w-full" : "w-10/12", 
+          // Conditionally add flame-nav-separator class for CSS override
+          isFlaming && "flame-nav-separator"
+        )} 
+      />
       <nav className="flex flex-col space-y-0.5 w-full">
         {navItems.map((item) => (
           <SidebarNavLink
