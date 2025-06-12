@@ -23,7 +23,7 @@ const navItems: NavItem[] = [
 ];
 
 const collapsedHiddenLeftValue = "-left-[44px]";
-const expandedHiddenLeftValue = "-left-[212px]"; // Assuming w-56 (224px) - p-1 (4px each side) = 216px -> -left-[212px] to hide almost all
+const expandedHiddenLeftValue = "-left-[212px]";
 const visibleLeft = "left-2";
 
 export default function FloatingVerticalNav() {
@@ -37,38 +37,41 @@ export default function FloatingVerticalNav() {
   }, []);
 
   const isActive = isHovering || isPinned;
+  // isFlaming: true when collapsed (not expanded) AND not active (not hovered or pinned) AND mounted
   const isFlaming = hasMounted && !isExpanded && !isActive;
 
   const handleToggleExpand = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent pin toggle if clicking expand/collapse
+    e.stopPropagation();
     setIsExpanded(!isExpanded);
   };
 
   const handlePinToggle = () => {
-    // Only toggle pin if not clicking the expand/collapse button
-    // This logic is simplified because expand button now stops propagation.
     setIsPinned(!isPinned);
   };
   
   const currentLeftPositionClass = hasMounted
     ? (isActive ? visibleLeft : (isExpanded ? expandedHiddenLeftValue : collapsedHiddenLeftValue))
-    : collapsedHiddenLeftValue; // Default to collapsed hidden for SSR and initial client render
+    : collapsedHiddenLeftValue;
 
   return (
     <div
       className={cn(
         "fixed top-1/2 -translate-y-1/2 z-40 shadow-xl rounded-xl p-1 flex flex-col items-center transition-all duration-300 ease-in-out",
-        "border-2", // Default border thickness
+        "border-2", // Keep border-2 for visibility
         isExpanded ? "w-56 items-stretch" : "w-14 items-center",
         currentLeftPositionClass,
+        // Default state styles
+        !isFlaming && "bg-card border-border",
         // Conditional styling for "flaming" state
-        isFlaming
-          ? 'is-flaming bg-black border-transparent animate-border-pulse-colors'
-          : "bg-card border-border" // Default state with theme border color
+        isFlaming && [
+          'is-flaming', // CSS hook
+          'animate-background-color-shift', // Apply background animation
+          'border-white/30' // Subtle static border when flaming
+        ]
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      onClick={handlePinToggle} // Pin toggle on the whole div
+      onClick={handlePinToggle}
     >
       <Button
         variant="ghost"
@@ -76,7 +79,8 @@ export default function FloatingVerticalNav() {
         onClick={handleToggleExpand} 
         className={cn(
             "mb-1 self-center",
-             isExpanded ? "w-auto px-2" : "w-10 h-10" // Adjust button size if needed
+             isExpanded ? "w-auto px-2" : "w-10 h-10",
+             isFlaming ? "hover:bg-white/20" : "" 
         )}
         aria-label={isExpanded ? "Collapse navigation" : "Expand navigation"}
       >
@@ -97,6 +101,7 @@ export default function FloatingVerticalNav() {
             label={item.label}
             icon={item.icon}
             isExpanded={isExpanded}
+            isFlaming={isFlaming} // Pass isFlaming to SidebarNavLink
           />
         ))}
       </nav>

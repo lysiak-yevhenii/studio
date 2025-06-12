@@ -89,39 +89,32 @@
 }
 
 @layer components {
-  /* Styles for FloatingVerticalNav when in "flaming" state (collapsed, not active, black bg with animated border) */
+  /* Styles for FloatingVerticalNav when in "flaming" state (collapsed, not active, animated bg) */
   .is-flaming {
-    /* bg-black is applied via Tailwind utility class */
-    /* border-color is animated via Tailwind utility class and keyframes */
+    /* Background is animated via Tailwind utility class and keyframes */
+    /* Border is set to border-white/30 via Tailwind utility class */
   }
 
   .is-flaming > button[aria-label*="navigation"] svg { /* Expand/collapse icon */
     @apply text-white;
   }
+  .is-flaming > button[aria-label*="navigation"]:hover {
+     @apply bg-white/20;
+  }
+
 
   .is-flaming .flame-nav-separator { /* Separator component when nav is flaming */
-    @apply bg-white/50 !important; /* Light separator on black bg */
+    @apply bg-white/50 !important; /* Light separator on animated bg */
   }
 
   /* Styles for SidebarNavLink items specifically within .is-flaming FloatingVerticalNav */
-  .is-flaming nav .group.hover\:bg-muted:hover { /* .group is the Button from SidebarNavLink */
-    background-color: rgba(255, 255, 255, 0.15) !important; /* Light hover on black bg */
-  }
-  .is-flaming nav .group.focus-visible\:bg-muted:focus-visible {
-    background-color: rgba(255, 255, 255, 0.2) !important; /* Light focus on black bg */
-  }
-
-  /* Active link style when flaming */
-  .is-flaming nav .group.bg-background { 
-    background-color: rgba(255, 255, 255, 0.25) !important; /* Light active on black bg */
-    box-shadow: none !important;
-  }
+  /* These are now mostly handled by conditional classes in SidebarNavLink.tsx */
+  /* Keeping general text/icon overrides for safety */
   
-  /* Text and icon color overrides for elements within SidebarNavLink links when flaming */
-  .is-flaming .text-muted-foreground { /* Primarily for icons in inactive links */
+  .is-flaming nav .group .text-muted-foreground { /* Primarily for icons in inactive links */
     @apply text-white/80 !important;
   }
-  .is-flaming .text-foreground { /* Primarily for text in inactive links & active link text/icons */
+  .is-flaming nav .group .text-foreground { /* Primarily for text in inactive links & active link text/icons */
     @apply text-white !important;
   }
   
@@ -131,4 +124,15 @@
    .is-flaming nav .group span { /* Targets text spans inside the Button from SidebarNavLink */
     @apply text-white !important; /* Ensures all text spans in links are white */
   }
+
+  /* Specific hover/active states for links when flaming are handled in SidebarNavLink.tsx for better control */
+  /* Example:
+  .is-flaming nav .group.hover\:bg-muted:hover { 
+    background-color: rgba(255, 255, 255, 0.15) !important; 
+  }
+  .is-flaming nav .group.bg-background { 
+    background-color: rgba(255, 255, 255, 0.25) !important; 
+    box-shadow: none !important;
+  }
+  */
 }

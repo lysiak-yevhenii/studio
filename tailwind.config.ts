@@ -80,10 +80,10 @@ const config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       backgroundImage: {
-        'rainbow-gradient': 'linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red)',
+        // Removed rainbow-gradient as it's not used directly anymore
       },
       backgroundSize: {
-        '400': '400% 400%',
+        // Removed bg-400 as it's not used
       },
       keyframes: {
         'accordion-down': {
@@ -102,22 +102,16 @@ const config = {
             height: '0',
           },
         },
-        'rainbow-shift': {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-        },
-        'border-pulse-colors': {
-          '0%, 100%': { borderColor: 'hsl(var(--primary))' }, // Blue
-          '25%': { borderColor: 'hsl(var(--accent))' },      // Green
-          '50%': { borderColor: '#FFCA28' },                 // Bright Yellow (e.g., Amber 400)
-          '75%': { borderColor: '#EC407A' },                 // Bright Pink (e.g., Pink 400)
+        'background-color-shift': { // Renamed and modified
+          '0%, 100%': { backgroundColor: 'hsl(var(--primary))' },      // Blue
+          '33%': { backgroundColor: 'hsl(var(--accent))' },           // Green
+          '66%': { backgroundColor: '#E91E63' },                      // Vibrant Pink
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'rainbow-shift': 'rainbow-shift 10s ease infinite alternate',
-        'border-pulse-colors': 'border-pulse-colors 4s ease-in-out infinite',
+        'background-color-shift': 'background-color-shift 12s ease-in-out infinite', // New animation utility
       },
     },
   },
