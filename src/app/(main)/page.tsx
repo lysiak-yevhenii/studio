@@ -1,6 +1,7 @@
+
 import CreatePostForm from "@/components/feed/create-post-form";
 import PostCard from "@/components/feed/post-card";
-import AiConnectionSuggestions from "@/components/connections/ai-connection-suggestions";
+// import AiConnectionSuggestions from "@/components/connections/ai-connection-suggestions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
@@ -61,7 +62,8 @@ export default function HomePage() {
             <CardTitle className="text-lg">Smart Connection Suggestions</CardTitle>
           </CardHeader>
           <CardContent>
-            <AiConnectionSuggestions />
+            {/* <AiConnectionSuggestions /> */}
+            <p className="text-sm text-muted-foreground">AI connection suggestions are temporarily disabled.</p>
           </CardContent>
         </Card>
         <Card>

@@ -1,4 +1,5 @@
-import AiConnectionSuggestions from "@/components/connections/ai-connection-suggestions";
+
+// import AiConnectionSuggestions from "@/components/connections/ai-connection-suggestions";
 import ConnectionCard from "@/components/connections/connection-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -46,7 +47,8 @@ export default function ConnectionsPage() {
               <CardDescription>AI-powered recommendations to expand your network.</CardDescription>
             </CardHeader>
             <CardContent>
-              <AiConnectionSuggestions />
+              {/* <AiConnectionSuggestions /> */}
+              <p className="text-sm text-muted-foreground">AI connection suggestions are temporarily disabled.</p>
             </CardContent>
           </Card>
         </TabsContent>
