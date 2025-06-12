@@ -66,7 +66,7 @@ export default function UserAvatar() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full">
-           <Avatar className="h-[100px] w-[100px] cursor-pointer">
+           <Avatar className="h-[100px] w-[100px] cursor-pointer border-4 border-card shadow-lg">
             <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} data-ai-hint="person face" />
             <AvatarFallback className="text-4xl">{getInitials(currentUser.name)}</AvatarFallback>
           </Avatar>
