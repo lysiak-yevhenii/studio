@@ -22,8 +22,8 @@ const navItems: NavItem[] = [
   { href: "/world-eye", label: "World Eye", icon: Eye },
 ];
 
-const collapsedHiddenLeftValue = "-left-[44px]"; // w-14 (56px) - 12px (p-1 * 2) = 44px for the icon part. Visible part 12px.
-const expandedHiddenLeftValue = "-left-[212px]"; // w-56 (224px) - 12px = 212px. Visible part 12px.
+const collapsedHiddenLeftValue = "-left-[44px]";
+const expandedHiddenLeftValue = "-left-[212px]";
 const visibleLeft = "left-2";
 
 export default function FloatingVerticalNav() {
@@ -37,9 +37,10 @@ export default function FloatingVerticalNav() {
   }, []);
 
   const isActive = isHovering || isPinned;
+  const isFlaming = !isExpanded && !isActive && hasMounted; // Animation only in collapsed peek state
 
   const handleToggleExpand = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent pin toggle when clicking expand
+    e.stopPropagation();
     setIsExpanded(!isExpanded);
   };
 
@@ -51,14 +52,13 @@ export default function FloatingVerticalNav() {
     ? (isActive ? visibleLeft : (isExpanded ? expandedHiddenLeftValue : collapsedHiddenLeftValue))
     : collapsedHiddenLeftValue;
 
-
   return (
     <div
       className={cn(
-        "flame-nav fixed top-1/2 -translate-y-1/2 z-40 border shadow-xl rounded-xl p-1 flex flex-col items-center transition-all duration-300 ease-in-out",
-        "bg-rainbow-gradient bg-400 animate-rainbow-shift", // Added gradient and animation
+        "fixed top-1/2 -translate-y-1/2 z-40 border shadow-xl rounded-xl p-1 flex flex-col items-center transition-all duration-300 ease-in-out",
         isExpanded ? "w-56 items-stretch" : "w-14 items-center",
-        currentLeftPositionClass
+        currentLeftPositionClass,
+        isFlaming ? 'is-flaming bg-rainbow-gradient bg-400 animate-rainbow-shift' : 'bg-card border-border'
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
@@ -73,7 +73,7 @@ export default function FloatingVerticalNav() {
       >
         {isExpanded ? <PanelLeftOpen className="h-5 w-5" /> : <PanelRightOpen className="h-5 w-5" />}
       </Button>
-      <Separator className={cn("mb-1 flame-nav-separator", isExpanded ? "w-full" : "w-10/12")} /> {/* Added flame-nav-separator */}
+      <Separator className={cn("mb-1", isExpanded ? "w-full" : "w-10/12", isFlaming ? "flame-nav-separator" : "bg-border")} />
       <nav className="flex flex-col space-y-0.5 w-full">
         {navItems.map((item) => (
           <SidebarNavLink

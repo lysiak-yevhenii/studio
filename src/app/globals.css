@@ -89,50 +89,45 @@
 }
 
 @layer components {
-  .flame-nav {
-    border-color: rgba(255, 255, 255, 0.4) !important; /* Adjusted border for flame nav */
-    /* Style for the expand/collapse button icon inside flame-nav */
-    & > button[aria-label*="navigation"] svg {
-      @apply text-white;
-    }
+  /* Styles for FloatingVerticalNav when in "flaming" state (collapsed, not active) */
+  .is-flaming {
+    border-color: rgba(255, 255, 255, 0.4) !important;
   }
 
-  /* Style for the Separator component when it has the .flame-nav-separator class */
-  .flame-nav-separator {
-    @apply bg-white/50 !important; /* More opaque for visibility */
+  .is-flaming > button[aria-label*="navigation"] svg { /* Expand/collapse icon */
+    @apply text-white;
   }
 
-  /* ------ Styles for SidebarNavLink items specifically within .flame-nav ------ */
+  .is-flaming .flame-nav-separator { /* Separator component when nav is flaming */
+    @apply bg-white/50 !important;
+  }
 
-  /* Overriding background for hover state (originally hover:bg-muted from Button variant ghost) */
-  .flame-nav nav .group.hover\:bg-muted:hover { /* .group is the Button from SidebarNavLink */
+  /* Styles for SidebarNavLink items specifically within .is-flaming FloatingVerticalNav */
+  .is-flaming nav .group.hover\:bg-muted:hover { /* .group is the Button from SidebarNavLink */
     background-color: rgba(255, 255, 255, 0.15) !important;
   }
-  /* Overriding background for Radix focus-visible state if it also tries to apply bg-muted */
-  .flame-nav nav .group.focus-visible\:bg-muted:focus-visible {
+  .is-flaming nav .group.focus-visible\:bg-muted:focus-visible {
     background-color: rgba(255, 255, 255, 0.2) !important;
   }
 
-  /* Overriding background for active state (originally bg-background from SidebarNavLink's buttonClasses) */
-  .flame-nav nav .group.bg-background { /* Targets active link style */
+  /* Active link style when flaming */
+  .is-flaming nav .group.bg-background { 
     background-color: rgba(255, 255, 255, 0.25) !important;
     box-shadow: none !important;
   }
   
-  /* Text and icon color overrides for elements within SidebarNavLink links */
-  .flame-nav .text-muted-foreground {
+  /* Text and icon color overrides for elements within SidebarNavLink links when flaming */
+  .is-flaming .text-muted-foreground {
     @apply text-white/80 !important;
   }
-  .flame-nav .text-foreground {
+  .is-flaming .text-foreground {
     @apply text-white !important;
   }
   
-  /* Ensure icons specifically within .flame-nav links are white */
-  .flame-nav nav .group svg { /* Targets svgs inside the Button from SidebarNavLink */
+  .is-flaming nav .group svg { /* Targets svgs inside the Button from SidebarNavLink */
     @apply text-white !important;
   }
-  /* Ensure text spans within .flame-nav links are white */
-   .flame-nav nav .group span {
+   .is-flaming nav .group span { /* Targets text spans inside the Button from SidebarNavLink */
     @apply text-white !important;
   }
 }
