@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react';
 const DEFAULT_USER = {
   name: "John Doe",
   email: "john.doe@example.com",
-  avatarUrl: "https://placehold.co/250x250.png",
+  avatarUrl: "https://placehold.co/100x100.png",
 };
 
 export default function UserAvatar() {
@@ -46,7 +46,7 @@ export default function UserAvatar() {
 
   // Render a placeholder on the server and initial client render to avoid hydration mismatch
   if (!hasMounted) {
-    return <div className="h-[250px] w-[250px]" />; // Placeholder with correct dimensions
+    return <div className="h-[100px] w-[100px]" />; // Placeholder with correct dimensions
   }
 
   const getInitials = (name: string) => {
@@ -66,9 +66,9 @@ export default function UserAvatar() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full">
-           <Avatar className="h-[250px] w-[250px] cursor-pointer">
+           <Avatar className="h-[100px] w-[100px] cursor-pointer">
             <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} data-ai-hint="person face" />
-            <AvatarFallback className="text-7xl">{getInitials(currentUser.name)}</AvatarFallback>
+            <AvatarFallback className="text-4xl">{getInitials(currentUser.name)}</AvatarFallback>
           </Avatar>
         </button>
       </DropdownMenuTrigger>
