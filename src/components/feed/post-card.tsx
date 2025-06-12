@@ -37,37 +37,37 @@ export default function PostCard({ post }: PostCardProps) {
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
 
   return (
-    <Card className="shadow-sm overflow-hidden">
-      <CardHeader className="p-4">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center space-x-3">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={post.user.avatarUrl} alt={post.user.name} data-ai-hint="person face" />
-              <AvatarFallback>{getInitials(post.user.name)}</AvatarFallback>
-            </Avatar>
-            <div>
-              <CardTitle className="text-base font-semibold leading-tight">{post.user.name}</CardTitle>
-              <CardDescription className="text-xs text-muted-foreground">{post.user.headline}</CardDescription>
-              <p className="text-xs text-muted-foreground">{post.timestamp}</p>
+    <div className="relative mb-6">
+      <Card className="shadow-sm overflow-hidden mr-8"> {/* Added mr-8 to make space for the tab */}
+        <CardHeader className="p-4">
+          <div className="flex items-start justify-between">
+            <div className="flex items-center space-x-3">
+              <Avatar className="h-10 w-10">
+                <AvatarImage src={post.user.avatarUrl} alt={post.user.name} data-ai-hint="person face" />
+                <AvatarFallback>{getInitials(post.user.name)}</AvatarFallback>
+              </Avatar>
+              <div>
+                <CardTitle className="text-base font-semibold leading-tight">{post.user.name}</CardTitle>
+                <CardDescription className="text-xs text-muted-foreground">{post.user.headline}</CardDescription>
+                <p className="text-xs text-muted-foreground">{post.timestamp}</p>
+              </div>
             </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>View Post</DropdownMenuItem>
+                <DropdownMenuItem>Report Post</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>View Post</DropdownMenuItem>
-              <DropdownMenuItem>Report Post</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </CardHeader>
-      <CardContent className="p-4 pt-0">
-        <div className="flex items-start gap-3">
-          {/* Left side: Content + Image */}
-          <div className="flex-grow space-y-3">
+        </CardHeader>
+        <CardContent className="p-4 pt-0">
+          {/* Main content: Text and Image */}
+          <div className="space-y-3">
             <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
             {post.image && (
               <div className="mt-3 rounded-lg overflow-hidden border">
@@ -82,41 +82,43 @@ export default function PostCard({ post }: PostCardProps) {
               </div>
             )}
           </div>
-
-          {/* Right side: Vertical Buttons with Counts */}
-          <div className="flex flex-col space-y-3">
-            <div className="flex flex-col items-center space-y-0.5">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10 w-10 h-10">
-                <ThumbsUp className="h-5 w-5" />
-              </Button>
-              {post.likes > 0 && <span className="text-xs text-muted-foreground">{post.likes}</span>}
-            </div>
-            <div className="flex flex-col items-center space-y-0.5">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-green-600 hover:bg-green-600/10 w-10 h-10">
-                <Repeat className="h-5 w-5" />
-              </Button>
-              {post.shares > 0 && <span className="text-xs text-muted-foreground">{post.shares}</span>}
-            </div>
-            <div className="flex flex-col items-center space-y-0.5">
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-blue-600 hover:bg-blue-600/10 w-10 h-10">
-                <Send className="h-5 w-5" />
-              </Button>
-              {/* Send typically doesn't have a public count */}
-            </div>
+        </CardContent>
+        <CardFooter className="p-4 border-t">
+          <div className="flex justify-between items-center w-full">
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground">
+              <MessageCircle className="h-4 w-4 mr-1.5" /> Comment
+            </Button>
+            {post.comments > 0 && (
+              <span className="text-xs text-muted-foreground">{post.comments} Comments</span>
+            )}
           </div>
-        </div>
-      </CardContent>
-      <CardFooter className="p-4 border-t">
-        <div className="flex justify-between items-center w-full">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-            <MessageCircle className="h-4 w-4 mr-1.5" /> Comment
+        </CardFooter>
+      </Card>
+
+      {/* Action Buttons Tab */}
+      <div className="absolute top-6 right-0 z-10 w-16 bg-card border border-border rounded-lg shadow-lg p-2 flex flex-col items-center space-y-3">
+        {/* Like Button & Count */}
+        <div className="flex flex-col items-center space-y-0.5">
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10 w-10 h-10">
+            <ThumbsUp className="h-5 w-5" />
           </Button>
-          {post.comments > 0 && (
-            <span className="text-xs text-muted-foreground">{post.comments} Comments</span>
-          )}
+          {post.likes > 0 && <span className="text-xs text-muted-foreground">{post.likes}</span>}
         </div>
-      </CardFooter>
-    </Card>
+        {/* Repost Button & Count */}
+        <div className="flex flex-col items-center space-y-0.5">
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-green-600 hover:bg-green-600/10 w-10 h-10">
+            <Repeat className="h-5 w-5" />
+          </Button>
+          {post.shares > 0 && <span className="text-xs text-muted-foreground">{post.shares}</span>}
+        </div>
+        {/* Send Button */}
+        <div className="flex flex-col items-center space-y-0.5">
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-blue-600 hover:bg-blue-600/10 w-10 h-10">
+            <Send className="h-5 w-5" />
+          </Button>
+          {/* Send typically doesn't have a public count */}
+        </div>
+      </div>
+    </div>
   );
 }
-
