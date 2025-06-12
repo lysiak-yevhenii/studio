@@ -38,7 +38,7 @@ export default function PostCard({ post }: PostCardProps) {
 
   return (
     <div className="relative mb-6">
-      <Card className="shadow-sm overflow-hidden mr-8"> {/* Added mr-8 to make space for the tab */}
+      <Card className="shadow-sm overflow-hidden mr-16"> {/* Increased right margin */}
         <CardHeader className="p-4">
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-3">
@@ -67,7 +67,7 @@ export default function PostCard({ post }: PostCardProps) {
         </CardHeader>
         <CardContent className="p-4 pt-0">
           {/* Main content: Text and Image */}
-          <div className="space-y-3">
+          <div className="space-y-3 min-h-[36px]"> {/* Added min-height here */}
             <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
             {post.image && (
               <div className="mt-3 rounded-lg overflow-hidden border">
