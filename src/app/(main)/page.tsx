@@ -42,9 +42,9 @@ const posts = [
 
 export default function HomePage() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Main content: Create Post and Feed */}
-      <div className="md:col-span-2 space-y-6">
+    <div className="w-full">
+      {/* Main content: Create Post and Feed, centered with a max-width */}
+      <div className="w-full max-w-3xl mx-auto space-y-6">
         <CreatePostForm />
         <Separator />
         <h2 className="text-xl font-semibold text-foreground">My Posts</h2>
@@ -54,11 +54,6 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-
-      {/* Sidebar: Connection Suggestions */}
-      <aside className="md:col-span-1 space-y-6">
-        {/* Sections removed as per user request */}
-      </aside>
     </div>
   );
 }
