@@ -57,15 +57,17 @@ export default function FloatingVerticalNav() {
     <div
       className={cn(
         "fixed top-1/2 -translate-y-1/2 z-40 shadow-xl rounded-xl p-1 flex flex-col items-center transition-all duration-300 ease-in-out",
-        "border-2", // Keep border-2 for visibility
+        "border-2", 
         isExpanded ? "w-56 items-stretch" : "w-14 items-center",
         currentLeftPositionClass,
-        // Default state styles
+        // Default state styles (applied when not flaming)
         !isFlaming && "bg-card border-border",
         // Conditional styling for "flaming" state
         isFlaming && [
           'is-flaming', // CSS hook
-          'animate-background-color-shift', // Apply background animation
+          'bg-animated-flame-gradient',
+          'bg-flame-gradient-size',
+          'animate-flame-gradient',
           'border-white/30' // Subtle static border when flaming
         ]
       )}

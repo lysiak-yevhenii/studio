@@ -80,10 +80,10 @@ const config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       backgroundImage: {
-        // Removed rainbow-gradient as it's not used directly anymore
+        'animated-flame-gradient': 'linear-gradient(-45deg, #4f46e5, #7c3aed, #db2777, #e11d48, #f97316, #facc15, #4f46e5, #7c3aed, #db2777, #e11d48, #f97316, #facc15)',
       },
       backgroundSize: {
-        // Removed bg-400 as it's not used
+        'flame-gradient-size': '400% 400%',
       },
       keyframes: {
         'accordion-down': {
@@ -102,16 +102,16 @@ const config = {
             height: '0',
           },
         },
-        'background-color-shift': { // Renamed and modified
-          '0%, 100%': { backgroundColor: 'hsl(var(--primary))' },      // Blue
-          '33%': { backgroundColor: 'hsl(var(--accent))' },           // Green
-          '66%': { backgroundColor: '#E91E63' },                      // Vibrant Pink
-        }
+        'flame-gradient-shift': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'background-color-shift': 'background-color-shift 12s ease-in-out infinite', // New animation utility
+        'flame-gradient': 'flame-gradient-shift 20s ease infinite',
       },
     },
   },

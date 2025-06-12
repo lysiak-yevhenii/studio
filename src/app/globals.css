@@ -89,10 +89,10 @@
 }
 
 @layer components {
-  /* Styles for FloatingVerticalNav when in "flaming" state (collapsed, not active, animated bg) */
+  /* Styles for FloatingVerticalNav when in "is-flaming" state (collapsed, not active, animated bg) */
   .is-flaming {
     /* Background is animated via Tailwind utility class and keyframes */
-    /* Border is set to border-white/30 via Tailwind utility class */
+    /* Border is set via Tailwind utility class (border-white/30) */
   }
 
   .is-flaming > button[aria-label*="navigation"] svg { /* Expand/collapse icon */
@@ -102,11 +102,10 @@
      @apply bg-white/20;
   }
 
-
   .is-flaming .flame-nav-separator { /* Separator component when nav is flaming */
     @apply bg-white/50 !important; /* Light separator on animated bg */
   }
-
+  
   /* Styles for SidebarNavLink items specifically within .is-flaming FloatingVerticalNav */
   /* These are now mostly handled by conditional classes in SidebarNavLink.tsx */
   /* Keeping general text/icon overrides for safety */
@@ -126,13 +125,4 @@
   }
 
   /* Specific hover/active states for links when flaming are handled in SidebarNavLink.tsx for better control */
-  /* Example:
-  .is-flaming nav .group.hover\:bg-muted:hover { 
-    background-color: rgba(255, 255, 255, 0.15) !important; 
-  }
-  .is-flaming nav .group.bg-background { 
-    background-color: rgba(255, 255, 255, 0.25) !important; 
-    box-shadow: none !important;
-  }
-  */
 }
