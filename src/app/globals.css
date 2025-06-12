@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -84,5 +85,54 @@
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline;
+  }
+}
+
+@layer components {
+  .flame-nav {
+    border-color: rgba(255, 255, 255, 0.4) !important; /* Adjusted border for flame nav */
+    /* Style for the expand/collapse button icon inside flame-nav */
+    & > button[aria-label*="navigation"] svg {
+      @apply text-white;
+    }
+  }
+
+  /* Style for the Separator component when it has the .flame-nav-separator class */
+  .flame-nav-separator {
+    @apply bg-white/50 !important; /* More opaque for visibility */
+  }
+
+  /* ------ Styles for SidebarNavLink items specifically within .flame-nav ------ */
+
+  /* Overriding background for hover state (originally hover:bg-muted from Button variant ghost) */
+  .flame-nav nav .group.hover\:bg-muted:hover { /* .group is the Button from SidebarNavLink */
+    background-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  /* Overriding background for Radix focus-visible state if it also tries to apply bg-muted */
+  .flame-nav nav .group.focus-visible\:bg-muted:focus-visible {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Overriding background for active state (originally bg-background from SidebarNavLink's buttonClasses) */
+  .flame-nav nav .group.bg-background { /* Targets active link style */
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    box-shadow: none !important;
+  }
+  
+  /* Text and icon color overrides for elements within SidebarNavLink links */
+  .flame-nav .text-muted-foreground {
+    @apply text-white/80 !important;
+  }
+  .flame-nav .text-foreground {
+    @apply text-white !important;
+  }
+  
+  /* Ensure icons specifically within .flame-nav links are white */
+  .flame-nav nav .group svg { /* Targets svgs inside the Button from SidebarNavLink */
+    @apply text-white !important;
+  }
+  /* Ensure text spans within .flame-nav links are white */
+   .flame-nav nav .group span {
+    @apply text-white !important;
   }
 }

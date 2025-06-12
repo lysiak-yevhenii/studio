@@ -47,8 +47,6 @@ export default function FloatingVerticalNav() {
     setIsPinned(!isPinned);
   };
   
-  // Determine the correct 'left' class based on component state
-  // Default to a hidden state for SSR and initial client render to avoid hydration mismatch
   const currentLeftPositionClass = hasMounted
     ? (isActive ? visibleLeft : (isExpanded ? expandedHiddenLeftValue : collapsedHiddenLeftValue))
     : collapsedHiddenLeftValue;
@@ -57,25 +55,25 @@ export default function FloatingVerticalNav() {
   return (
     <div
       className={cn(
-        "fixed top-1/2 -translate-y-1/2 z-40 bg-card border shadow-xl rounded-xl p-1 flex flex-col items-center transition-all duration-300 ease-in-out",
+        "flame-nav fixed top-1/2 -translate-y-1/2 z-40 border shadow-xl rounded-xl p-1 flex flex-col items-center transition-all duration-300 ease-in-out",
+        "bg-rainbow-gradient bg-400 animate-rainbow-shift", // Added gradient and animation
         isExpanded ? "w-56 items-stretch" : "w-14 items-center",
         currentLeftPositionClass
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      onClick={handlePinToggle} // Pin/unpin when clicking the body of the nav
+      onClick={handlePinToggle} 
     >
-      {/* Button to toggle expand/collapse, self-centers */}
       <Button
         variant="ghost"
         size="icon"
-        onClick={handleToggleExpand} // Only toggles expand/collapse
-        className="mb-1 self-center" // Ensures button is centered when nav is collapsed
+        onClick={handleToggleExpand} 
+        className="mb-1 self-center" 
         aria-label={isExpanded ? "Collapse navigation" : "Expand navigation"}
       >
         {isExpanded ? <PanelLeftOpen className="h-5 w-5" /> : <PanelRightOpen className="h-5 w-5" />}
       </Button>
-      <Separator className={cn("mb-1", isExpanded ? "w-full" : "w-10/12")} /> {/* Full width when expanded, smaller when collapsed */}
+      <Separator className={cn("mb-1 flame-nav-separator", isExpanded ? "w-full" : "w-10/12")} /> {/* Added flame-nav-separator */}
       <nav className="flex flex-col space-y-0.5 w-full">
         {navItems.map((item) => (
           <SidebarNavLink

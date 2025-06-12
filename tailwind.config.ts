@@ -79,6 +79,12 @@ const config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      backgroundImage: {
+        'rainbow-gradient': 'linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red)',
+      },
+      backgroundSize: {
+        '400': '400% 400%',
+      },
       keyframes: {
         'accordion-down': {
           from: {
@@ -96,10 +102,15 @@ const config = {
             height: '0',
           },
         },
+        'rainbow-shift': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'rainbow-shift': 'rainbow-shift 10s ease infinite alternate',
       },
     },
   },
