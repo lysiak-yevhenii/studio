@@ -1,7 +1,8 @@
+
 "use client";
 
 import Link from 'next/link';
-import { Briefcase, Home, Users, UserCircle, Bell, Search as SearchIcon, Menu } from 'lucide-react';
+import { Briefcase, Home, Users, UserCircle, Bell, Search as SearchIcon, Menu, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import UserAvatar from '@/components/auth/user-avatar';
 import NavLink from './nav-link';
@@ -11,6 +12,7 @@ import { Input } from "@/components/ui/input";
 const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/connections", label: "Network", icon: Users },
+  { href: "/world", label: "World", icon: Globe },
   { href: "/profile", label: "Profile", icon: UserCircle },
   { href: "/notifications", label: "Notifications", icon: Bell },
 ];
