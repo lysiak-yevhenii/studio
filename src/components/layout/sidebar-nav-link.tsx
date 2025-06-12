@@ -21,10 +21,13 @@ export default function SidebarNavLink({ href, label, icon: Icon, isExpanded }: 
 
   const linkContent = (
     <>
-      <Icon className={cn("h-5 w-5 shrink-0", isActive ? "text-primary" : "text-muted-foreground group-hover:text-primary")} />
+      <Icon className={cn(
+        "h-5 w-5 shrink-0", 
+        isActive ? "text-foreground" : "text-muted-foreground group-hover:text-primary"
+      )} />
       <span className={cn(
         "ml-3 text-sm font-medium truncate",
-        isActive ? "text-primary" : "text-foreground group-hover:text-primary",
+        isActive ? "text-foreground" : "text-foreground group-hover:text-primary",
         isExpanded ? "opacity-100 visible" : "opacity-0 invisible w-0"
       )}
       style={{ transition: 'opacity 0.2s ease-in-out, width 0.2s ease-in-out' }}
@@ -44,7 +47,7 @@ export default function SidebarNavLink({ href, label, icon: Icon, isExpanded }: 
               asChild
               className={cn(
                 "w-full justify-start px-3 py-2 h-10",
-                 isActive ? "bg-accent" : "",
+                 isActive ? "bg-background shadow-sm" : "",
                 "group"
               )}
             >
@@ -67,7 +70,7 @@ export default function SidebarNavLink({ href, label, icon: Icon, isExpanded }: 
       asChild
       className={cn(
         "w-full justify-start px-3 py-2 h-10",
-        isActive ? "bg-accent" : "",
+        isActive ? "bg-background shadow-sm" : "",
         "group"
       )}
     >
