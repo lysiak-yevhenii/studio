@@ -34,8 +34,8 @@ const userProfile = {
   ],
   skills: ["Product Management", "AI/ML", "SaaS", "Agile Methodologies", "Roadmap Planning", "User Research", "Data Analysis", "Leadership"],
   posts: [
-    { id: "p1", user: { name: "Jane Professional", avatarUrl: "https://placehold.co/40x40.png", headline: "Senior Product Manager" }, timestamp: "3h ago", content: "Reflecting on the future of AI in product development. The possibilities are endless! #AI #ProductManagement", likes: 150, comments: 20, shares: 10 },
-    { id: "p2", user: { name: "Jane Professional", avatarUrl: "https://placehold.co/40x40.png", headline: "Senior Product Manager" }, timestamp: "2d ago", content: "Shared some thoughts on leading remote teams effectively. What are your best practices? #RemoteWork #Leadership", likes: 90, comments: 12, shares: 5, image: "https://placehold.co/600x300.png", imageHint: "team collaboration" },
+    { id: "p1", user: { name: "Jane Professional", avatarUrl: "https://placehold.co/40x40.png", headline: "Senior Product Manager" }, timestamp: "3h ago", content: "Reflecting on the future of AI in product development. The possibilities are endless! #AI #ProductManagement", likes: 150, comments: 20, shares: 10, views: 300 },
+    { id: "p2", user: { name: "Jane Professional", avatarUrl: "https://placehold.co/40x40.png", headline: "Senior Product Manager" }, timestamp: "2d ago", content: "Shared some thoughts on leading remote teams effectively. What are your best practices? #RemoteWork #Leadership", likes: 90, comments: 12, shares: 5, views: 220, image: "https://placehold.co/600x300.png", imageHint: "team collaboration" },
   ]
 };
 
@@ -175,5 +175,4 @@ export default function ProfilePage() {
     </div>
   );
 }
-
     

@@ -15,6 +15,7 @@ const posts = [
     likes: 120,
     comments: 15,
     shares: 7,
+    views: 250,
     image: "https://placehold.co/600x400.png",
     imageHint: "tech project"
   },
@@ -26,6 +27,7 @@ const posts = [
     likes: 85,
     comments: 5,
     shares: 2,
+    views: 180,
   },
   {
     id: "3",
@@ -35,6 +37,7 @@ const posts = [
     likes: 230,
     comments: 42,
     shares: 11,
+    views: 500,
     image: "https://placehold.co/600x300.png",
     imageHint: "design trends"
   },

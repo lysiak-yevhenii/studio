@@ -3,13 +3,7 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ThumbsUp, MessageCircle, Repeat, Send, MoreHorizontal } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { ThumbsUp, MessageCircle, Repeat, Send, OctagonAlert, Eye } from "lucide-react";
 
 interface PostUser {
   name: string;
@@ -27,6 +21,7 @@ interface Post {
   likes: number;
   comments: number;
   shares: number;
+  views: number; // Added views property
 }
 
 interface PostCardProps {
@@ -70,7 +65,7 @@ export default function PostCard({ post }: PostCardProps) {
                 <p className="text-xs text-muted-foreground">{post.timestamp}</p>
               </div>
             </div>
-            <div className="flex items-center space-x-2"> {/* Adjusted space-x for better group separation */}
+            <div className="flex items-start space-x-2"> {/* Changed to items-start */}
               {/* Repost Group */}
               <div className="flex flex-col items-center space-y-0.5">
                 <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-green-600 hover:bg-green-600/10">
@@ -87,17 +82,21 @@ export default function PostCard({ post }: PostCardProps) {
                 {post.comments > 0 && <span className="text-xs text-muted-foreground">{post.comments}</span>}
               </div>
               
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>View Post</DropdownMenuItem>
-                  <DropdownMenuItem>Report Post</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {/* Report Group */}
+              <div className="flex flex-col items-center space-y-0.5">
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10">
+                  <OctagonAlert className="h-4 w-4" />
+                </Button>
+                 {/* No count for report */}
+              </div>
+
+              {/* View Group */}
+              <div className="flex flex-col items-center space-y-0.5">
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-purple-500 hover:bg-purple-500/10">
+                  <Eye className="h-4 w-4" />
+                </Button>
+                {post.views > 0 && <span className="text-xs text-muted-foreground">{post.views}</span>}
+              </div>
             </div>
           </div>
         </CardHeader>
@@ -118,7 +117,6 @@ export default function PostCard({ post }: PostCardProps) {
             )}
           </div>
         </CardContent>
-        {/* CardFooter removed as counts are now in header or right action bar */}
       </Card>
     </div>
   );

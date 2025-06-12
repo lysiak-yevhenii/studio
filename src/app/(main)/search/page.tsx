@@ -1,11 +1,12 @@
+
 "use client";
 
 import { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search as SearchIcon, Users, FileText, Briefcase } from "lucide-react";
+import { Search as SearchIcon, Users, FileText, Briefcase, AvatarFallback, AvatarImage, Avatar } from "lucide-react";
 import ConnectionCard from '@/components/connections/connection-card';
 import PostCard from '@/components/feed/post-card';
 
@@ -15,7 +16,7 @@ const peopleResults = [
   { id: "p2", name: "Samantha Blue", headline: "Marketing Director at ProNetwork", avatarUrl: "https://placehold.co/80x80.png", mutualConnections: 25 },
 ];
 const postResults = [
-    { id: "post1", user: { name: "Alice Wonderland", avatarUrl: "https://placehold.co/40x40.png", headline: "Software Engineer"}, timestamp: "2h ago", content: "Discussing the impact of search algorithms on professional networking. #Search #AI", likes: 50, comments: 5, shares: 2 },
+    { id: "post1", user: { name: "Alice Wonderland", avatarUrl: "https://placehold.co/40x40.png", headline: "Software Engineer"}, timestamp: "2h ago", content: "Discussing the impact of search algorithms on professional networking. #Search #AI", likes: 50, comments: 5, shares: 2, views: 120 },
 ];
 const companyResults = [
     {id: "c1", name: "ProNetwork Inc.", industry: "Technology", avatarUrl: "https://placehold.co/80x80.png", description: "The leading professional networking platform."},

@@ -16,6 +16,7 @@ const mixFeedPosts = [
     likes: 15,
     comments: 2,
     shares: 1,
+    views: 50,
     image: "https://placehold.co/600x380.png",
     imageHint: "music headphones"
   }
@@ -31,6 +32,7 @@ const friendsPosts = [
     likes: 75,
     comments: 10,
     shares: 3,
+    views: 150,
     image: "https://placehold.co/600x400.png",
     imageHint: "construction site"
   },
@@ -42,6 +44,7 @@ const friendsPosts = [
     likes: 110,
     comments: 22,
     shares: 9,
+    views: 200,
   },
 ];
 
@@ -55,6 +58,7 @@ const worldPosts = [
     likes: 1050,
     comments: 300,
     shares: 50,
+    views: 5000,
     image: "https://placehold.co/600x400.png",
     imageHint: "mars landscape"
   },
@@ -66,6 +70,7 @@ const worldPosts = [
     likes: 500,
     comments: 80,
     shares: 20,
+    views: 1200,
     image: "https://placehold.co/600x350.png",
     imageHint: "gourmet food"
   },
@@ -77,6 +82,7 @@ const worldPosts = [
     likes: 120,
     comments: 15,
     shares: 7,
+    views: 450,
     image: "https://placehold.co/600x400.png",
     imageHint: "tech project"
   },
@@ -88,6 +94,7 @@ const worldPosts = [
     likes: 300,
     comments: 40,
     shares: 10,
+    views: 800,
     image: "https://placehold.co/600x420.png",
     imageHint: "bali beach"
   },
@@ -99,6 +106,7 @@ const worldPosts = [
     likes: 180,
     comments: 25,
     shares: 8,
+    views: 600,
   },
   {
     id: "wp6",
@@ -108,6 +116,7 @@ const worldPosts = [
     likes: 90,
     comments: 12,
     shares: 3,
+    views: 350,
     image: "https://placehold.co/600x330.png",
     imageHint: "open book"
   },
@@ -119,6 +128,7 @@ const worldPosts = [
     likes: 450,
     comments: 60,
     shares: 15,
+    views: 1500,
   }
 ];
 
