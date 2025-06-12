@@ -3,7 +3,8 @@ import PostCard from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown } from "lucide-react";
+import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown, PlusCircle } from "lucide-react";
+import Image from "next/image";
 
 // Placeholder data for mix feed posts
 const mixFeedPosts = [
@@ -44,7 +45,7 @@ const friendsPosts = [
   },
 ];
 
-// Placeholder data for world posts (can reuse or create new ones)
+// Placeholder data for world posts
 const worldPosts = [
   {
     id: "wp1",
@@ -79,13 +80,54 @@ const worldPosts = [
     image: "https://placehold.co/600x400.png",
     imageHint: "tech project"
   },
+  {
+    id: "wp4",
+    user: { name: "Travel Enthusiast", avatarUrl: "https://placehold.co/40x40.png", headline: "World Nomad" },
+    timestamp: "5h ago",
+    content: "Just booked a trip to Bali! Any recommendations? #travel #bali #adventure",
+    likes: 300,
+    comments: 40,
+    shares: 10,
+    image: "https://placehold.co/600x420.png",
+    imageHint: "bali beach"
+  },
+  {
+    id: "wp5",
+    user: { name: "Fitness Guru", avatarUrl: "https://placehold.co/40x40.png", headline: "Health & Wellness Coach" },
+    timestamp: "6h ago",
+    content: "Morning workout done! Feeling energized. #fitness #healthylifestyle #motivation",
+    likes: 180,
+    comments: 25,
+    shares: 8,
+  },
+  {
+    id: "wp6",
+    user: { name: "Book Worm", avatarUrl: "https://placehold.co/40x40.png", headline: "Avid Reader" },
+    timestamp: "7h ago",
+    content: "Just finished an amazing fantasy novel. Can't wait for the sequel! #books #reading #fantasy",
+    likes: 90,
+    comments: 12,
+    shares: 3,
+    image: "https://placehold.co/600x330.png",
+    imageHint: "open book"
+  },
+  {
+    id: "wp7",
+    user: { name: "Gamer Pro", avatarUrl: "https://placehold.co/40x40.png", headline: "eSports Champion" },
+    timestamp: "8h ago",
+    content: "New high score! Who wants to challenge me? #gaming #esports #highscore",
+    likes: 450,
+    comments: 60,
+    shares: 15,
+  }
 ];
+
 
 export default function WorldPage() {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="mix-feed" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-3 sticky top-0 z-10 bg-background p-1 border-b shadow-sm">
           <TabsTrigger value="mix-feed" className="flex items-center gap-2">
             <Shuffle className="h-4 w-4" /> Mix Feed
           </TabsTrigger>
