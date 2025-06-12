@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -87,16 +88,16 @@ export default function PostCard({ post }: PostCardProps) {
             </div>
         </div>
         <div className="w-full grid grid-cols-4 gap-1">
-          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-accent/10 hover:text-primary">
+          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-muted/50 hover:text-foreground">
             <ThumbsUp className="h-4 w-4 mr-1.5" /> Like
           </Button>
-          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-accent/10 hover:text-primary">
+          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-muted/50 hover:text-foreground">
             <MessageCircle className="h-4 w-4 mr-1.5" /> Comment
           </Button>
-          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-accent/10 hover:text-primary">
+          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-muted/50 hover:text-foreground">
             <Repeat className="h-4 w-4 mr-1.5" /> Repost
           </Button>
-          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-accent/10 hover:text-primary">
+          <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:bg-muted/50 hover:text-foreground">
             <Send className="h-4 w-4 mr-1.5" /> Send
           </Button>
         </div>

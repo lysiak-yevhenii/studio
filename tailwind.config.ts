@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 const config = {
@@ -54,7 +55,7 @@ const config = {
         },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
+        ring: 'hsl(var(--secondary))', // Changed from hsl(var(--primary))
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',

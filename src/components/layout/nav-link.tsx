@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -21,12 +22,12 @@ export default function NavLink({ href, label, icon: Icon }: NavLinkProps) {
       variant="ghost"
       asChild
       className={cn(
-        "flex flex-col items-center px-3 py-1 h-auto text-xs font-medium rounded-none hover:bg-accent/10",
-        isActive ? "text-primary border-b-2 border-primary" : "text-muted-foreground hover:text-primary"
+        "flex flex-col items-center px-3 py-1 h-auto text-xs font-medium rounded-none hover:bg-muted/50",
+        isActive ? "text-foreground border-b-2 border-foreground" : "text-muted-foreground hover:text-muted-foreground"
       )}
     >
       <Link href={href}>
-        <Icon className={cn("h-5 w-5 mb-0.5", isActive ? "text-primary" : "")} />
+        <Icon className={cn("h-5 w-5 mb-0.5", isActive ? "text-foreground" : "")} />
         <span>{label}</span>
       </Link>
     </Button>
