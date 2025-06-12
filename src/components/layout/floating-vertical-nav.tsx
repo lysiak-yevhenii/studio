@@ -16,20 +16,43 @@ const navItems = [
   { href: "/notifications", label: "Notifications", icon: Bell },
 ];
 
+// w-14 is 3.5rem (56px), w-56 is 14rem (224px)
+// Visible part when hidden: 20px
+const collapsedHiddenLeft = "-left-[36px]"; // 56px - 20px = 36px
+const expandedHiddenLeft = "-left-[204px]"; // 224px - 20px = 204px
+const visibleLeft = "left-2";
+
 export default function FloatingVerticalNav() {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false); // Controls width (icons vs icons+text)
+  const [isHovering, setIsHovering] = useState(false); // Controls hover-based slide
+  const [isPinned, setIsPinned] = useState(false); // Controls click-based pinned slide
+
+  const isActive = isHovering || isPinned;
+
+  const handleToggleExpand = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent pinning/unpinning when clicking this button
+    setIsExpanded(!isExpanded);
+  };
+
+  const handlePinToggle = () => {
+    setIsPinned(!isPinned);
+  };
 
   return (
     <div
       className={cn(
-        "fixed left-4 top-1/2 -translate-y-1/2 z-40 bg-card border shadow-xl rounded-lg p-2 flex flex-col items-center transition-all duration-300 ease-in-out",
-        isExpanded ? "w-56 items-stretch" : "w-14 items-center"
+        "fixed top-1/2 -translate-y-1/2 z-40 bg-card border shadow-xl rounded-lg p-2 flex flex-col items-center transition-all duration-300 ease-in-out",
+        isExpanded ? "w-56 items-stretch" : "w-14 items-center",
+        isActive ? visibleLeft : (isExpanded ? expandedHiddenLeft : collapsedHiddenLeft)
       )}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      onClick={handlePinToggle}
     >
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={handleToggleExpand}
         className="mb-2 self-center"
         aria-label={isExpanded ? "Collapse navigation" : "Expand navigation"}
       >
