@@ -65,19 +65,37 @@ export default function PostCard({ post }: PostCardProps) {
         </div>
       </CardHeader>
       <CardContent className="p-4 pt-0">
-        <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
-        {post.image && (
-          <div className="mt-3 rounded-lg overflow-hidden border">
-            <Image 
-              src={post.image} 
-              alt="Post image" 
-              width={600} 
-              height={400} 
-              className="w-full h-auto object-cover" 
-              data-ai-hint={post.imageHint || "social media image"}
-            />
+        <div className="flex items-start gap-3">
+          {/* Left side: Content + Image */}
+          <div className="flex-grow space-y-3">
+            <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
+            {post.image && (
+              <div className="mt-3 rounded-lg overflow-hidden border">
+                <Image 
+                  src={post.image} 
+                  alt="Post image" 
+                  width={600} 
+                  height={400} 
+                  className="w-full h-auto object-cover" 
+                  data-ai-hint={post.imageHint || "social media image"}
+                />
+              </div>
+            )}
           </div>
-        )}
+
+          {/* Right side: Vertical Buttons */}
+          <div className="flex flex-col space-y-2 pt-1">
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted/50 w-10 h-10">
+              <ThumbsUp className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted/50 w-10 h-10">
+              <Repeat className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted/50 w-10 h-10">
+              <Send className="h-5 w-5" />
+            </Button>
+          </div>
+        </div>
       </CardContent>
       <CardFooter className="p-4 border-t flex flex-col items-start space-y-2">
         <div className="flex justify-between w-full text-xs text-muted-foreground">
@@ -87,29 +105,12 @@ export default function PostCard({ post }: PostCardProps) {
                 <span>{post.shares} Shares</span>
             </div>
         </div>
-        <div className="w-full flex justify-between items-center">
-          {/* Like and Comment buttons */}
-          <div className="flex space-x-1">
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-              <ThumbsUp className="h-4 w-4 mr-1.5" /> Like
-            </Button>
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground">
-              <MessageCircle className="h-4 w-4 mr-1.5" /> Comment
-            </Button>
-          </div>
-
-          {/* Repost and Send buttons - Vertical */}
-          <div className="flex flex-col space-y-1">
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground justify-start">
-              <Repeat className="h-4 w-4 mr-1.5" /> Repost
-            </Button>
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground justify-start">
-              <Send className="h-4 w-4 mr-1.5" /> Send
-            </Button>
-          </div>
+        <div className="w-full flex justify-start items-center">
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-muted/50 hover:text-foreground">
+            <MessageCircle className="h-4 w-4 mr-1.5" /> Comment
+          </Button>
         </div>
       </CardFooter>
     </Card>
   );
 }
-
