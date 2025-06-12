@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,21 +16,39 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LogIn } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
+
+const MOCK_EMAIL = "test@example.com";
+const MOCK_PASSWORD = "password";
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    // Placeholder for login logic
-    console.log("Login attempt with:", { email, password });
+
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    if (email === MOCK_EMAIL && password === MOCK_PASSWORD) {
+      toast({
+        title: "Login Successful",
+        description: "Welcome back!",
+      });
+      router.push('/'); // Redirect to homepage
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Login Failed",
+        description: "Invalid email or password. Please try again.",
+      });
+    }
     setIsLoading(false);
-    // alert("Login functionality not implemented yet.");
   };
 
   return (
@@ -94,3 +113,4 @@ export default function LoginPage() {
     </div>
   );
 }
+
