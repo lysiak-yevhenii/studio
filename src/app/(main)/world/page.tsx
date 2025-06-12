@@ -2,7 +2,23 @@
 import PostCard from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Globe, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown } from "lucide-react";
+
+// Placeholder data for mix feed posts
+const mixFeedPosts = [
+  {
+    id: "mf1",
+    user: { name: "Random User One", avatarUrl: "https://placehold.co/40x40.png", headline: "Explorer of Ideas" },
+    timestamp: "10m ago",
+    content: "Just discovered this amazing new song! What's everyone listening to? #music #discovery",
+    likes: 15,
+    comments: 2,
+    shares: 1,
+    image: "https://placehold.co/600x380.png",
+    imageHint: "music headphones"
+  }
+];
 
 // Placeholder data for friends' posts
 const friendsPosts = [
@@ -78,8 +94,11 @@ export default function WorldPage() {
         </CardHeader>
       </Card>
 
-      <Tabs defaultValue="friends" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
+      <Tabs defaultValue="mix-feed" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="mix-feed" className="flex items-center gap-2">
+            <Shuffle className="h-4 w-4" /> Mix Feed
+          </TabsTrigger>
           <TabsTrigger value="friends" className="flex items-center gap-2">
             <Users className="h-4 w-4" /> Friends Feed
           </TabsTrigger>
@@ -87,6 +106,35 @@ export default function WorldPage() {
             <Globe className="h-4 w-4" /> World Feed
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="mix-feed" className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Mix Feed</CardTitle>
+              <CardDescription>Swipe through posts. Like or pass!</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {mixFeedPosts.length > 0 ? (
+                mixFeedPosts.map(post => (
+                  <div key={post.id} className="space-y-3">
+                    <PostCard post={post} />
+                    <div className="flex justify-center gap-4">
+                      <Button variant="outline" className="border-destructive text-destructive hover:bg-destructive/10">
+                        <ThumbsDown className="mr-2 h-4 w-4" /> Pass (Swipe Right)
+                      </Button>
+                      <Button variant="outline" className="border-accent text-accent-foreground hover:bg-accent/10 hover:text-accent">
+                        <ThumbsUp className="mr-2 h-4 w-4" /> Like (Swipe Left)
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-8">No posts in the mix feed right now.</p>
+              )}
+               <p className="text-xs text-muted-foreground text-center pt-4">Full swipe functionality coming soon!</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="friends" className="mt-6">
           <Card>
