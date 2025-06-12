@@ -57,24 +57,7 @@ export default function HomePage() {
 
       {/* Sidebar: Connection Suggestions */}
       <aside className="md:col-span-1 space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Smart Connection Suggestions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {/* <AiConnectionSuggestions /> */}
-            <p className="text-sm text-muted-foreground">AI connection suggestions are temporarily disabled.</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">People You May Know</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {/* Placeholder for "People You May Know" */}
-            <p className="text-sm text-muted-foreground">Feature coming soon.</p>
-          </CardContent>
-        </Card>
+        {/* Sections removed as per user request */}
       </aside>
     </div>
   );
