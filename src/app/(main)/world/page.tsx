@@ -3,7 +3,7 @@ import PostCard from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown, PlusCircle } from "lucide-react";
+import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown } from "lucide-react";
 import Image from "next/image";
 
 // Placeholder data for mix feed posts
@@ -127,18 +127,23 @@ export default function WorldPage() {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="mix-feed" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 sticky top-0 z-10 bg-background p-1 border-b shadow-sm">
-          <TabsTrigger value="mix-feed" className="flex items-center gap-2">
-            <Shuffle className="h-4 w-4" /> Mix Feed
-          </TabsTrigger>
-          <TabsTrigger value="friends" className="flex items-center gap-2">
-            <Users className="h-4 w-4" /> Friends Feed
-          </TabsTrigger>
-          <TabsTrigger value="world" className="flex items-center gap-2">
-            <Globe className="h-4 w-4" /> World Feed
-          </TabsTrigger>
-        </TabsList>
+        
+        {/* Floating Navigation Block */}
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
+          <TabsList className="grid grid-cols-3">
+            <TabsTrigger value="mix-feed" className="flex items-center gap-2">
+              <Shuffle className="h-4 w-4" /> Mix Feed
+            </TabsTrigger>
+            <TabsTrigger value="friends" className="flex items-center gap-2">
+              <Users className="h-4 w-4" /> Friends Feed
+            </TabsTrigger>
+            <TabsTrigger value="world" className="flex items-center gap-2">
+              <Globe className="h-4 w-4" /> World Feed
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
+        {/* Tab Content - remains in normal flow */}
         <TabsContent value="mix-feed" className="mt-6">
           <Card>
             <CardHeader>
