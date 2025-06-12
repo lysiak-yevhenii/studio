@@ -60,9 +60,9 @@ export default function UserAvatar() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full">
-           <Avatar className="h-8 w-8 cursor-pointer">
+           <Avatar className="h-14 w-14 cursor-pointer"> {/* Increased size */}
             <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} data-ai-hint="person face" />
-            <AvatarFallback>{getInitials(currentUser.name)}</AvatarFallback>
+            <AvatarFallback className="text-xl">{getInitials(currentUser.name)}</AvatarFallback> {/* Adjusted fallback text size if needed */}
           </Avatar>
         </button>
       </DropdownMenuTrigger>

@@ -1,7 +1,6 @@
 
 import FloatingVerticalNav from '@/components/layout/floating-vertical-nav';
 import FloatingVerticalNavRight from '@/components/layout/floating-vertical-nav-right';
-import GlobalBottomNav from '@/components/layout/global-bottom-nav';
 import UserAvatar from '@/components/auth/user-avatar';
 
 export default function MainLayout({
@@ -16,7 +15,7 @@ export default function MainLayout({
       <main className="flex-grow container mx-auto py-6 px-4">
         {children}
       </main>
-      <GlobalBottomNav />
+      {/* GlobalBottomNav removed */}
       <div className="fixed bottom-6 right-6 z-50">
         <UserAvatar />
       </div>
