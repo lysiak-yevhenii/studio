@@ -13,9 +13,10 @@ interface SidebarNavLinkProps {
   label: string;
   icon: LucideIcon;
   isExpanded: boolean;
+  tooltipSide?: "left" | "right" | "top" | "bottom";
 }
 
-export default function SidebarNavLink({ href, label, icon: Icon, isExpanded }: SidebarNavLinkProps) {
+export default function SidebarNavLink({ href, label, icon: Icon, isExpanded, tooltipSide = "right" }: SidebarNavLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === href || (href === "/" && pathname.startsWith("/?")) || (href !== "/" && pathname.startsWith(href));
 
@@ -56,7 +57,7 @@ export default function SidebarNavLink({ href, label, icon: Icon, isExpanded }: 
               </Link>
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right" className="ml-2">
+          <TooltipContent side={tooltipSide} className="ml-2">
             <p>{label}</p>
           </TooltipContent>
         </Tooltip>
@@ -80,4 +81,3 @@ export default function SidebarNavLink({ href, label, icon: Icon, isExpanded }: 
     </Button>
   );
 }
-
