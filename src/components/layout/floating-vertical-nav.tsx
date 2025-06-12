@@ -23,7 +23,7 @@ const navItems: NavItem[] = [
 ];
 
 const collapsedHiddenLeftValue = "-left-[44px]";
-const expandedHiddenLeftValue = "-left-[212px]";
+const expandedHiddenLeftValue = "-left-[212px]"; // Assuming w-56 (224px) - p-1 (4px each side) = 216px -> -left-[212px] to hide almost all
 const visibleLeft = "left-2";
 
 export default function FloatingVerticalNav() {
@@ -37,45 +37,47 @@ export default function FloatingVerticalNav() {
   }, []);
 
   const isActive = isHovering || isPinned;
-  // isFlaming is true only on the client after mount, and if other conditions are met
-  const isFlaming = hasMounted && !isExpanded && !isActive; 
+  const isFlaming = hasMounted && !isExpanded && !isActive;
 
   const handleToggleExpand = (e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent pin toggle if clicking expand/collapse
     setIsExpanded(!isExpanded);
   };
 
   const handlePinToggle = () => {
+    // Only toggle pin if not clicking the expand/collapse button
+    // This logic is simplified because expand button now stops propagation.
     setIsPinned(!isPinned);
   };
   
-  // currentLeftPositionClass depends on hasMounted to avoid hydration issues for positioning
   const currentLeftPositionClass = hasMounted
     ? (isActive ? visibleLeft : (isExpanded ? expandedHiddenLeftValue : collapsedHiddenLeftValue))
-    : collapsedHiddenLeftValue;
+    : collapsedHiddenLeftValue; // Default to collapsed hidden for SSR and initial client render
 
   return (
     <div
       className={cn(
-        "fixed top-1/2 -translate-y-1/2 z-40 border shadow-xl rounded-xl p-1 flex flex-col items-center transition-all duration-300 ease-in-out",
-        // Default background and border, rendered on server and initial client
-        "bg-card border-border", 
+        "fixed top-1/2 -translate-y-1/2 z-40 shadow-xl rounded-xl p-1 flex flex-col items-center transition-all duration-300 ease-in-out",
+        "border-2", // Default border thickness
         isExpanded ? "w-56 items-stretch" : "w-14 items-center",
         currentLeftPositionClass,
-        // Conditionally add flaming classes only on client after mount if isFlaming is true
-        // The `is-flaming` class is a marker for CSS overrides in globals.css
-        // The Tailwind bg/animate classes apply the gradient directly
-        isFlaming && 'is-flaming bg-rainbow-gradient bg-400 animate-rainbow-shift'
+        // Conditional styling for "flaming" state
+        isFlaming
+          ? 'is-flaming bg-black border-transparent animate-border-pulse-colors'
+          : "bg-card border-border" // Default state with theme border color
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      onClick={handlePinToggle} 
+      onClick={handlePinToggle} // Pin toggle on the whole div
     >
       <Button
         variant="ghost"
         size="icon"
         onClick={handleToggleExpand} 
-        className="mb-1 self-center" 
+        className={cn(
+            "mb-1 self-center",
+             isExpanded ? "w-auto px-2" : "w-10 h-10" // Adjust button size if needed
+        )}
         aria-label={isExpanded ? "Collapse navigation" : "Expand navigation"}
       >
         {isExpanded ? <PanelLeftOpen className="h-5 w-5" /> : <PanelRightOpen className="h-5 w-5" />}
@@ -83,11 +85,8 @@ export default function FloatingVerticalNav() {
       <Separator 
         className={cn(
           "mb-1", 
-          // Default background for separator
-          "bg-border", 
           isExpanded ? "w-full" : "w-10/12", 
-          // Conditionally add flame-nav-separator class for CSS override
-          isFlaming && "flame-nav-separator"
+          isFlaming ? "flame-nav-separator" : "bg-border"
         )} 
       />
       <nav className="flex flex-col space-y-0.5 w-full">

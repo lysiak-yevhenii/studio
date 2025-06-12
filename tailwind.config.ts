@@ -106,11 +106,18 @@ const config = {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
         },
+        'border-pulse-colors': {
+          '0%, 100%': { borderColor: 'hsl(var(--primary))' }, // Blue
+          '25%': { borderColor: 'hsl(var(--accent))' },      // Green
+          '50%': { borderColor: '#FFCA28' },                 // Bright Yellow (e.g., Amber 400)
+          '75%': { borderColor: '#EC407A' },                 // Bright Pink (e.g., Pink 400)
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'rainbow-shift': 'rainbow-shift 10s ease infinite alternate',
+        'border-pulse-colors': 'border-pulse-colors 4s ease-in-out infinite',
       },
     },
   },
