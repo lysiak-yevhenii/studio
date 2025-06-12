@@ -111,7 +111,7 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'flame-gradient': 'flame-gradient-shift 160s ease infinite',
+        'flame-gradient': 'flame-gradient-shift 300s ease infinite',
       },
     },
   },
