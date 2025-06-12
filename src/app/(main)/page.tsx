@@ -5,11 +5,11 @@ import PostCard from "@/components/feed/post-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-// Placeholder data for posts
+// Placeholder data for posts - now attributed to "Test User"
 const posts = [
   {
     id: "1",
-    user: { name: "Alice Wonderland", avatarUrl: "https://placehold.co/40x40.png", headline: "Software Engineer at TechCorp" },
+    user: { name: "Test User", avatarUrl: "https://placehold.co/40x40.png", headline: "ProNetwork User" },
     timestamp: "2h ago",
     content: "Excited to share my latest project on AI-driven networking! #AI #Networking #Innovation. Check out the details on my profile.",
     likes: 120,
@@ -20,7 +20,7 @@ const posts = [
   },
   {
     id: "2",
-    user: { name: "Bob The Builder", avatarUrl: "https://placehold.co/40x40.png", headline: "Project Manager at Constructify" },
+    user: { name: "Test User", avatarUrl: "https://placehold.co/40x40.png", headline: "ProNetwork User" },
     timestamp: "5h ago",
     content: "Just attended an amazing conference on sustainable development. Learned so much! #Sustainability #Development #Conference",
     likes: 85,
@@ -29,7 +29,7 @@ const posts = [
   },
   {
     id: "3",
-    user: { name: "Charlie Brown", avatarUrl: "https://placehold.co/40x40.png", headline: "UX Designer at CreativeMinds" },
+    user: { name: "Test User", avatarUrl: "https://placehold.co/40x40.png", headline: "ProNetwork User" },
     timestamp: "1d ago",
     content: "Exploring new design trends for 2024. What are your favorite resources for inspiration? #UXDesign #Trends #Inspiration",
     likes: 230,
@@ -47,7 +47,7 @@ export default function HomePage() {
       <div className="md:col-span-2 space-y-6">
         <CreatePostForm />
         <Separator />
-        <h2 className="text-xl font-semibold text-foreground">Recent Activity</h2>
+        <h2 className="text-xl font-semibold text-foreground">My Posts</h2>
         <div className="space-y-6">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
