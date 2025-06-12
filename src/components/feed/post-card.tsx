@@ -66,7 +66,6 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
         </CardHeader>
         <CardContent className="p-4 pt-0">
-          {/* Main content: Text and Image */}
           <div className="space-y-3 min-h-[36px]">
             <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
             {post.image && (
@@ -83,11 +82,10 @@ export default function PostCard({ post }: PostCardProps) {
             )}
           </div>
         </CardContent>
-        {/* CardFooter removed as per new design where comment button is in the action tab */}
       </Card>
 
-      {/* Action Buttons Tab */}
-      <div className="absolute top-6 right-0 z-10 w-16 bg-card border border-border rounded-lg shadow-lg p-1 flex flex-col items-center space-y-1">
+      {/* Action Buttons Tab - Increased z-index */}
+      <div className="absolute top-6 right-0 z-30 w-16 bg-card border border-border rounded-lg shadow-lg p-1 flex flex-col items-center space-y-1">
         {/* Like Button & Count */}
         <div className="flex flex-col items-center space-y-0.5">
           <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10 w-10 h-10">
@@ -110,13 +108,13 @@ export default function PostCard({ post }: PostCardProps) {
           {post.shares > 0 && <span className="text-xs text-muted-foreground">{post.shares}</span>}
         </div>
         {/* Send Button */}
-        <div className="flex flex-col items-center space-y-0.5"> {/* Added space-y-0.5 for consistency if a count were ever added */}
+        <div className="flex flex-col items-center space-y-0.5">
           <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-indigo-600 hover:bg-indigo-600/10 w-10 h-10">
             <Send className="h-5 w-5" />
           </Button>
-          {/* Send typically doesn't have a public count */}
         </div>
       </div>
     </div>
   );
 }
+
