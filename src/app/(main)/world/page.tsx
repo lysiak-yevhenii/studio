@@ -118,7 +118,7 @@ type FeedTabValue = 'my-feed' | 'mix-feed' | 'friends' | 'world';
 export default function WorldPage() {
   const [activeTab, setActiveTab] = useState<FeedTabValue>('mix-feed');
   const [showCreatePostForm, setShowCreatePostForm] = useState(false);
-  const [myFeedTabLabel, setMyFeedTabLabel] = useState("My Feed"); // Initial label
+  const [myFeedTabLabel, setMyFeedTabLabel] = useState("My Feed"); 
 
   const handleTabChange = (value: string) => {
     const newTab = value as FeedTabValue;
@@ -127,12 +127,11 @@ export default function WorldPage() {
       // User is interacting with the first tab.
       if (myFeedTabLabel === "My Feed") {
         // Currently labeled "My Feed".
-        // If form is hidden: Change label to "Create Post", keep form hidden.
-        // If form is visible: Change label to "Create Post", HIDE form.
+        // Action: Change label to "Create Post". Form stays hidden.
         setMyFeedTabLabel("Create Post");
         setShowCreatePostForm(false); 
       } else { // myFeedTabLabel === "Create Post"
-        // Currently labeled "Create Post". Form is hidden.
+        // Currently labeled "Create Post".
         // Action: Change label to "My Feed". Form becomes visible.
         setMyFeedTabLabel("My Feed");
         setShowCreatePostForm(true);
@@ -264,3 +263,4 @@ export default function WorldPage() {
     </div>
   );
 }
+
