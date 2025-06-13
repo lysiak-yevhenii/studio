@@ -31,7 +31,7 @@ interface PostCardProps {
 export default function PostCard({ post }: PostCardProps) {
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
 
-  const bottomTabHeightRem = 2.25; // Approximate height of the yellow bar
+  const bottomTabHeightRem = 2.25; 
   const bottomTabPosition = `-${bottomTabHeightRem - 0.5}rem`; 
 
   return (
@@ -39,7 +39,7 @@ export default function PostCard({ post }: PostCardProps) {
       
       {/* Yellow Action Tab - Now at the Bottom */}
       <div 
-        className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center space-x-1 p-1.5 bg-yellow-400 rounded-md shadow-md min-w-[280px]"
+        className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center space-x-1 p-1.5 bg-yellow-400 rounded-t-xl rounded-b-md min-w-[280px]"
         style={{ bottom: bottomTabPosition }} 
       >
         <Button variant="ghost" size="sm" className="flex items-center space-x-1 text-neutral-700 hover:bg-yellow-300/80 h-auto px-2 py-1">
@@ -61,7 +61,7 @@ export default function PostCard({ post }: PostCardProps) {
       </div>
 
       {/* Left Action Tab (Red) - Full Height */}
-      <div className="absolute top-0 bottom-0 -left-12 z-10 flex flex-col items-center justify-center space-y-1.5 p-2 bg-red-600 text-white rounded-lg shadow-md w-12">
+      <div className="absolute top-0 bottom-0 -left-[46px] z-10 flex flex-col items-center justify-center space-y-1.5 p-2 bg-red-600 text-white rounded-l-xl w-12">
         <Button variant="ghost" size="icon" className="text-white hover:bg-red-500/80 h-8 w-8 p-1.5" aria-label="Dislike">
           <ThumbsDown className="h-5 w-5" />
         </Button>
@@ -71,14 +71,14 @@ export default function PostCard({ post }: PostCardProps) {
       </div>
 
       {/* Right Action Tab (Green) - Full Height */}
-      <div className="absolute top-0 bottom-0 -right-12 z-10 flex flex-col items-center justify-center p-2 bg-green-500 text-white rounded-lg shadow-md w-12">
+      <div className="absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-center p-2 bg-green-500 text-white rounded-r-xl w-12">
         <Button variant="ghost" size="icon" className="text-white hover:bg-green-400/80 h-8 w-8 p-1.5" aria-label="Like">
           <ThumbsUp className="h-5 w-5" />
         </Button>
         {post.likes > 0 && <span className="text-xs font-semibold mt-0.5">{post.likes}</span>}
       </div>
 
-      <CardHeader className="p-4 pt-6 pb-2"> {/* Adjusted padding slightly if needed for bottom bar */}
+      <CardHeader className="p-4 pt-6 pb-2">
         <div className="flex items-center space-x-3">
           <Avatar className="h-10 w-10">
             <AvatarImage src={post.user.avatarUrl} alt={post.user.name} data-ai-hint="person face" />
@@ -91,7 +91,7 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-4 pt-2 pb-8"> {/* Increased bottom padding for space above yellow bar */}
+      <CardContent className="p-4 pt-2 pb-8"> 
         <div className="space-y-3 min-h-[36px]">
           <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
           {post.image && (
@@ -111,4 +111,3 @@ export default function PostCard({ post }: PostCardProps) {
     </Card>
   );
 }
-
