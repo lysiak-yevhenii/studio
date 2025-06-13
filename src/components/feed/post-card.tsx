@@ -31,15 +31,16 @@ interface PostCardProps {
 export default function PostCard({ post }: PostCardProps) {
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
 
-  const topTabHeightRem = 2.25; 
-  const topTabPosition = `-${topTabHeightRem - 0.5}rem`; 
+  const bottomTabHeightRem = 2.25; // Approximate height of the yellow bar
+  const bottomTabPosition = `-${bottomTabHeightRem - 0.5}rem`; 
 
   return (
     <Card className="relative shadow-lg overflow-visible mx-auto max-w-xl rounded-xl border-2 border-border mb-10 mt-8">
       
+      {/* Yellow Action Tab - Now at the Bottom */}
       <div 
         className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center space-x-1 p-1.5 bg-yellow-400 rounded-md shadow-md min-w-[280px]"
-        style={{ top: topTabPosition }}
+        style={{ bottom: bottomTabPosition }} // Changed from top to bottom
       >
         <Button variant="ghost" size="sm" className="flex items-center space-x-1 text-neutral-700 hover:bg-yellow-300/80 h-auto px-2 py-1">
           <Repeat className="h-4 w-4" />
@@ -77,7 +78,7 @@ export default function PostCard({ post }: PostCardProps) {
         {post.likes > 0 && <span className="text-xs font-semibold mt-0.5">{post.likes}</span>}
       </div>
 
-      <CardHeader className="p-4 pt-6"> 
+      <CardHeader className="p-4 pt-6 pb-2"> {/* Adjusted padding slightly if needed for bottom bar */}
         <div className="flex items-center space-x-3">
           <Avatar className="h-10 w-10">
             <AvatarImage src={post.user.avatarUrl} alt={post.user.name} data-ai-hint="person face" />
@@ -90,7 +91,7 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-4 pt-0">
+      <CardContent className="p-4 pt-2"> {/* Adjusted padding slightly if needed for bottom bar */}
         <div className="space-y-3 min-h-[36px]">
           <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
           {post.image && (
