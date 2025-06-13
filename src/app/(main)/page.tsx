@@ -52,7 +52,6 @@ export default function HomePage() {
     <div className="w-full">
       {/* Main content: Create Post and Feed, centered with a max-width */}
       <div className="w-full max-w-3xl mx-auto space-y-6">
-        <CreatePostForm />
         <Separator />
         <h2 className="text-xl font-semibold text-foreground">My Posts</h2>
         <div className="space-y-6">
