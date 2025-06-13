@@ -119,6 +119,10 @@ type FeedTabValue = 'my-feed' | 'mix-feed' | 'friends' | 'world';
 export default function WorldPage() {
   const [activeTab, setActiveTab] = useState<FeedTabValue>('mix-feed');
 
+  const handleMakePostClick = () => {
+    setActiveTab('my-feed');
+  };
+
   return (
     <div className="space-y-6">
       <Card className="shadow-md">
@@ -130,15 +134,12 @@ export default function WorldPage() {
             </CardTitle>
             <CardDescription>Discover posts from different perspectives or create your own.</CardDescription>
           </div>
-          <Button className="bg-primary hover:bg-primary/90">
+          <Button className="bg-primary hover:bg-primary/90" onClick={handleMakePostClick}>
             <PencilLine className="h-4 w-4 mr-2" />
             Make a Post
           </Button>
         </CardHeader>
         <CardContent>
-          <div className="mb-6">
-            <CreatePostForm />
-          </div>
           <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as FeedTabValue)} className="w-full">
             <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
                 <TabsList className="grid grid-cols-4">
@@ -160,10 +161,13 @@ export default function WorldPage() {
             <TabsContent value="my-feed" className="mt-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>My Posts</CardTitle>
-                  <CardDescription>Your personal feed and creations.</CardDescription>
+                  <CardTitle>My Posts & Creations</CardTitle>
+                  <CardDescription>Create new posts and view your activity.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
+                  <div className="mb-6">
+                    <CreatePostForm />
+                  </div>
                   {myPosts.length > 0 ? (
                     myPosts.map(post => (
                       <PostCard key={post.id} post={post} />
