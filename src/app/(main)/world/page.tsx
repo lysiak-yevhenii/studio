@@ -118,26 +118,41 @@ type FeedTabValue = 'my-feed' | 'mix-feed' | 'friends' | 'world';
 
 export default function WorldPage() {
   const [activeTab, setActiveTab] = useState<FeedTabValue>('mix-feed');
-  const [isCreatePostMode, setIsCreatePostMode] = useState(false);
+  const [showCreatePostForm, setShowCreatePostForm] = useState(false);
+  const [myFeedTabLabel, setMyFeedTabLabel] = useState("My Feed");
 
   const handleMakePostClick = () => {
     setActiveTab('my-feed');
-    setIsCreatePostMode(true);
+    setMyFeedTabLabel("My Feed"); // Ensure label is "My Feed" when form is shown
+    setShowCreatePostForm(true);
   };
 
   const handleTabChange = (value: string) => {
     const newTab = value as FeedTabValue;
-    setActiveTab(newTab);
+
     if (newTab === 'my-feed') {
-      setIsCreatePostMode(prevMode => !prevMode);
-    } else {
-      setIsCreatePostMode(false);
+      if (activeTab === 'my-feed') { // Clicking the "my-feed" tab trigger when it's already active
+        if (myFeedTabLabel === "My Feed") { // Currently "My Feed", about to become "Create Post"
+          setMyFeedTabLabel("Create Post");
+          setShowCreatePostForm(false);
+        } else { // Currently "Create Post", about to become "My Feed" and show form
+          setMyFeedTabLabel("My Feed");
+          setShowCreatePostForm(true);
+        }
+      } else { // Switching to "my-feed" from another tab
+        setMyFeedTabLabel("Create Post"); // Initial state when landing on "my-feed"
+        setShowCreatePostForm(false);
+      }
+    } else { // Switching to a tab other than 'my-feed'
+      setMyFeedTabLabel("My Feed"); // Reset 'my-feed' tab label
+      setShowCreatePostForm(false); // Hide form
     }
+    setActiveTab(newTab);
   };
 
   return (
     <div className="space-y-6">
-      {isCreatePostMode && (
+      {showCreatePostForm && (
         <div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-40 w-full max-w-xl p-4">
           <CreatePostForm />
         </div>
@@ -163,7 +178,7 @@ export default function WorldPage() {
                 <TabsList className="grid grid-cols-4">
                     <TabsTrigger value="my-feed" className="flex items-center gap-2">
                         <LayoutGrid className="h-4 w-4" /> 
-                        {isCreatePostMode && activeTab === 'my-feed' ? "My Feed" : "Create Post"}
+                        {myFeedTabLabel}
                     </TabsTrigger>
                     <TabsTrigger value="mix-feed" className="flex items-center gap-2">
                         <Shuffle className="h-4 w-4" /> Mix
@@ -182,9 +197,7 @@ export default function WorldPage() {
                 <CardHeader>
                   <CardTitle>My Posts & Creations</CardTitle>
                   <CardDescription>
-                    {isCreatePostMode && activeTab === 'my-feed' 
-                      ? "The form to create a post is active above. Scroll down to see your existing posts." 
-                      : "Your personal posts and creations. Click 'Create Post' in the tab bar below to start a new post."}
+                    Your personal posts and creations.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 pb-16">
@@ -258,4 +271,3 @@ export default function WorldPage() {
     </div>
   );
 }
-
