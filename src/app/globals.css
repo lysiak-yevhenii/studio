@@ -92,7 +92,7 @@
   /* Styles for FloatingVerticalNav when in "is-flaming" state (collapsed, not active, animated bg) */
   .is-flaming {
     @apply bg-animated-flame-gradient bg-flame-gradient-size animate-flame-gradient border-white/30;
-    animation-duration: 120s !important; /* Explicit override for animation speed */
+    animation-duration: 50s !important; /* Explicit override for animation speed */
   }
 
   .is-flaming > button[aria-label*="navigation"] svg { /* Expand/collapse icon */
@@ -105,18 +105,18 @@
   .is-flaming .flame-nav-separator { /* Separator component when nav is flaming */
     @apply bg-white/50 !important; /* Light separator on animated bg */
   }
-  
+
   /* Styles for SidebarNavLink items specifically within .is-flaming FloatingVerticalNav */
   /* These are now mostly handled by conditional classes in SidebarNavLink.tsx */
   /* Keeping general text/icon overrides for safety */
-  
+
   .is-flaming nav .group .text-muted-foreground { /* Primarily for icons in inactive links */
     @apply text-white/80 !important;
   }
   .is-flaming nav .group .text-foreground { /* Primarily for text in inactive links & active link text/icons */
     @apply text-white !important;
   }
-  
+
   .is-flaming nav .group svg { /* Targets svgs inside the Button from SidebarNavLink */
     @apply text-white !important; /* Ensures all icons in links are white */
   }
