@@ -37,7 +37,6 @@ const myPosts: Post[] = [
   },
 ];
 
-
 // Placeholder data for mix feed posts
 const mixFeedPosts: Post[] = [
   {
@@ -126,12 +125,11 @@ export default function WorldPage() {
     if (newTab === 'my-feed') {
       // User is interacting with the first tab.
       if (myFeedTabLabel === "My Feed") {
-        // Currently labeled "My Feed".
+        // Currently labeled "My Feed". Clicked.
         // Action: Change label to "Create Post". Form stays hidden.
         setMyFeedTabLabel("Create Post");
         setShowCreatePostForm(false); 
-      } else { // myFeedTabLabel === "Create Post"
-        // Currently labeled "Create Post".
+      } else { // myFeedTabLabel === "Create Post". Clicked.
         // Action: Change label to "My Feed". Form becomes visible.
         setMyFeedTabLabel("My Feed");
         setShowCreatePostForm(true);
@@ -164,7 +162,6 @@ export default function WorldPage() {
           </div>
         </CardHeader>
         <CardContent>
-          
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
             <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
                 <TabsList className="grid grid-cols-4">
@@ -263,4 +260,3 @@ export default function WorldPage() {
     </div>
   );
 }
-
