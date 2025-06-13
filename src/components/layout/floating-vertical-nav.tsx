@@ -37,8 +37,8 @@ export default function FloatingVerticalNav() {
   }, []);
 
   const isActive = isHovering || isPinned;
-  // isFlaming: true when collapsed (not expanded) AND not active (not hovered or pinned) AND mounted
-  const isFlaming = hasMounted && !isExpanded && !isActive;
+  // isFlaming: now true whenever component is mounted on client
+  const isFlaming = hasMounted;
 
   const handleToggleExpand = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -60,10 +60,9 @@ export default function FloatingVerticalNav() {
         "border-2", 
         isExpanded ? "w-56 items-stretch" : "w-14 items-center",
         currentLeftPositionClass,
-        // Default state styles (applied when not flaming)
-        !isFlaming && "bg-card border-border",
-        // Conditional styling for "flaming" state - now primarily driven by the .is-flaming class from globals.css
-        isFlaming && 'is-flaming'
+        isFlaming
+          ? 'is-flaming' // Applies @apply rules from globals.css including gradient, border, animation
+          : "bg-card border-border" // Fallback for SSR / pre-mount
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
@@ -76,7 +75,8 @@ export default function FloatingVerticalNav() {
         className={cn(
             "mb-1 self-center",
              isExpanded ? "w-auto px-2" : "w-10 h-10",
-             isFlaming ? "hover:bg-white/20" : "" // Keep this direct hover style for the button itself
+             // Hover style is now controlled by .is-flaming > button in globals.css when flaming
+             isFlaming ? "" : "hover:bg-muted" 
         )}
         aria-label={isExpanded ? "Collapse navigation" : "Expand navigation"}
       >
@@ -86,7 +86,7 @@ export default function FloatingVerticalNav() {
         className={cn(
           "mb-1", 
           isExpanded ? "w-full" : "w-10/12", 
-          isFlaming ? "flame-nav-separator" : "bg-border" // flame-nav-separator is styled in globals.css
+          isFlaming ? "flame-nav-separator" : "bg-border"
         )} 
       />
       <nav className="flex flex-col space-y-0.5 w-full">
@@ -97,7 +97,7 @@ export default function FloatingVerticalNav() {
             label={item.label}
             icon={item.icon}
             isExpanded={isExpanded}
-            isFlaming={isFlaming} // Pass isFlaming to SidebarNavLink
+            isFlaming={isFlaming} 
           />
         ))}
       </nav>
