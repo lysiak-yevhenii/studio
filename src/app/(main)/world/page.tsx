@@ -7,8 +7,37 @@ import type { Post } from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown, PencilLine } from "lucide-react";
+import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown, PencilLine, LayoutGrid } from "lucide-react";
 import CreatePostForm from "@/components/feed/create-post-form";
+
+// Placeholder data for My Feed posts (posts by "Test User")
+const myPosts: Post[] = [
+  {
+    id: "myPost1",
+    user: { name: "Test User", avatarUrl: "https://placehold.co/40x40.png", headline: "ProNetwork User" },
+    timestamp: "10m ago",
+    content: "Just created my first post in 'My Feed'! #NewFeature",
+    likes: 5,
+    bookmarks: 1,
+    comments: 0,
+    shares: 0,
+    views: 10,
+    image: "https://placehold.co/600x300.png",
+    imageHint: "celebration new"
+  },
+  {
+    id: "myPost2",
+    user: { name: "Test User", avatarUrl: "https://placehold.co/40x40.png", headline: "ProNetwork User" },
+    timestamp: "1h ago",
+    content: "Thinking about what to share next with my network. Any ideas?",
+    likes: 12,
+    bookmarks: 3,
+    comments: 2,
+    shares: 1,
+    views: 30
+  },
+];
+
 
 // Placeholder data for mix feed posts
 const mixFeedPosts: Post[] = [
@@ -83,208 +112,142 @@ const worldPosts: Post[] = [
     image: "https://placehold.co/600x350.png",
     imageHint: "gourmet food"
   },
-   {
-    id: "wp3",
-    user: { name: "Alice Wonderland", avatarUrl: "https://placehold.co/40x40.png", headline: "Software Engineer at TechCorp" },
-    timestamp: "4h ago",
-    content: "Excited to share my latest project on AI-driven networking! #AI #Networking #Innovation. Check out the details on my profile.",
-    likes: 120,
-    bookmarks: 22,
-    comments: 15,
-    shares: 7,
-    views: 450,
-    image: "https://placehold.co/600x400.png",
-    imageHint: "tech project"
-  },
-  {
-    id: "wp4",
-    user: { name: "Travel Enthusiast", avatarUrl: "https://placehold.co/40x40.png", headline: "World Nomad" },
-    timestamp: "5h ago",
-    content: "Just booked a trip to Bali! Any recommendations? #travel #bali #adventure",
-    likes: 300,
-    bookmarks: 50,
-    comments: 40,
-    shares: 10,
-    views: 800,
-    image: "https://placehold.co/600x420.png",
-    imageHint: "bali beach"
-  },
-  {
-    id: "wp5",
-    user: { name: "Fitness Guru", avatarUrl: "https://placehold.co/40x40.png", headline: "Health & Wellness Coach" },
-    timestamp: "6h ago",
-    content: "Morning workout done! Feeling energized. #fitness #healthylifestyle #motivation",
-    likes: 180,
-    bookmarks: 30,
-    comments: 25,
-    shares: 8,
-    views: 600,
-  },
-  {
-    id: "wp6",
-    user: { name: "Book Worm", avatarUrl: "https://placehold.co/40x40.png", headline: "Avid Reader" },
-    timestamp: "7h ago",
-    content: "Just finished an amazing fantasy novel. Can't wait for the sequel! #books #reading #fantasy",
-    likes: 90,
-    bookmarks: 18,
-    comments: 12,
-    shares: 3,
-    views: 350,
-    image: "https://placehold.co/600x330.png",
-    imageHint: "open book"
-  },
-  {
-    id: "wp7",
-    user: { name: "Gamer Pro", avatarUrl: "https://placehold.co/40x40.png", headline: "eSports Champion" },
-    timestamp: "8h ago",
-    content: "New high score! Who wants to challenge me? #gaming #esports #highscore",
-    likes: 450,
-    bookmarks: 70,
-    comments: 60,
-    shares: 15,
-    views: 1500,
-  }
 ];
 
-type FeedTab = 'mix' | 'friends' | 'world';
+type FeedTabValue = 'mix-feed' | 'friends' | 'world' | 'my-feed';
 
 export default function WorldPage() {
-  const [showCreatePostForm, setShowCreatePostForm] = useState<{ mix: boolean; friends: boolean; world: boolean }>({
-    mix: false,
-    friends: false,
-    world: false,
-  });
+  const [activeTab, setActiveTab] = useState<FeedTabValue>('mix-feed');
 
-  const toggleCreatePostForm = (tab: FeedTab) => {
-    setShowCreatePostForm(prevState => ({
-      ...prevState,
-      [tab]: !prevState[tab],
-    }));
+  const handleMakePostClick = () => {
+    setActiveTab('my-feed');
   };
 
   return (
     <div className="space-y-6">
-      <Tabs defaultValue="mix-feed" className="w-full">
-        
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
-          <TabsList className="grid grid-cols-3">
-            <TabsTrigger value="mix-feed" className="flex items-center gap-2">
-              <Shuffle className="h-4 w-4" /> Mix Feed
-            </TabsTrigger>
-            <TabsTrigger value="friends" className="flex items-center gap-2">
-              <Users className="h-4 w-4" /> Friends Feed
-            </TabsTrigger>
-            <TabsTrigger value="world" className="flex items-center gap-2">
-              <Globe className="h-4 w-4" /> World Feed
-            </TabsTrigger>
-          </TabsList>
-        </div>
-
-        <TabsContent value="mix-feed" className="mt-6">
-          <Button 
-            onClick={() => toggleCreatePostForm('mix')} 
-            variant="outline" 
-            className="w-full mb-4 flex items-center gap-2"
-          >
-            <PencilLine className="h-4 w-4" />
-            {showCreatePostForm.mix ? "Cancel Post" : "Make a Post in Mix Feed"}
+      <Card className="shadow-md">
+        <CardHeader className="flex flex-row justify-between items-center">
+          <div>
+            <CardTitle className="text-2xl font-headline flex items-center">
+              <Globe className="mr-3 h-7 w-7 text-primary" />
+              Explore Feeds
+            </CardTitle>
+            <CardDescription>Discover posts from different perspectives or create your own.</CardDescription>
+          </div>
+          <Button onClick={handleMakePostClick} className="bg-primary hover:bg-primary/90">
+            <PencilLine className="h-4 w-4 mr-2" />
+            Make a Post
           </Button>
-          {showCreatePostForm.mix && (
-            <div className="mb-6">
-              <CreatePostForm />
+        </CardHeader>
+        <CardContent>
+          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as FeedTabValue)} className="w-full">
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
+                <TabsList className="grid grid-cols-4">
+                    <TabsTrigger value="my-feed" className="flex items-center gap-2">
+                        <LayoutGrid className="h-4 w-4" /> My Feed
+                    </TabsTrigger>
+                    <TabsTrigger value="mix-feed" className="flex items-center gap-2">
+                        <Shuffle className="h-4 w-4" /> Mix
+                    </TabsTrigger>
+                    <TabsTrigger value="friends" className="flex items-center gap-2">
+                        <Users className="h-4 w-4" /> Friends
+                    </TabsTrigger>
+                    <TabsTrigger value="world" className="flex items-center gap-2">
+                        <Globe className="h-4 w-4" /> World
+                    </TabsTrigger>
+                </TabsList>
             </div>
-          )}
-          <Card>
-            <CardHeader>
-              <CardTitle>Mix Feed</CardTitle>
-              <CardDescription>Swipe through posts. Like or pass!</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {mixFeedPosts.length > 0 ? (
-                mixFeedPosts.map(post => (
-                  <div key={post.id} className="space-y-3">
-                    <PostCard post={post} />
-                    <div className="flex justify-center gap-4">
-                      <Button variant="outline" className="border-destructive text-destructive hover:bg-destructive/10">
-                        <ThumbsDown className="mr-2 h-4 w-4" /> Pass (Swipe Right)
-                      </Button>
-                      <Button variant="outline" className="border-accent text-accent-foreground hover:bg-accent/10 hover:text-accent">
-                        <ThumbsUp className="mr-2 h-4 w-4" /> Like (Swipe Left)
-                      </Button>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-muted-foreground text-center py-8">No posts in the mix feed right now.</p>
-              )}
-               <p className="text-xs text-muted-foreground text-center pt-4">Full swipe functionality coming soon!</p>
-            </CardContent>
-          </Card>
-        </TabsContent>
 
-        <TabsContent value="friends" className="mt-6">
-           <Button 
-            onClick={() => toggleCreatePostForm('friends')} 
-            variant="outline" 
-            className="w-full mb-4 flex items-center gap-2"
-          >
-            <PencilLine className="h-4 w-4" />
-            {showCreatePostForm.friends ? "Cancel Post" : "Make a Post in Friends Feed"}
-          </Button>
-          {showCreatePostForm.friends && (
-            <div className="mb-6">
-              <CreatePostForm />
-            </div>
-          )}
-          <Card>
-            <CardHeader>
-              <CardTitle>Friends' Recent Posts</CardTitle>
-              <CardDescription>See what your connections are sharing.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {friendsPosts.length > 0 ? (
-                friendsPosts.map(post => (
-                  <PostCard key={post.id} post={post} />
-                ))
-              ) : (
-                <p className="text-sm text-muted-foreground text-center py-8">No posts from friends yet.</p>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
+            <TabsContent value="my-feed" className="mt-6">
+              <div className="mb-6">
+                <CreatePostForm />
+              </div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>My Posts</CardTitle>
+                  <CardDescription>Your personal feed and creations.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {myPosts.length > 0 ? (
+                    myPosts.map(post => (
+                      <PostCard key={post.id} post={post} />
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-8">You haven't posted anything yet. Create your first post!</p>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-        <TabsContent value="world" className="mt-6">
-          <Button 
-            onClick={() => toggleCreatePostForm('world')} 
-            variant="outline" 
-            className="w-full mb-4 flex items-center gap-2"
-          >
-            <PencilLine className="h-4 w-4" />
-            {showCreatePostForm.world ? "Cancel Post" : "Make a Post in World Feed"}
-          </Button>
-          {showCreatePostForm.world && (
-            <div className="mb-6">
-              <CreatePostForm />
-            </div>
-          )}
-          <Card>
-            <CardHeader>
-              <CardTitle>Worldwide Activity</CardTitle>
-              <CardDescription>Trending posts and content based on your interests (personalization coming soon!).</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {worldPosts.length > 0 ? (
-                worldPosts.map(post => (
-                  <PostCard key={post.id} post={post} />
-                ))
-              ) : (
-                <p className="text-sm text-muted-foreground text-center py-8">No world posts to display right now.</p>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+            <TabsContent value="mix-feed" className="mt-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Mix Feed</CardTitle>
+                  <CardDescription>Swipe through posts. Like or pass!</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {mixFeedPosts.length > 0 ? (
+                    mixFeedPosts.map(post => (
+                      <div key={post.id} className="space-y-3">
+                        <PostCard post={post} />
+                        <div className="flex justify-center gap-4">
+                          <Button variant="outline" className="border-destructive text-destructive hover:bg-destructive/10">
+                            <ThumbsDown className="mr-2 h-4 w-4" /> Pass (Swipe Right)
+                          </Button>
+                          <Button variant="outline" className="border-accent text-accent-foreground hover:bg-accent/10 hover:text-accent">
+                            <ThumbsUp className="mr-2 h-4 w-4" /> Like (Swipe Left)
+                          </Button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-8">No posts in the mix feed right now.</p>
+                  )}
+                  <p className="text-xs text-muted-foreground text-center pt-4">Full swipe functionality coming soon!</p>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="friends" className="mt-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Friends' Recent Posts</CardTitle>
+                  <CardDescription>See what your connections are sharing.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {friendsPosts.length > 0 ? (
+                    friendsPosts.map(post => (
+                      <PostCard key={post.id} post={post} />
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-8">No posts from friends yet.</p>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="world" className="mt-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Worldwide Activity</CardTitle>
+                  <CardDescription>Trending posts and content based on your interests (personalization coming soon!).</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {worldPosts.length > 0 ? (
+                    worldPosts.map(post => (
+                      <PostCard key={post.id} post={post} />
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-8">No world posts to display right now.</p>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
     </div>
   );
 }
 
+  
