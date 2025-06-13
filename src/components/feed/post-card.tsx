@@ -1,9 +1,13 @@
 
+"use client";
+
 import Image from 'next/image';
+import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ThumbsUp, ThumbsDown, MessageCircle, Repeat, Send, OctagonAlert, Eye } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface PostUser {
   name: string;
@@ -29,15 +33,39 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post }: PostCardProps) {
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+  const [currentLikes, setCurrentLikes] = useState(post.likes);
+
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
 
   const bottomTabHeightRem = 2.25; 
   const bottomTabPosition = `-${bottomTabHeightRem - 0.5}rem`; 
 
+  const handleLike = () => {
+    if (isLiked) {
+      setIsLiked(false);
+      setCurrentLikes(currentLikes - 1);
+    } else {
+      setIsLiked(true);
+      setCurrentLikes(currentLikes + 1);
+      if (isDisliked) {
+        setIsDisliked(false);
+      }
+    }
+  };
+
+  const handleDislike = () => {
+    setIsDisliked(!isDisliked);
+    if (!isDisliked && isLiked) { // If was not disliked and becomes disliked, un-like if liked
+      setIsLiked(false);
+      setCurrentLikes(currentLikes -1); // Assuming dislike also removes a like if it was liked
+    }
+  };
+
   return (
     <Card className="relative shadow-lg overflow-visible mx-auto max-w-xl rounded-xl border-2 border-border mb-10 mt-8">
       
-      {/* Yellow Action Tab - Now at the Bottom */}
       <div 
         className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center space-x-1 p-1.5 bg-yellow-400 rounded-t-xl rounded-b-md min-w-[280px]"
         style={{ bottom: bottomTabPosition }} 
@@ -60,22 +88,61 @@ export default function PostCard({ post }: PostCardProps) {
         </Button>
       </div>
 
-      {/* Left Action Tab (Red) - Full Height */}
-      <div className="absolute top-0 bottom-0 -left-[46px] z-10 flex flex-col items-center justify-center space-y-1.5 p-2 bg-red-600 text-white rounded-l-xl w-12">
-        <Button variant="ghost" size="icon" className="text-white hover:bg-red-500/80 h-8 w-8 p-1.5" aria-label="Dislike">
+      {/* Left Action Tab (Red - Dislike/Report) */}
+      <div className={cn(
+        "absolute top-0 bottom-0 -left-[46px] z-10 flex flex-col items-center justify-center space-y-1.5 p-2 w-12 rounded-l-xl border-t-2 border-b-2",
+        isDisliked 
+          ? 'bg-red-600 border-red-600 text-white' 
+          : 'bg-card border-r-2 border-red-600 border-t-border border-b-border'
+      )}>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className={cn(
+            "h-8 w-8 p-1.5",
+            isDisliked ? "text-white hover:bg-white/20" : "text-red-600 hover:bg-red-600/10"
+          )} 
+          aria-label="Dislike"
+          onClick={handleDislike}
+        >
           <ThumbsDown className="h-5 w-5" />
         </Button>
-        <Button variant="ghost" size="icon" className="text-white hover:bg-red-500/80 h-8 w-8 p-1.5" aria-label="Report">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className={cn(
+             "h-8 w-8 p-1.5",
+             isDisliked ? "text-white hover:bg-white/20" : "text-red-600 hover:bg-red-600/10"
+          )} 
+          aria-label="Report"
+        >
           <OctagonAlert className="h-5 w-5" />
         </Button>
       </div>
 
-      {/* Right Action Tab (Green) - Full Height */}
-      <div className="absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-center p-2 bg-green-500 text-white rounded-r-xl w-12">
-        <Button variant="ghost" size="icon" className="text-white hover:bg-green-400/80 h-8 w-8 p-1.5" aria-label="Like">
+      {/* Right Action Tab (Green - Like) */}
+      <div className={cn(
+        "absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-center p-2 w-12 rounded-r-xl border-t-2 border-b-2",
+         isLiked 
+          ? 'bg-green-500 border-green-500 text-white'
+          : 'bg-card border-l-2 border-green-500 border-t-border border-b-border'
+      )}>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className={cn(
+            "text-white hover:bg-green-400/80 h-8 w-8 p-1.5",
+            isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10"
+          )} 
+          aria-label="Like"
+          onClick={handleLike}
+        >
           <ThumbsUp className="h-5 w-5" />
         </Button>
-        {post.likes > 0 && <span className="text-xs font-semibold mt-0.5">{post.likes}</span>}
+        {currentLikes > 0 && <span className={cn(
+          "text-xs font-semibold mt-0.5",
+           isLiked ? "text-white" : "text-green-500"
+        )}>{currentLikes}</span>}
       </div>
 
       <CardHeader className="p-4 pt-6 pb-2">
