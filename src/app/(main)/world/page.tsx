@@ -170,7 +170,7 @@ export default function WorldPage() {
                   <CardTitle>My Posts & Creations</CardTitle>
                   <CardDescription>Your personal posts and creations. Use the form above when this tab is active.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6 pb-24">
+                <CardContent className="space-y-6 pb-16">
                   {myPosts.length > 0 ? (
                     myPosts.map(post => (
                       <PostCard key={post.id} post={post} />
@@ -188,7 +188,7 @@ export default function WorldPage() {
                   <CardTitle>Mix Feed</CardTitle>
                   <CardDescription>Swipe through posts. Like or pass!</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4 pb-24">
+                <CardContent className="space-y-4 pb-16">
                   {mixFeedPosts.length > 0 ? (
                     mixFeedPosts.map(post => (
                       <div key={post.id} className="space-y-3">
@@ -217,7 +217,7 @@ export default function WorldPage() {
                   <CardTitle>Friends' Recent Posts</CardTitle>
                   <CardDescription>See what your connections are sharing.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6 pb-24">
+                <CardContent className="space-y-6 pb-16">
                   {friendsPosts.length > 0 ? (
                     friendsPosts.map(post => (
                       <PostCard key={post.id} post={post} />
@@ -235,7 +235,7 @@ export default function WorldPage() {
                   <CardTitle>Worldwide Activity</CardTitle>
                   <CardDescription>Trending posts and content based on your interests (personalization coming soon!).</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6 pb-24">
+                <CardContent className="space-y-6 pb-16">
                   {worldPosts.length > 0 ? (
                     worldPosts.map(post => (
                       <PostCard key={post.id} post={post} />
