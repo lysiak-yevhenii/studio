@@ -149,116 +149,103 @@ export default function WorldPage() {
         </div>
       )}
 
-      <Card className="shadow-md">
-        <CardHeader className="flex flex-row justify-between items-center">
-          <div>
-            <CardTitle className="text-2xl font-headline flex items-center">
-              <Globe className="mr-3 h-7 w-7 text-primary" />
-              Explore Feeds
-            </CardTitle>
-            <CardDescription>Discover posts from different perspectives or create your own.</CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
-                <TabsList className="grid grid-cols-4">
-                    <TabsTrigger 
-                      value="my-feed" 
-                      className="flex items-center gap-2"
-                      onClick={handleMyFeedDirectClick}
-                    >
-                        <LayoutGrid className="h-4 w-4"/> 
-                        My Feed
-                    </TabsTrigger>
-                    <TabsTrigger value="mix-feed" className="flex items-center gap-2">
-                        <Shuffle className="h-4 w-4" /> Mix
-                    </TabsTrigger>
-                    <TabsTrigger value="friends" className="flex items-center gap-2">
-                        <Users className="h-4 w-4" /> Friends
-                    </TabsTrigger>
-                    <TabsTrigger value="world" className="flex items-center gap-2">
-                        <Globe className="h-4 w-4" /> World
-                    </TabsTrigger>
-                </TabsList>
-            </div>
+      <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
+            <TabsList className="grid grid-cols-4">
+                <TabsTrigger 
+                  value="my-feed" 
+                  className="flex items-center gap-2"
+                  onClick={handleMyFeedDirectClick} // Handles direct clicks on "My Feed"
+                >
+                    <LayoutGrid className="h-4 w-4"/> 
+                    My Feed
+                </TabsTrigger>
+                <TabsTrigger value="mix-feed" className="flex items-center gap-2">
+                    <Shuffle className="h-4 w-4" /> Mix
+                </TabsTrigger>
+                <TabsTrigger value="friends" className="flex items-center gap-2">
+                    <Users className="h-4 w-4" /> Friends
+                </TabsTrigger>
+                <TabsTrigger value="world" className="flex items-center gap-2">
+                    <Globe className="h-4 w-4" /> World
+                </TabsTrigger>
+            </TabsList>
+        </div>
 
-            <TabsContent value="my-feed" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>My Posts & Creations</CardTitle>
-                  <CardDescription>
-                    Your personal posts and creations.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6 pb-16">
-                  {myPosts.length > 0 ? (
-                    myPosts.map(post => (
-                      <PostCard key={post.id} post={post} />
-                    ))
-                  ) : (
-                    <p className="text-sm text-muted-foreground text-center py-8">You haven't posted anything yet. Create your first post!</p>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
+        <TabsContent value="my-feed" className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>My Posts & Creations</CardTitle>
+              <CardDescription>
+                Your personal posts and creations.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6 pb-16">
+              {myPosts.length > 0 ? (
+                myPosts.map(post => (
+                  <PostCard key={post.id} post={post} />
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-8">You haven't posted anything yet. Create your first post!</p>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-            <TabsContent value="mix-feed" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Mix Feed</CardTitle>
-                  <CardDescription>Discover interesting posts from the community.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6 pb-16">
-                  {mixFeedPosts.length > 0 ? (
-                    mixFeedPosts.map(post => (
-                      <PostCard key={post.id} post={post} />
-                    ))
-                  ) : (
-                    <p className="text-sm text-muted-foreground text-center py-8">No posts in the mix feed right now.</p>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
+        <TabsContent value="mix-feed" className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Mix Feed</CardTitle>
+              <CardDescription>Discover interesting posts from the community.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6 pb-16">
+              {mixFeedPosts.length > 0 ? (
+                mixFeedPosts.map(post => (
+                  <PostCard key={post.id} post={post} />
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-8">No posts in the mix feed right now.</p>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-            <TabsContent value="friends" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Friends' Recent Posts</CardTitle>
-                  <CardDescription>See what your connections are sharing.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6 pb-16">
-                  {friendsPosts.length > 0 ? (
-                    friendsPosts.map(post => (
-                      <PostCard key={post.id} post={post} />
-                    ))
-                  ) : (
-                    <p className="text-sm text-muted-foreground text-center py-8">No posts from friends yet.</p>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
+        <TabsContent value="friends" className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Friends' Recent Posts</CardTitle>
+              <CardDescription>See what your connections are sharing.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6 pb-16">
+              {friendsPosts.length > 0 ? (
+                friendsPosts.map(post => (
+                  <PostCard key={post.id} post={post} />
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-8">No posts from friends yet.</p>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-            <TabsContent value="world" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Worldwide Activity</CardTitle>
-                  <CardDescription>Trending posts and content (personalization coming soon!).</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6 pb-16">
-                  {worldPosts.length > 0 ? (
-                    worldPosts.map(post => (
-                      <PostCard key={post.id} post={post} />
-                    ))
-                  ) : (
-                    <p className="text-sm text-muted-foreground text-center py-8">No world posts to display right now.</p>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+        <TabsContent value="world" className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Worldwide Activity</CardTitle>
+              <CardDescription>Trending posts and content (personalization coming soon!).</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6 pb-16">
+              {worldPosts.length > 0 ? (
+                worldPosts.map(post => (
+                  <PostCard key={post.id} post={post} />
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-8">No world posts to display right now.</p>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
