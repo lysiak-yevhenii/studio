@@ -2,6 +2,7 @@
 "use client";
 
 import Image from 'next/image';
+import type { MouseEvent } from 'react'; // Import MouseEvent
 import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,7 @@ export interface Post {
   image?: string;
   imageHint?: string;
   likes: number;
-  bookmarks: number; // Added bookmarks
+  bookmarks: number;
   comments: number;
   shares: number;
   views: number;
@@ -54,6 +55,7 @@ export default function PostCard({ post }: PostCardProps) {
       setCurrentLikes(currentLikes + 1);
       if (isDisliked) {
         setIsDisliked(false);
+        // We don't adjust dislike count here, assuming disliking also clears like
       }
     }
   };
@@ -70,7 +72,8 @@ export default function PostCard({ post }: PostCardProps) {
     }
   };
 
-  const handleBookmark = () => {
+  const handleBookmark = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation(); // Prevent event from bubbling up
     if (isBookmarked) {
       setIsBookmarked(false);
       setCurrentBookmarks(currentBookmarks - 1);
@@ -107,10 +110,10 @@ export default function PostCard({ post }: PostCardProps) {
 
       {/* Left Action Tab (Red - Dislike/Report) */}
       <div className={cn(
-        "absolute top-0 bottom-0 -left-[46px] z-10 flex flex-col items-center justify-center space-y-1.5 p-2 w-12 rounded-l-xl",
+        "absolute top-0 bottom-0 -left-[46px] z-10 flex flex-col items-center justify-center space-y-1.5 p-2 w-12 rounded-l-xl border-2",
         isDisliked 
-          ? 'bg-red-600 border-2 border-red-600 text-white' 
-          : 'bg-card border-2 border-red-600'
+          ? 'bg-red-600 border-red-600 text-white' 
+          : 'bg-card border-red-600'
       )}>
         <Button 
           variant="ghost" 
@@ -139,10 +142,10 @@ export default function PostCard({ post }: PostCardProps) {
 
       {/* Right Action Tab (Green - Like/Bookmark) */}
       <div className={cn(
-        "absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-around p-2 w-12 rounded-r-xl", // justify-around for spacing
+        "absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-around p-2 w-12 rounded-r-xl border-2",
          isLiked 
-          ? 'bg-green-500 border-2 border-green-500 text-white'
-          : 'bg-card border-2 border-green-500'
+          ? 'bg-green-500 border-green-500 text-white'
+          : 'bg-card border-green-500'
       )}>
         <div className="flex flex-col items-center">
             <Button 
@@ -169,16 +172,16 @@ export default function PostCard({ post }: PostCardProps) {
             size="icon" 
             className={cn(
                 "h-8 w-8 p-1.5", 
-                isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10" // Bookmark icon color matches tab state
+                isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10" 
             )} 
             aria-label="Bookmark"
-            onClick={handleBookmark}
+            onClick={(e) => handleBookmark(e)} // Pass event to handler
             >
             <Bookmark className="h-5 w-5" fill={isBookmarked ? "currentColor" : "none"} />
             </Button>
             {currentBookmarks > 0 && <span className={cn(
             "text-xs font-semibold mt-0.5",
-            isLiked ? "text-white" : "text-green-500" // Bookmark count color matches tab state
+            isLiked ? "text-white" : "text-green-500" 
             )}>{currentBookmarks}</span>}
         </div>
       </div>
@@ -216,3 +219,4 @@ export default function PostCard({ post }: PostCardProps) {
     </Card>
   );
 }
+
