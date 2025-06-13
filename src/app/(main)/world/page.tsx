@@ -126,7 +126,7 @@ export default function WorldPage() {
   return (
     <div className="space-y-6">
       {activeTab === 'my-feed' && (
-        <div className="fixed top-1/4 left-1/2 -translate-x-1/2 z-40 w-full max-w-xl p-4">
+        <div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-40 w-full max-w-xl p-4">
           <CreatePostForm />
         </div>
       )}
