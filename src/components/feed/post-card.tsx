@@ -51,15 +51,22 @@ export default function PostCard({ post }: PostCardProps) {
       setCurrentLikes(currentLikes + 1);
       if (isDisliked) {
         setIsDisliked(false);
+        // If it was disliked and now liked, the dislike is removed,
+        // but currentLikes was already adjusted by the like action.
       }
     }
   };
 
   const handleDislike = () => {
-    setIsDisliked(!isDisliked);
-    if (!isDisliked && isLiked) { // If was not disliked and becomes disliked, un-like if liked
-      setIsLiked(false);
-      setCurrentLikes(currentLikes -1); // Assuming dislike also removes a like if it was liked
+    if (isDisliked) {
+      setIsDisliked(false);
+      // If it was disliked and now un-disliked, no change to like count unless it was also liked.
+    } else {
+      setIsDisliked(true);
+      if (isLiked) { // If it was liked and now disliked
+        setIsLiked(false);
+        setCurrentLikes(currentLikes - 1); 
+      }
     }
   };
 
@@ -90,10 +97,10 @@ export default function PostCard({ post }: PostCardProps) {
 
       {/* Left Action Tab (Red - Dislike/Report) */}
       <div className={cn(
-        "absolute top-0 bottom-0 -left-[46px] z-10 flex flex-col items-center justify-center space-y-1.5 p-2 w-12 rounded-l-xl border-t-2 border-b-2",
+        "absolute top-0 bottom-0 -left-[46px] z-10 flex flex-col items-center justify-center space-y-1.5 p-2 w-12 rounded-l-xl",
         isDisliked 
-          ? 'bg-red-600 border-red-600 text-white' 
-          : 'bg-card border-r-2 border-red-600 border-t-border border-b-border'
+          ? 'bg-red-600 border-2 border-red-600 text-white' 
+          : 'bg-card border-2 border-red-600'
       )}>
         <Button 
           variant="ghost" 
@@ -122,16 +129,16 @@ export default function PostCard({ post }: PostCardProps) {
 
       {/* Right Action Tab (Green - Like) */}
       <div className={cn(
-        "absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-center p-2 w-12 rounded-r-xl border-t-2 border-b-2",
+        "absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-center p-2 w-12 rounded-r-xl",
          isLiked 
-          ? 'bg-green-500 border-green-500 text-white'
-          : 'bg-card border-l-2 border-green-500 border-t-border border-b-border'
+          ? 'bg-green-500 border-2 border-green-500 text-white'
+          : 'bg-card border-2 border-green-500'
       )}>
         <Button 
           variant="ghost" 
           size="icon" 
           className={cn(
-            "text-white hover:bg-green-400/80 h-8 w-8 p-1.5",
+            "h-8 w-8 p-1.5", // Removed hover:bg-green-400/80 to use conditional hover
             isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10"
           )} 
           aria-label="Like"
