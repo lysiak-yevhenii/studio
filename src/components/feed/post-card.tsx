@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ThumbsUp, MessageCircle, Repeat, Send, OctagonAlert, Eye } from "lucide-react";
+import { ThumbsUp, ThumbsDown, MessageCircle, Repeat, Send, OctagonAlert, Eye } from "lucide-react";
 
 interface PostUser {
   name: string;
@@ -21,7 +21,7 @@ interface Post {
   likes: number;
   comments: number;
   shares: number;
-  views: number; // Added views property
+  views: number;
 }
 
 interface PostCardProps {
@@ -32,76 +32,63 @@ export default function PostCard({ post }: PostCardProps) {
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
 
   return (
-    <div className="relative mb-6">
-      {/* Right Action Buttons Tab */}
-      <div className="absolute top-6 right-0 z-30 w-16 bg-card border border-border rounded-lg shadow-lg p-1 flex flex-col items-center space-y-1">
-        {/* Like Button & Count */}
-        <div className="flex flex-col items-center space-y-0.5">
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary hover:bg-primary/10 w-10 h-10">
-            <ThumbsUp className="h-5 w-5" />
-          </Button>
-          {post.likes > 0 && <span className="text-xs text-muted-foreground">{post.likes}</span>}
-        </div>
-        {/* Send Button */}
-        <div className="flex flex-col items-center space-y-0.5">
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-indigo-600 hover:bg-indigo-600/10 w-10 h-10">
-            <Send className="h-5 w-5" />
-          </Button>
-        </div>
+    <div className="relative pt-12 mb-6"> {/* Increased top padding for the top tab, mb-6 for spacing between posts */}
+      
+      {/* Top Action Tab (Yellow) */}
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 z-20 flex items-center justify-center space-x-1 p-1.5 bg-yellow-400 rounded-b-lg shadow-md min-w-[280px]">
+        <Button variant="ghost" size="sm" className="flex items-center space-x-1 text-neutral-700 hover:bg-yellow-300/80 h-auto px-2 py-1">
+          <Repeat className="h-4 w-4" />
+          <span className="text-xs font-medium">{post.shares}</span>
+        </Button>
+        <Button variant="ghost" size="sm" className="flex items-center space-x-1 text-neutral-700 hover:bg-yellow-300/80 h-auto px-2 py-1">
+          <MessageCircle className="h-4 w-4" />
+          <span className="text-xs font-medium">{post.comments}</span>
+        </Button>
+        <Button variant="ghost" size="sm" className="flex items-center space-x-1 text-neutral-700 hover:bg-yellow-300/80 h-auto px-2 py-1">
+          <Eye className="h-4 w-4" />
+          <span className="text-xs font-medium">{post.views}</span>
+        </Button>
+        <Button variant="ghost" size="sm" className="flex items-center space-x-1 text-neutral-700 hover:bg-yellow-300/80 h-auto px-2 py-1">
+          <Send className="h-4 w-4" />
+          <span className="text-xs font-medium">Send</span>
+        </Button>
       </div>
 
-      {/* Main Post Card */}
-      <Card className="shadow-sm overflow-hidden mr-16">
+      {/* Left Action Tab (Red) */}
+      <div className="absolute top-1/2 -translate-y-1/2 left-0 z-20 flex flex-col items-center space-y-1.5 p-2 bg-red-600 text-white rounded-r-lg shadow-md w-12">
+        <Button variant="ghost" size="icon" className="text-white hover:bg-red-500/80 h-8 w-8 p-1.5" aria-label="Dislike">
+          <ThumbsDown className="h-5 w-5" />
+        </Button>
+        <Button variant="ghost" size="icon" className="text-white hover:bg-red-500/80 h-8 w-8 p-1.5" aria-label="Report">
+          <OctagonAlert className="h-5 w-5" />
+        </Button>
+      </div>
+
+      {/* Right Action Tab (Green) */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-0 z-20 flex flex-col items-center p-2 bg-green-500 text-white rounded-l-lg shadow-md w-12">
+        <Button variant="ghost" size="icon" className="text-white hover:bg-green-400/80 h-8 w-8 p-1.5" aria-label="Like">
+          <ThumbsUp className="h-5 w-5" />
+        </Button>
+        {post.likes > 0 && <span className="text-xs font-semibold mt-0.5">{post.likes}</span>}
+      </div>
+
+      {/* Main Post Card Content */}
+      <Card className="shadow-lg overflow-hidden mx-auto max-w-xl sm:mx-14 bg-card text-card-foreground rounded-xl border-2 border-border">
         <CardHeader className="p-4">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center space-x-3">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={post.user.avatarUrl} alt={post.user.name} data-ai-hint="person face" />
-                <AvatarFallback>{getInitials(post.user.name)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <CardTitle className="text-base font-semibold leading-tight">{post.user.name}</CardTitle>
-                <CardDescription className="text-xs text-muted-foreground">{post.user.headline}</CardDescription>
-                <p className="text-xs text-muted-foreground">{post.timestamp}</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-2"> {/* Changed to items-start */}
-              {/* Repost Group */}
-              <div className="flex flex-col items-center space-y-0.5">
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-green-600 hover:bg-green-600/10">
-                  <Repeat className="h-4 w-4" />
-                </Button>
-                {post.shares > 0 && <span className="text-xs text-muted-foreground">{post.shares}</span>}
-              </div>
-
-              {/* Comment Group */}
-              <div className="flex flex-col items-center space-y-0.5">
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-blue-500 hover:bg-blue-500/10">
-                  <MessageCircle className="h-4 w-4" />
-                </Button>
-                {post.comments > 0 && <span className="text-xs text-muted-foreground">{post.comments}</span>}
-              </div>
-              
-              {/* Report Group */}
-              <div className="flex flex-col items-center space-y-0.5">
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10">
-                  <OctagonAlert className="h-4 w-4" />
-                </Button>
-                 {/* No count for report */}
-              </div>
-
-              {/* View Group */}
-              <div className="flex flex-col items-center space-y-0.5">
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-purple-500 hover:bg-purple-500/10">
-                  <Eye className="h-4 w-4" />
-                </Button>
-                {post.views > 0 && <span className="text-xs text-muted-foreground">{post.views}</span>}
-              </div>
+          <div className="flex items-center space-x-3">
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={post.user.avatarUrl} alt={post.user.name} data-ai-hint="person face" />
+              <AvatarFallback>{getInitials(post.user.name)}</AvatarFallback>
+            </Avatar>
+            <div>
+              <CardTitle className="text-base font-semibold leading-tight">{post.user.name}</CardTitle>
+              <CardDescription className="text-xs text-muted-foreground">{post.user.headline}</CardDescription>
+              <p className="text-xs text-muted-foreground">{post.timestamp}</p>
             </div>
           </div>
         </CardHeader>
         <CardContent className="p-4 pt-0">
-          <div className="space-y-3 min-h-[36px]"> {/* Added min-height to content */}
+          <div className="space-y-3 min-h-[36px]">
             <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
             {post.image && (
               <div className="mt-3 rounded-lg overflow-hidden border">
