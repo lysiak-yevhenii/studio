@@ -7,7 +7,7 @@ import type { Post } from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown, PencilLine, LayoutGrid } from "lucide-react";
+import { Globe, Users, Shuffle, PencilLine, LayoutGrid } from "lucide-react";
 import CreatePostForm from "@/components/feed/create-post-form";
 
 // Placeholder data for My Feed posts (posts by "Test User")
@@ -118,14 +118,26 @@ type FeedTabValue = 'my-feed' | 'mix-feed' | 'friends' | 'world';
 
 export default function WorldPage() {
   const [activeTab, setActiveTab] = useState<FeedTabValue>('mix-feed');
+  const [isCreatePostMode, setIsCreatePostMode] = useState(false);
 
   const handleMakePostClick = () => {
     setActiveTab('my-feed');
+    setIsCreatePostMode(true);
+  };
+
+  const handleTabChange = (value: string) => {
+    const newTab = value as FeedTabValue;
+    setActiveTab(newTab);
+    if (newTab === 'my-feed') {
+      setIsCreatePostMode(prevMode => !prevMode);
+    } else {
+      setIsCreatePostMode(false);
+    }
   };
 
   return (
     <div className="space-y-6">
-      {activeTab === 'my-feed' && (
+      {isCreatePostMode && (
         <div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-40 w-full max-w-xl p-4">
           <CreatePostForm />
         </div>
@@ -146,11 +158,12 @@ export default function WorldPage() {
           </Button>
         </CardHeader>
         <CardContent>
-          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as FeedTabValue)} className="w-full">
+          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
             <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
                 <TabsList className="grid grid-cols-4">
                     <TabsTrigger value="my-feed" className="flex items-center gap-2">
-                        <LayoutGrid className="h-4 w-4" /> My Feed
+                        <LayoutGrid className="h-4 w-4" /> 
+                        {isCreatePostMode && activeTab === 'my-feed' ? "My Feed" : "Create Post"}
                     </TabsTrigger>
                     <TabsTrigger value="mix-feed" className="flex items-center gap-2">
                         <Shuffle className="h-4 w-4" /> Mix
@@ -168,7 +181,11 @@ export default function WorldPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>My Posts & Creations</CardTitle>
-                  <CardDescription>Your personal posts and creations. Use the form above when this tab is active.</CardDescription>
+                  <CardDescription>
+                    {isCreatePostMode && activeTab === 'my-feed' 
+                      ? "The form to create a post is active above. Scroll down to see your existing posts." 
+                      : "Your personal posts and creations. Click 'Create Post' in the tab bar below to start a new post."}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 pb-16">
                   {myPosts.length > 0 ? (
@@ -186,27 +203,16 @@ export default function WorldPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Mix Feed</CardTitle>
-                  <CardDescription>Swipe through posts. Like or pass!</CardDescription>
+                  <CardDescription>Discover interesting posts from the community.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4 pb-16">
+                <CardContent className="space-y-6 pb-16">
                   {mixFeedPosts.length > 0 ? (
                     mixFeedPosts.map(post => (
-                      <div key={post.id} className="space-y-3">
-                        <PostCard post={post} />
-                        <div className="flex justify-center gap-4">
-                          <Button variant="outline" className="border-destructive text-destructive hover:bg-destructive/10">
-                            <ThumbsDown className="mr-2 h-4 w-4" /> Pass (Swipe Right)
-                          </Button>
-                          <Button variant="outline" className="border-accent text-accent-foreground hover:bg-accent/10 hover:text-accent">
-                            <ThumbsUp className="mr-2 h-4 w-4" /> Like (Swipe Left)
-                          </Button>
-                        </div>
-                      </div>
+                      <PostCard key={post.id} post={post} />
                     ))
                   ) : (
                     <p className="text-sm text-muted-foreground text-center py-8">No posts in the mix feed right now.</p>
                   )}
-                  <p className="text-xs text-muted-foreground text-center pt-4">Full swipe functionality coming soon!</p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -233,7 +239,7 @@ export default function WorldPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Worldwide Activity</CardTitle>
-                  <CardDescription>Trending posts and content based on your interests (personalization coming soon!).</CardDescription>
+                  <CardDescription>Trending posts and content (personalization coming soon!).</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 pb-16">
                   {worldPosts.length > 0 ? (
@@ -252,3 +258,4 @@ export default function WorldPage() {
     </div>
   );
 }
+
