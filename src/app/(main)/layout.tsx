@@ -1,6 +1,4 @@
 
-import FloatingVerticalNav from '@/components/layout/floating-vertical-nav';
-
 import UserAvatar from '@/components/auth/user-avatar';
 
 export default function MainLayout({
@@ -10,7 +8,6 @@ export default function MainLayout({
 }) {
   return (
     <div className="flex flex-col min-h-screen">
-      <FloatingVerticalNav /> 
       
       <main className="flex-grow container mx-auto py-6 px-4">
         {children}
