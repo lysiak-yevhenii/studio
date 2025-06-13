@@ -168,10 +168,9 @@ export default function WorldPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>My Posts & Creations</CardTitle>
-                  <CardDescription>Your personal posts and creations. Use the form to create new content.</CardDescription>
+                  <CardDescription>Your personal posts and creations. Use the form above when this tab is active.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  {/* CreatePostForm is no longer here, it floats */}
+                <CardContent className="space-y-6 pb-24">
                   {myPosts.length > 0 ? (
                     myPosts.map(post => (
                       <PostCard key={post.id} post={post} />
@@ -189,7 +188,7 @@ export default function WorldPage() {
                   <CardTitle>Mix Feed</CardTitle>
                   <CardDescription>Swipe through posts. Like or pass!</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 pb-24">
                   {mixFeedPosts.length > 0 ? (
                     mixFeedPosts.map(post => (
                       <div key={post.id} className="space-y-3">
@@ -218,7 +217,7 @@ export default function WorldPage() {
                   <CardTitle>Friends' Recent Posts</CardTitle>
                   <CardDescription>See what your connections are sharing.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 pb-24">
                   {friendsPosts.length > 0 ? (
                     friendsPosts.map(post => (
                       <PostCard key={post.id} post={post} />
@@ -236,7 +235,7 @@ export default function WorldPage() {
                   <CardTitle>Worldwide Activity</CardTitle>
                   <CardDescription>Trending posts and content based on your interests (personalization coming soon!).</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 pb-24">
                   {worldPosts.length > 0 ? (
                     worldPosts.map(post => (
                       <PostCard key={post.id} post={post} />
