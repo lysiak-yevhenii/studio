@@ -118,19 +118,33 @@ export default function WorldPage() {
   const [activeTab, setActiveTab] = useState<FeedTabValue>('mix-feed');
   const [showCreatePostForm, setShowCreatePostForm] = useState(false);
 
+  const handleMyFeedDirectClick = () => {
+    if (activeTab === 'my-feed') {
+      // "My Feed" is already active, toggle the form.
+      setShowCreatePostForm(prevShow => !prevShow);
+    } else {
+      // "My Feed" is not active. Make it active.
+      // This will also trigger Tabs onValueChange, which calls handleTabChange.
+      // handleTabChange will then ensure the form is shown.
+      setActiveTab('my-feed'); 
+    }
+  };
+
   const handleTabChange = (value: string) => {
     const newTab = value as FeedTabValue;
 
     if (newTab === 'my-feed') {
-      // Toggle form visibility when "My Feed" tab is clicked
-      setShowCreatePostForm(!showCreatePostForm);
+      // When "My Feed" becomes the active tab (either by direct click when it was inactive,
+      // or by programmatic change), ensure the form is shown.
+      // The toggle logic for when it's already active is handled by handleMyFeedDirectClick.
+      setShowCreatePostForm(true);
     } else {
-      // If any other tab is clicked, hide the form
+      // Any other tab is selected, hide the form.
       setShowCreatePostForm(false);
     }
     setActiveTab(newTab);
   };
-
+  
   return (
     <div className="space-y-6">
       {showCreatePostForm && (
@@ -153,7 +167,11 @@ export default function WorldPage() {
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
             <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
                 <TabsList className="grid grid-cols-4">
-                    <TabsTrigger value="my-feed" className="flex items-center gap-2">
+                    <TabsTrigger 
+                      value="my-feed" 
+                      className="flex items-center gap-2"
+                      onClick={handleMyFeedDirectClick} // Direct click handler for specific "My Feed" logic
+                    >
                         <LayoutGrid className="h-4 w-4"/> 
                         My Feed
                     </TabsTrigger>
@@ -174,7 +192,7 @@ export default function WorldPage() {
                 <CardHeader>
                   <CardTitle>My Posts & Creations</CardTitle>
                   <CardDescription>
-                    Your personal posts and creations. Use the "My Feed" tab below to toggle the post creation form.
+                    Your personal posts and creations.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 pb-16">
