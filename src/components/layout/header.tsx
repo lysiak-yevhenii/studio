@@ -13,10 +13,10 @@ import { Input } from "@/components/ui/input";
 // These navItems are now primarily managed by FloatingVerticalNav for desktop
 // and still used here for the mobile Sheet menu.
 const mobileNavItems = [
-  { href: "/", label: "Home", icon: Home },
+  // Home is now My Page, which is served from '/'
   { href: "/connections", label: "Network", icon: Users },
   { href: "/world", label: "World", icon: Globe },
-  { href: "/profile", label: "Profile", icon: UserCircle },
+  { href: "/", label: "My Page", icon: UserCircle }, // Was Profile, now My Page at root
   { href: "/notifications", label: "Notifications", icon: Bell },
 ];
 

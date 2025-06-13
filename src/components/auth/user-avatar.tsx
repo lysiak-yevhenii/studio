@@ -24,7 +24,7 @@ interface RadialNavItem {
 }
 
 const mainNavItemsConfig: Omit<RadialNavItem, 'id'>[] = [
-  { href: "/", label: "Home", icon: Home },
+  // Home is now My Page, which is handled by profileItem below
   { href: "/connections", label: "Network", icon: Users },
   { href: "/world", label: "World", icon: Globe },
   { href: "/world-eye", label: "World Eye", icon: Eye },
@@ -68,11 +68,9 @@ export default function UserAvatar() {
     router.push('/login');
   };
 
-  const handleProfileClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    // This function is called via onClick for the profile link
-    // It already has e.preventDefault() in the Link's onClick
+  const handleMyPageClick = (event: MouseEvent<HTMLAnchorElement>) => {
     setIsRadialMenuOpen(false);
-    router.push('/profile');
+    router.push('/');
   }
 
   const handleNavClick = (href?: string) => {
@@ -82,12 +80,12 @@ export default function UserAvatar() {
     }
   }
   
-  const profileItem: Omit<RadialNavItem, 'id'> = { href: "/profile", label: "Profile", icon: UserCircle};
+  const myPageItem: Omit<RadialNavItem, 'id'> = { href: "/", label: "My Page", icon: UserCircle};
   const logoutItem: Omit<RadialNavItem, 'id'> = { action: handleLogout, label: "Log out", icon: LogOut };
 
   const radialNavItems: RadialNavItem[] = [
     ...mainNavItemsConfig.map((item, index) => ({...item, id: `nav-${index}`})),
-    {...profileItem, id: "profile"},
+    {...myPageItem, id: "my-page"}, // Changed from "profile" to "my-page"
     {...logoutItem, id: "logout"},
   ];
 
@@ -105,19 +103,15 @@ export default function UserAvatar() {
   const itemRadius = itemSize / 2;
   const radius = 85; // Distance from center of main avatar to center of small items
   
-  // Calculate positioning for the radial items container to be centered on the avatar
-  const radialContainerDiameter = 2 * (radius + itemRadius); // Max reach of items
+  const radialContainerDiameter = 2 * (radius + itemRadius); 
   const mainAvatarCenterInContainer = radialContainerDiameter / 2;
 
-  // Calculate angle step to ensure items just touch or have a tiny gap
-  // Minimum angular separation for items to touch: itemSize / radius (in radians)
-  // Add a small constant (e.g., 0.035 rad ~ 2 degrees) for a tiny visual gap
   const angleStep = (itemSize / radius) + 0.035; 
-  const startAngleRad = Math.PI; // Start at West (180 degrees)
+  const startAngleRad = Math.PI; 
 
   return (
     <TooltipProvider delayDuration={100}>
-      <div className="relative"> {/* Container for absolute positioning of radial items */}
+      <div className="relative"> 
         <button 
           onClick={toggleRadialMenu}
           className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full"
@@ -140,7 +134,6 @@ export default function UserAvatar() {
           >
             {radialNavItems.map((item, index) => {
               const angle = startAngleRad + index * angleStep;
-              // Calculate position for top-left corner of the item
               const x = mainAvatarCenterInContainer + radius * Math.cos(angle) - itemRadius;
               const y = mainAvatarCenterInContainer + radius * Math.sin(angle) - itemRadius;
               const Icon = item.icon;
@@ -168,9 +161,9 @@ export default function UserAvatar() {
                   <TooltipTrigger asChild>
                     {item.href ? (
                       <Link href={item.href} onClick={(e) => {
-                        if(item.id === "profile") {
+                        if(item.id === "my-page") { // Changed from "profile"
                            e.preventDefault(); 
-                           handleProfileClick(e as unknown as MouseEvent<HTMLAnchorElement>);
+                           handleMyPageClick(e as unknown as MouseEvent<HTMLAnchorElement>);
                         } else {
                            handleNavClick(item.href); 
                         }
