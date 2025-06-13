@@ -6,8 +6,7 @@ import PostCard from "@/components/feed/post-card";
 import type { Post } from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Globe, Users, Shuffle, PencilLine, LayoutGrid } from "lucide-react";
+import { Globe, Users, Shuffle, LayoutGrid } from "lucide-react";
 import CreatePostForm from "@/components/feed/create-post-form";
 
 // Placeholder data for My Feed posts (posts by "Test User")
@@ -121,11 +120,6 @@ export default function WorldPage() {
   const [showCreatePostForm, setShowCreatePostForm] = useState(false);
   const [myFeedTabLabel, setMyFeedTabLabel] = useState("My Feed");
 
-  const handleMakePostClick = () => {
-    setActiveTab('my-feed');
-    setMyFeedTabLabel("My Feed"); 
-    setShowCreatePostForm(true);
-  };
 
   const handleTabChange = (value: string) => {
     const newTab = value as FeedTabValue;
@@ -133,31 +127,22 @@ export default function WorldPage() {
     if (newTab === 'my-feed') {
       // Logic for the first tab (My Feed / Create Post)
       if (myFeedTabLabel === "My Feed") {
-        // Currently labeled "My Feed"
-        if (showCreatePostForm) {
-          // Form is visible: ("My Feed", Visible) -> Clicking "My Feed" tab
-          // Transition to: ("Create Post", Hidden)
-          setMyFeedTabLabel("Create Post");
-          setShowCreatePostForm(false);
-        } else {
-          // Form is hidden: ("My Feed", Hidden) -> Clicking "My Feed" tab
-          // Transition to: ("Create Post", Hidden)
-          setMyFeedTabLabel("Create Post");
-          // setShowCreatePostForm(false); // Stays hidden
-        }
+        // Currently labeled "My Feed", form is hidden
+        // Transition to: ("Create Post", Hidden)
+        setMyFeedTabLabel("Create Post");
+        setShowCreatePostForm(false); // Keep form hidden
       } else { // myFeedTabLabel === "Create Post"
-        // Currently labeled "Create Post", Form is hidden: ("Create Post", Hidden) -> Clicking "Create Post" tab
+        // Currently labeled "Create Post", form is hidden
         // Transition to: ("My Feed", Visible)
         setMyFeedTabLabel("My Feed");
-        setShowCreatePostForm(true);
+        setShowCreatePostForm(true); // Show form
       }
-      setActiveTab('my-feed'); // Ensure content area is "my-feed"
     } else {
       // Switched to a tab other than 'my-feed' (e.g., Mix, Friends, World)
-      setActiveTab(newTab);
       setMyFeedTabLabel("My Feed"); // Reset first tab's label
       setShowCreatePostForm(false); // Hide form
     }
+    setActiveTab(newTab);
   };
 
   return (
@@ -177,10 +162,7 @@ export default function WorldPage() {
             </CardTitle>
             <CardDescription>Discover posts from different perspectives or create your own.</CardDescription>
           </div>
-          <Button className="bg-primary hover:bg-primary/90" onClick={handleMakePostClick}>
-            <PencilLine className="h-4 w-4 mr-2" />
-            Make a Post
-          </Button>
+          {/* "Make a Post" button removed from here */}
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
@@ -281,3 +263,4 @@ export default function WorldPage() {
     </div>
   );
 }
+
