@@ -20,7 +20,24 @@ interface SidebarNavLinkProps {
 
 export default function SidebarNavLink({ href, label, icon: Icon, isExpanded, onClick, tooltipSide = "right", isFlaming = false }: SidebarNavLinkProps) {
   const pathname = usePathname();
-  const isActive = href ? (pathname === href || (href === "/" && pathname.startsWith("/?")) || (href !== "/" && pathname.startsWith(href))) : false;
+  
+  let isActive = false;
+  if (href) {
+    if (pathname === href) { // Exact match
+      isActive = true;
+    } else if (href === "/") { // Special handling for root path
+      // Active if pathname starts with "/?" (query params for root)
+      // The exact match pathname === href already covers the plain "/" case.
+      if (pathname.startsWith("/?")) {
+        isActive = true;
+      }
+    } else { // For non-root hrefs (href is not "/")
+      // Active if pathname starts with href AND is followed by a '/' (sub-route) or '?' (query params)
+      if (pathname.startsWith(href + "/") || pathname.startsWith(href + "?")) {
+        isActive = true;
+      }
+    }
+  }
 
   const content = (
     <>
