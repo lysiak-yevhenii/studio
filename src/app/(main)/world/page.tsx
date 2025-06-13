@@ -1,5 +1,6 @@
 
 import PostCard from "@/components/feed/post-card";
+import type { Post } from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -7,13 +8,14 @@ import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown } from "lucide-react";
 import Image from "next/image";
 
 // Placeholder data for mix feed posts
-const mixFeedPosts = [
+const mixFeedPosts: Post[] = [
   {
     id: "mf1",
     user: { name: "Random User One", avatarUrl: "https://placehold.co/40x40.png", headline: "Explorer of Ideas" },
     timestamp: "10m ago",
     content: "Just discovered this amazing new song! What's everyone listening to? #music #discovery",
     likes: 15,
+    bookmarks: 2,
     comments: 2,
     shares: 1,
     views: 50,
@@ -23,13 +25,14 @@ const mixFeedPosts = [
 ];
 
 // Placeholder data for friends' posts
-const friendsPosts = [
+const friendsPosts: Post[] = [
   {
     id: "fp1",
     user: { name: "Bob The Builder", avatarUrl: "https://placehold.co/40x40.png", headline: "Project Manager at Constructify" },
     timestamp: "1h ago",
     content: "Just finished a major project! So proud of the team. #construction #teamwork",
     likes: 75,
+    bookmarks: 12,
     comments: 10,
     shares: 3,
     views: 150,
@@ -42,6 +45,7 @@ const friendsPosts = [
     timestamp: "3h ago",
     content: "New marketing campaign launched today! Excited to see the results. #marketing #campaign",
     likes: 110,
+    bookmarks: 20,
     comments: 22,
     shares: 9,
     views: 200,
@@ -49,13 +53,14 @@ const friendsPosts = [
 ];
 
 // Placeholder data for world posts
-const worldPosts = [
+const worldPosts: Post[] = [
   {
     id: "wp1",
     user: { name: "Elon Musketeer", avatarUrl: "https://placehold.co/40x40.png", headline: "Innovator at XSpace" },
     timestamp: "30m ago",
     content: "Thinking about colonizing Mars... again. What are your thoughts? #space #innovation #mars",
     likes: 1050,
+    bookmarks: 200,
     comments: 300,
     shares: 50,
     views: 5000,
@@ -68,6 +73,7 @@ const worldPosts = [
     timestamp: "2h ago",
     content: "Just created the most amazing soufflé. Perfection! #food #cooking #masterchef",
     likes: 500,
+    bookmarks: 80,
     comments: 80,
     shares: 20,
     views: 1200,
@@ -80,6 +86,7 @@ const worldPosts = [
     timestamp: "4h ago",
     content: "Excited to share my latest project on AI-driven networking! #AI #Networking #Innovation. Check out the details on my profile.",
     likes: 120,
+    bookmarks: 22,
     comments: 15,
     shares: 7,
     views: 450,
@@ -92,6 +99,7 @@ const worldPosts = [
     timestamp: "5h ago",
     content: "Just booked a trip to Bali! Any recommendations? #travel #bali #adventure",
     likes: 300,
+    bookmarks: 50,
     comments: 40,
     shares: 10,
     views: 800,
@@ -104,6 +112,7 @@ const worldPosts = [
     timestamp: "6h ago",
     content: "Morning workout done! Feeling energized. #fitness #healthylifestyle #motivation",
     likes: 180,
+    bookmarks: 30,
     comments: 25,
     shares: 8,
     views: 600,
@@ -114,6 +123,7 @@ const worldPosts = [
     timestamp: "7h ago",
     content: "Just finished an amazing fantasy novel. Can't wait for the sequel! #books #reading #fantasy",
     likes: 90,
+    bookmarks: 18,
     comments: 12,
     shares: 3,
     views: 350,
@@ -126,6 +136,7 @@ const worldPosts = [
     timestamp: "8h ago",
     content: "New high score! Who wants to challenge me? #gaming #esports #highscore",
     likes: 450,
+    bookmarks: 70,
     comments: 60,
     shares: 15,
     views: 1500,

@@ -4,15 +4,17 @@ import PostCard from "@/components/feed/post-card";
 // import AiConnectionSuggestions from "@/components/connections/ai-connection-suggestions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import type { Post } from "@/components/feed/post-card";
 
 // Placeholder data for posts - now attributed to "Test User"
-const posts = [
+const posts: Post[] = [
   {
     id: "1",
     user: { name: "Test User", avatarUrl: "https://placehold.co/40x40.png", headline: "ProNetwork User" },
     timestamp: "2h ago",
     content: "Excited to share my latest project on AI-driven networking! #AI #Networking #Innovation. Check out the details on my profile.",
     likes: 120,
+    bookmarks: 25,
     comments: 15,
     shares: 7,
     views: 250,
@@ -25,6 +27,7 @@ const posts = [
     timestamp: "5h ago",
     content: "Just attended an amazing conference on sustainable development. Learned so much! #Sustainability #Development #Conference",
     likes: 85,
+    bookmarks: 10,
     comments: 5,
     shares: 2,
     views: 180,
@@ -35,6 +38,7 @@ const posts = [
     timestamp: "1d ago",
     content: "Exploring new design trends for 2024. What are your favorite resources for inspiration? #UXDesign #Trends #Inspiration",
     likes: 230,
+    bookmarks: 40,
     comments: 42,
     shares: 11,
     views: 500,

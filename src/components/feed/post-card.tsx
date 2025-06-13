@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ThumbsUp, ThumbsDown, MessageCircle, Repeat, Send, OctagonAlert, Eye } from "lucide-react";
+import { ThumbsUp, ThumbsDown, MessageCircle, Repeat, Send, OctagonAlert, Eye, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PostUser {
@@ -15,7 +15,7 @@ interface PostUser {
   headline: string;
 }
 
-interface Post {
+export interface Post {
   id: string;
   user: PostUser;
   timestamp: string;
@@ -23,6 +23,7 @@ interface Post {
   image?: string;
   imageHint?: string;
   likes: number;
+  bookmarks: number; // Added bookmarks
   comments: number;
   shares: number;
   views: number;
@@ -36,6 +37,8 @@ export default function PostCard({ post }: PostCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const [currentLikes, setCurrentLikes] = useState(post.likes);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [currentBookmarks, setCurrentBookmarks] = useState(post.bookmarks);
 
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
 
@@ -51,8 +54,6 @@ export default function PostCard({ post }: PostCardProps) {
       setCurrentLikes(currentLikes + 1);
       if (isDisliked) {
         setIsDisliked(false);
-        // If it was disliked and now liked, the dislike is removed,
-        // but currentLikes was already adjusted by the like action.
       }
     }
   };
@@ -60,13 +61,22 @@ export default function PostCard({ post }: PostCardProps) {
   const handleDislike = () => {
     if (isDisliked) {
       setIsDisliked(false);
-      // If it was disliked and now un-disliked, no change to like count unless it was also liked.
     } else {
       setIsDisliked(true);
-      if (isLiked) { // If it was liked and now disliked
+      if (isLiked) { 
         setIsLiked(false);
         setCurrentLikes(currentLikes - 1); 
       }
+    }
+  };
+
+  const handleBookmark = () => {
+    if (isBookmarked) {
+      setIsBookmarked(false);
+      setCurrentBookmarks(currentBookmarks - 1);
+    } else {
+      setIsBookmarked(true);
+      setCurrentBookmarks(currentBookmarks + 1);
     }
   };
 
@@ -127,29 +137,50 @@ export default function PostCard({ post }: PostCardProps) {
         </Button>
       </div>
 
-      {/* Right Action Tab (Green - Like) */}
+      {/* Right Action Tab (Green - Like/Bookmark) */}
       <div className={cn(
-        "absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-center p-2 w-12 rounded-r-xl",
+        "absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-around p-2 w-12 rounded-r-xl", // justify-around for spacing
          isLiked 
           ? 'bg-green-500 border-2 border-green-500 text-white'
           : 'bg-card border-2 border-green-500'
       )}>
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className={cn(
-            "h-8 w-8 p-1.5", 
-            isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10"
-          )} 
-          aria-label="Like"
-          onClick={handleLike}
-        >
-          <ThumbsUp className="h-5 w-5" />
-        </Button>
-        {currentLikes > 0 && <span className={cn(
-          "text-xs font-semibold mt-0.5",
-           isLiked ? "text-white" : "text-green-500"
-        )}>{currentLikes}</span>}
+        <div className="flex flex-col items-center">
+            <Button 
+            variant="ghost" 
+            size="icon" 
+            className={cn(
+                "h-8 w-8 p-1.5", 
+                isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10"
+            )} 
+            aria-label="Like"
+            onClick={handleLike}
+            >
+            <ThumbsUp className="h-5 w-5" />
+            </Button>
+            {currentLikes > 0 && <span className={cn(
+            "text-xs font-semibold mt-0.5",
+            isLiked ? "text-white" : "text-green-500"
+            )}>{currentLikes}</span>}
+        </div>
+        
+        <div className="flex flex-col items-center">
+            <Button 
+            variant="ghost" 
+            size="icon" 
+            className={cn(
+                "h-8 w-8 p-1.5", 
+                isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10" // Bookmark icon color matches tab state
+            )} 
+            aria-label="Bookmark"
+            onClick={handleBookmark}
+            >
+            <Bookmark className="h-5 w-5" fill={isBookmarked ? "currentColor" : "none"} />
+            </Button>
+            {currentBookmarks > 0 && <span className={cn(
+            "text-xs font-semibold mt-0.5",
+            isLiked ? "text-white" : "text-green-500" // Bookmark count color matches tab state
+            )}>{currentBookmarks}</span>}
+        </div>
       </div>
 
       <CardHeader className="p-4 pt-6 pb-2">
