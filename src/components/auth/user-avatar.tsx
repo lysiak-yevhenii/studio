@@ -69,7 +69,8 @@ export default function UserAvatar() {
   };
 
   const handleProfileClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
+    // This function is called via onClick for the profile link
+    // It already has e.preventDefault() in the Link's onClick
     setIsRadialMenuOpen(false);
     router.push('/profile');
   }
@@ -95,21 +96,24 @@ export default function UserAvatar() {
   };
 
   if (!hasMounted) {
+    // Return a placeholder matching the avatar's size to prevent layout shifts
     return <div className="h-[100px] w-[100px]" />; 
   }
 
   const numItems = radialNavItems.length;
-  const radius = 85; // Distance from center of main avatar to center of small items
-  const itemSize = 48; // Diameter of small items
+  const itemSize = 36; // Diameter of small items
   const itemRadius = itemSize / 2;
-  const mainAvatarCenter = 50; // Center of the 100x100 main avatar
+  const radius = 85; // Distance from center of main avatar to center of small items
+  
+  // Calculate positioning for the radial items container to be centered on the avatar
+  const radialContainerDiameter = 2 * (radius + itemRadius); // Max reach of items
+  const mainAvatarCenterInContainer = radialContainerDiameter / 2;
 
-  // Arc from West (180deg) to North (270deg), counter-clockwise
-  const startAngleRad = Math.PI; // 180 degrees
-  const endAngleRad = Math.PI * 1.5; // 270 degrees
-  const angleSpreadRad = endAngleRad - startAngleRad; // Should be PI/2 (90 degrees)
-  const angleStep = numItems > 1 ? angleSpreadRad / (numItems - 1) : 0;
-
+  // Calculate angle step to ensure items just touch or have a tiny gap
+  // Minimum angular separation for items to touch: itemSize / radius (in radians)
+  // Add a small constant (e.g., 0.035 rad ~ 2 degrees) for a tiny visual gap
+  const angleStep = (itemSize / radius) + 0.035; 
+  const startAngleRad = Math.PI; // Start at West (180 degrees)
 
   return (
     <TooltipProvider delayDuration={100}>
@@ -127,11 +131,18 @@ export default function UserAvatar() {
         </button>
 
         {isRadialMenuOpen && (
-          <div className="absolute bottom-0 right-0 w-[calc(100px+170px)] h-[calc(100px+170px)] pointer-events-none">
+          <div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            style={{
+              width: `${radialContainerDiameter}px`,
+              height: `${radialContainerDiameter}px`,
+            }}
+          >
             {radialNavItems.map((item, index) => {
               const angle = startAngleRad + index * angleStep;
-              const x = mainAvatarCenter + radius * Math.cos(angle) - itemRadius;
-              const y = mainAvatarCenter + radius * Math.sin(angle) - itemRadius;
+              // Calculate position for top-left corner of the item
+              const x = mainAvatarCenterInContainer + radius * Math.cos(angle) - itemRadius;
+              const y = mainAvatarCenterInContainer + radius * Math.sin(angle) - itemRadius;
               const Icon = item.icon;
 
               const itemContent = (
@@ -147,10 +158,8 @@ export default function UserAvatar() {
                     "transition-all duration-300 ease-in-out",
                     isRadialMenuOpen ? "opacity-100 scale-100" : "opacity-0 scale-50"
                   )}
-                  // style for staggered animation if desired:
-                  // transitionDelay: `${index * 50}ms` 
                 >
-                  <Icon className="h-6 w-6 text-primary" />
+                  <Icon className="h-5 w-5 text-primary" />
                 </div>
               );
 
@@ -159,11 +168,11 @@ export default function UserAvatar() {
                   <TooltipTrigger asChild>
                     {item.href ? (
                       <Link href={item.href} onClick={(e) => {
-                        if(item.label === "Profile") {
-                           e.preventDefault(); // prevent default Link nav
-                           handleProfileClick(e as unknown as MouseEvent<HTMLAnchorElement>); // Call router push
+                        if(item.id === "profile") {
+                           e.preventDefault(); 
+                           handleProfileClick(e as unknown as MouseEvent<HTMLAnchorElement>);
                         } else {
-                           handleNavClick(item.href); // For other nav links
+                           handleNavClick(item.href); 
                         }
                       }}>
                         {itemContent}
