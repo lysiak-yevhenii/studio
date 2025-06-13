@@ -2,7 +2,7 @@
 "use client";
 
 import Image from 'next/image';
-import type { MouseEvent } from 'react'; // Import MouseEvent
+import type { MouseEvent } from 'react';
 import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -43,8 +43,8 @@ export default function PostCard({ post }: PostCardProps) {
 
   const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
 
-  const bottomTabHeightRem = 2.25; 
-  const bottomTabPosition = `-${bottomTabHeightRem - 0.5}rem`; 
+  const bottomTabHeightRem = 2.25;
+  const bottomTabPosition = `-${bottomTabHeightRem - 0.5}rem`;
 
   const handleLike = () => {
     if (isLiked) {
@@ -55,7 +55,6 @@ export default function PostCard({ post }: PostCardProps) {
       setCurrentLikes(currentLikes + 1);
       if (isDisliked) {
         setIsDisliked(false);
-        // We don't adjust dislike count here, assuming disliking also clears like
       }
     }
   };
@@ -65,15 +64,15 @@ export default function PostCard({ post }: PostCardProps) {
       setIsDisliked(false);
     } else {
       setIsDisliked(true);
-      if (isLiked) { 
+      if (isLiked) {
         setIsLiked(false);
-        setCurrentLikes(currentLikes - 1); 
+        setCurrentLikes(currentLikes - 1);
       }
     }
   };
 
   const handleBookmark = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation(); // Prevent event from bubbling up
+    event.stopPropagation();
     if (isBookmarked) {
       setIsBookmarked(false);
       setCurrentBookmarks(currentBookmarks - 1);
@@ -85,10 +84,10 @@ export default function PostCard({ post }: PostCardProps) {
 
   return (
     <Card className="relative shadow-lg overflow-visible mx-auto max-w-2xl rounded-xl border-2 border-border mb-10 mt-8">
-      
-      <div 
+
+      <div
         className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center space-x-1 p-1.5 bg-yellow-400 rounded-t-xl rounded-b-md min-w-[280px]"
-        style={{ bottom: bottomTabPosition }} 
+        style={{ bottom: bottomTabPosition }}
       >
         <Button variant="ghost" size="sm" className="flex items-center space-x-1 text-neutral-700 hover:bg-yellow-300/80 h-auto px-2 py-1">
           <Repeat className="h-4 w-4" />
@@ -111,29 +110,29 @@ export default function PostCard({ post }: PostCardProps) {
       {/* Left Action Tab (Red - Dislike/Report) */}
       <div className={cn(
         "absolute top-0 bottom-0 -left-[46px] z-10 flex flex-col items-center justify-center space-y-1.5 p-2 w-12 rounded-l-xl border-2",
-        isDisliked 
-          ? 'bg-red-600 border-red-600 text-white' 
-          : 'bg-card border-red-600'
+        isDisliked
+          ? 'bg-red-600 border-red-600 text-white'
+          : 'bg-card border-red-600 text-red-600'
       )}>
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           className={cn(
             "h-8 w-8 p-1.5",
             isDisliked ? "text-white hover:bg-white/20" : "text-red-600 hover:bg-red-600/10"
-          )} 
+          )}
           aria-label="Dislike"
           onClick={handleDislike}
         >
           <ThumbsDown className="h-5 w-5" />
         </Button>
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           className={cn(
              "h-8 w-8 p-1.5",
              isDisliked ? "text-white hover:bg-white/20" : "text-red-600 hover:bg-red-600/10"
-          )} 
+          )}
           aria-label="Report"
         >
           <OctagonAlert className="h-5 w-5" />
@@ -143,18 +142,19 @@ export default function PostCard({ post }: PostCardProps) {
       {/* Right Action Tab (Green - Like/Bookmark) */}
       <div className={cn(
         "absolute top-0 bottom-0 -right-[46px] z-10 flex flex-col items-center justify-around p-2 w-12 rounded-r-xl border-2",
-         isLiked 
-          ? 'bg-green-500 border-green-500 text-white'
-          : 'bg-card border-green-500'
+         isLiked
+          ? 'bg-green-500 border-green-500 text-white' // Active like state: green bg, white text for all children
+          : 'bg-card border-green-500' // Inactive like state: card bg, green border. Specific text colors below.
       )}>
+        {/* Like Button & Count */}
         <div className="flex flex-col items-center">
-            <Button 
-            variant="ghost" 
-            size="icon" 
+            <Button
+            variant="ghost"
+            size="icon"
             className={cn(
-                "h-8 w-8 p-1.5", 
+                "h-8 w-8 p-1.5",
                 isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10"
-            )} 
+            )}
             aria-label="Like"
             onClick={handleLike}
             >
@@ -165,23 +165,32 @@ export default function PostCard({ post }: PostCardProps) {
             isLiked ? "text-white" : "text-green-500"
             )}>{currentLikes}</span>}
         </div>
-        
+
+        {/* Bookmark Button & Count */}
         <div className="flex flex-col items-center">
-            <Button 
-            variant="ghost" 
-            size="icon" 
+            <Button
+            variant="ghost"
+            size="icon"
             className={cn(
-                "h-8 w-8 p-1.5", 
-                isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10" 
-            )} 
+                "h-8 w-8 p-1.5",
+                isLiked
+                  ? "text-white hover:bg-white/20" // Liked state: white icon
+                  : isBookmarked
+                    ? "text-primary hover:bg-primary/10" // Not liked, but bookmarked: primary color icon
+                    : "text-muted-foreground hover:bg-muted/20" // Not liked, not bookmarked: muted icon
+            )}
             aria-label="Bookmark"
-            onClick={(e) => handleBookmark(e)} // Pass event to handler
+            onClick={handleBookmark}
             >
             <Bookmark className="h-5 w-5" fill={isBookmarked ? "currentColor" : "none"} />
             </Button>
             {currentBookmarks > 0 && <span className={cn(
             "text-xs font-semibold mt-0.5",
-            isLiked ? "text-white" : "text-green-500" 
+            isLiked
+              ? "text-white" // Liked state: white count
+              : isBookmarked
+                ? "text-primary" // Not liked, but bookmarked: primary color count
+                : "text-muted-foreground" // Not liked, not bookmarked: muted count
             )}>{currentBookmarks}</span>}
         </div>
       </div>
@@ -199,17 +208,17 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-4 pt-2 pb-8"> 
+      <CardContent className="p-4 pt-2 pb-8">
         <div className="space-y-3 min-h-[36px]">
           <p className="text-sm text-foreground whitespace-pre-wrap">{post.content}</p>
           {post.image && (
             <div className="mt-3 rounded-lg overflow-hidden border">
-              <Image 
-                src={post.image} 
-                alt="Post image" 
-                width={600} 
-                height={400} 
-                className="w-full h-auto object-cover" 
+              <Image
+                src={post.image}
+                alt="Post image"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
                 data-ai-hint={post.imageHint || "social media image"}
               />
             </div>
@@ -219,4 +228,3 @@ export default function PostCard({ post }: PostCardProps) {
     </Card>
   );
 }
-
