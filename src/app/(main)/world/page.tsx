@@ -140,12 +140,6 @@ export default function WorldPage() {
           </Button>
         </CardHeader>
         <CardContent>
-          {/* CreatePostForm appears here ONLY when "My Feed" is selected */}
-          {activeTab === 'my-feed' && (
-            <div className="mb-6">
-              <CreatePostForm />
-            </div>
-          )}
           <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as FeedTabValue)} className="w-full">
             <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
                 <TabsList className="grid grid-cols-4">
@@ -168,9 +162,12 @@ export default function WorldPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>My Posts & Creations</CardTitle>
-                  <CardDescription>View your posts below. Create new posts using the form that appears above when this tab is selected.</CardDescription>
+                  <CardDescription>Create new posts using the form below and view your existing ones.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
+                  <div className="mb-6">
+                    <CreatePostForm />
+                  </div>
                   {myPosts.length > 0 ? (
                     myPosts.map(post => (
                       <PostCard key={post.id} post={post} />
