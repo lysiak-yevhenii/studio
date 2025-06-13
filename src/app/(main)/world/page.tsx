@@ -117,27 +117,15 @@ type FeedTabValue = 'my-feed' | 'mix-feed' | 'friends' | 'world';
 export default function WorldPage() {
   const [activeTab, setActiveTab] = useState<FeedTabValue>('mix-feed');
   const [showCreatePostForm, setShowCreatePostForm] = useState(false);
-  const [myFeedTabLabel, setMyFeedTabLabel] = useState("My Feed"); 
 
   const handleTabChange = (value: string) => {
     const newTab = value as FeedTabValue;
 
     if (newTab === 'my-feed') {
-      // User is interacting with the first tab.
-      if (myFeedTabLabel === "My Feed") {
-        // Currently labeled "My Feed". Clicked.
-        // Action: Change label to "Create Post". Form stays hidden.
-        setMyFeedTabLabel("Create Post");
-        setShowCreatePostForm(false); 
-      } else { // myFeedTabLabel === "Create Post". Clicked.
-        // Action: Change label to "My Feed". Form becomes visible.
-        setMyFeedTabLabel("My Feed");
-        setShowCreatePostForm(true);
-      }
+      // Toggle form visibility when "My Feed" tab is clicked
+      setShowCreatePostForm(!showCreatePostForm);
     } else {
-      // User clicked a different tab (Mix, Friends, World).
-      // Reset the first tab's state: label "My Feed", form hidden.
-      setMyFeedTabLabel("My Feed");
+      // If any other tab is clicked, hide the form
       setShowCreatePostForm(false);
     }
     setActiveTab(newTab);
@@ -166,8 +154,8 @@ export default function WorldPage() {
             <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
                 <TabsList className="grid grid-cols-4">
                     <TabsTrigger value="my-feed" className="flex items-center gap-2">
-                        <LayoutGrid className="h-4 w-4" /> 
-                        {myFeedTabLabel}
+                        <LayoutGrid className="h-4 w-4"/> 
+                        My Feed
                     </TabsTrigger>
                     <TabsTrigger value="mix-feed" className="flex items-center gap-2">
                         <Shuffle className="h-4 w-4" /> Mix
@@ -186,7 +174,7 @@ export default function WorldPage() {
                 <CardHeader>
                   <CardTitle>My Posts & Creations</CardTitle>
                   <CardDescription>
-                    Your personal posts and creations. Use the tab below to create a new post.
+                    Your personal posts and creations. Use the "My Feed" tab below to toggle the post creation form.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 pb-16">
