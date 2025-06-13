@@ -123,7 +123,7 @@ export default function WorldPage() {
 
   const handleMakePostClick = () => {
     setActiveTab('my-feed');
-    setMyFeedTabLabel("My Feed"); // Ensure label is "My Feed" when form is shown
+    setMyFeedTabLabel("My Feed"); 
     setShowCreatePostForm(true);
   };
 
@@ -131,23 +131,33 @@ export default function WorldPage() {
     const newTab = value as FeedTabValue;
 
     if (newTab === 'my-feed') {
-      if (activeTab === 'my-feed') { // Clicking the "my-feed" tab trigger when it's already active
-        if (myFeedTabLabel === "My Feed") { // Currently "My Feed", about to become "Create Post"
+      // Logic for the first tab (My Feed / Create Post)
+      if (myFeedTabLabel === "My Feed") {
+        // Currently labeled "My Feed"
+        if (showCreatePostForm) {
+          // Form is visible: ("My Feed", Visible) -> Clicking "My Feed" tab
+          // Transition to: ("Create Post", Hidden)
           setMyFeedTabLabel("Create Post");
           setShowCreatePostForm(false);
-        } else { // Currently "Create Post", about to become "My Feed" and show form
-          setMyFeedTabLabel("My Feed");
-          setShowCreatePostForm(true);
+        } else {
+          // Form is hidden: ("My Feed", Hidden) -> Clicking "My Feed" tab
+          // Transition to: ("Create Post", Hidden)
+          setMyFeedTabLabel("Create Post");
+          // setShowCreatePostForm(false); // Stays hidden
         }
-      } else { // Switching to "my-feed" from another tab
-        setMyFeedTabLabel("Create Post"); // Initial state when landing on "my-feed"
-        setShowCreatePostForm(false);
+      } else { // myFeedTabLabel === "Create Post"
+        // Currently labeled "Create Post", Form is hidden: ("Create Post", Hidden) -> Clicking "Create Post" tab
+        // Transition to: ("My Feed", Visible)
+        setMyFeedTabLabel("My Feed");
+        setShowCreatePostForm(true);
       }
-    } else { // Switching to a tab other than 'my-feed'
-      setMyFeedTabLabel("My Feed"); // Reset 'my-feed' tab label
+      setActiveTab('my-feed'); // Ensure content area is "my-feed"
+    } else {
+      // Switched to a tab other than 'my-feed' (e.g., Mix, Friends, World)
+      setActiveTab(newTab);
+      setMyFeedTabLabel("My Feed"); // Reset first tab's label
       setShowCreatePostForm(false); // Hide form
     }
-    setActiveTab(newTab);
   };
 
   return (
@@ -197,7 +207,7 @@ export default function WorldPage() {
                 <CardHeader>
                   <CardTitle>My Posts & Creations</CardTitle>
                   <CardDescription>
-                    Your personal posts and creations.
+                    Your personal posts and creations. Use the tab below to create a new post.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6 pb-16">
