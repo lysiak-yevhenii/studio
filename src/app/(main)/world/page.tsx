@@ -140,7 +140,15 @@ export default function WorldPage() {
           </Button>
         </CardHeader>
         <CardContent>
+          {/* CreatePostForm is now here, conditionally rendered based on activeTab */}
+          {activeTab === 'my-feed' && (
+            <div className="mb-6">
+              <CreatePostForm />
+            </div>
+          )}
+
           <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as FeedTabValue)} className="w-full">
+            {/* TabsList remains fixed at the bottom */}
             <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
                 <TabsList className="grid grid-cols-4">
                     <TabsTrigger value="my-feed" className="flex items-center gap-2">
@@ -162,12 +170,10 @@ export default function WorldPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>My Posts & Creations</CardTitle>
-                  <CardDescription>Create new posts using the form below and view your existing ones.</CardDescription>
+                  <CardDescription>View your personal feed and creations. Use the form above to post when this tab is active.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="mb-6">
-                    <CreatePostForm />
-                  </div>
+                  {/* CreatePostForm removed from here */}
                   {myPosts.length > 0 ? (
                     myPosts.map(post => (
                       <PostCard key={post.id} post={post} />
