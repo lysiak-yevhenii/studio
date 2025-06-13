@@ -123,23 +123,19 @@ export default function WorldPage() {
       // "My Feed" is already active, toggle the form.
       setShowCreatePostForm(prevShow => !prevShow);
     } else {
-      // "My Feed" is not active. Make it active.
-      // This will also trigger Tabs onValueChange, which calls handleTabChange.
-      // handleTabChange will then ensure the form is shown.
-      setActiveTab('my-feed'); 
+      // "My Feed" is not active. Switching to it.
+      // Form should NOT show on this first switch.
+      setShowCreatePostForm(false);
+      setActiveTab('my-feed'); // This will trigger handleTabChange via Tabs onValueChange
     }
   };
 
   const handleTabChange = (value: string) => {
     const newTab = value as FeedTabValue;
 
-    if (newTab === 'my-feed') {
-      // When "My Feed" becomes the active tab (either by direct click when it was inactive,
-      // or by programmatic change), ensure the form is shown.
-      // The toggle logic for when it's already active is handled by handleMyFeedDirectClick.
-      setShowCreatePostForm(true);
-    } else {
-      // Any other tab is selected, hide the form.
+    // If switching to any tab other than "My Feed", hide the form.
+    // Form visibility for "My Feed" itself is handled by handleMyFeedDirectClick.
+    if (newTab !== 'my-feed') {
       setShowCreatePostForm(false);
     }
     setActiveTab(newTab);
@@ -170,7 +166,7 @@ export default function WorldPage() {
                     <TabsTrigger 
                       value="my-feed" 
                       className="flex items-center gap-2"
-                      onClick={handleMyFeedDirectClick} // Direct click handler for specific "My Feed" logic
+                      onClick={handleMyFeedDirectClick}
                     >
                         <LayoutGrid className="h-4 w-4"/> 
                         My Feed
