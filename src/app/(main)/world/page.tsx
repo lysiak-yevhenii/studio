@@ -1,11 +1,14 @@
 
+"use client";
+
+import { useState } from 'react';
 import PostCard from "@/components/feed/post-card";
 import type { Post } from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown } from "lucide-react";
-import Image from "next/image";
+import { Globe, Users, Shuffle, ThumbsUp, ThumbsDown, PencilLine } from "lucide-react";
+import CreatePostForm from "@/components/feed/create-post-form";
 
 // Placeholder data for mix feed posts
 const mixFeedPosts: Post[] = [
@@ -143,13 +146,26 @@ const worldPosts: Post[] = [
   }
 ];
 
+type FeedTab = 'mix' | 'friends' | 'world';
 
 export default function WorldPage() {
+  const [showCreatePostForm, setShowCreatePostForm] = useState<{ mix: boolean; friends: boolean; world: boolean }>({
+    mix: false,
+    friends: false,
+    world: false,
+  });
+
+  const toggleCreatePostForm = (tab: FeedTab) => {
+    setShowCreatePostForm(prevState => ({
+      ...prevState,
+      [tab]: !prevState[tab],
+    }));
+  };
+
   return (
     <div className="space-y-6">
       <Tabs defaultValue="mix-feed" className="w-full">
         
-        {/* Floating Navigation Block */}
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
           <TabsList className="grid grid-cols-3">
             <TabsTrigger value="mix-feed" className="flex items-center gap-2">
@@ -164,8 +180,20 @@ export default function WorldPage() {
           </TabsList>
         </div>
 
-        {/* Tab Content - remains in normal flow */}
         <TabsContent value="mix-feed" className="mt-6">
+          <Button 
+            onClick={() => toggleCreatePostForm('mix')} 
+            variant="outline" 
+            className="w-full mb-4 flex items-center gap-2"
+          >
+            <PencilLine className="h-4 w-4" />
+            {showCreatePostForm.mix ? "Cancel Post" : "Make a Post in Mix Feed"}
+          </Button>
+          {showCreatePostForm.mix && (
+            <div className="mb-6">
+              <CreatePostForm />
+            </div>
+          )}
           <Card>
             <CardHeader>
               <CardTitle>Mix Feed</CardTitle>
@@ -195,6 +223,19 @@ export default function WorldPage() {
         </TabsContent>
 
         <TabsContent value="friends" className="mt-6">
+           <Button 
+            onClick={() => toggleCreatePostForm('friends')} 
+            variant="outline" 
+            className="w-full mb-4 flex items-center gap-2"
+          >
+            <PencilLine className="h-4 w-4" />
+            {showCreatePostForm.friends ? "Cancel Post" : "Make a Post in Friends Feed"}
+          </Button>
+          {showCreatePostForm.friends && (
+            <div className="mb-6">
+              <CreatePostForm />
+            </div>
+          )}
           <Card>
             <CardHeader>
               <CardTitle>Friends' Recent Posts</CardTitle>
@@ -213,6 +254,19 @@ export default function WorldPage() {
         </TabsContent>
 
         <TabsContent value="world" className="mt-6">
+          <Button 
+            onClick={() => toggleCreatePostForm('world')} 
+            variant="outline" 
+            className="w-full mb-4 flex items-center gap-2"
+          >
+            <PencilLine className="h-4 w-4" />
+            {showCreatePostForm.world ? "Cancel Post" : "Make a Post in World Feed"}
+          </Button>
+          {showCreatePostForm.world && (
+            <div className="mb-6">
+              <CreatePostForm />
+            </div>
+          )}
           <Card>
             <CardHeader>
               <CardTitle>Worldwide Activity</CardTitle>
@@ -233,3 +287,4 @@ export default function WorldPage() {
     </div>
   );
 }
+
