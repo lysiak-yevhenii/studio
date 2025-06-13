@@ -71,7 +71,7 @@ export default function PostCard({ post }: PostCardProps) {
   };
 
   return (
-    <Card className="relative shadow-lg overflow-visible mx-auto max-w-xl rounded-xl border-2 border-border mb-10 mt-8">
+    <Card className="relative shadow-lg overflow-visible mx-auto max-w-2xl rounded-xl border-2 border-border mb-10 mt-8">
       
       <div 
         className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center space-x-1 p-1.5 bg-yellow-400 rounded-t-xl rounded-b-md min-w-[280px]"
@@ -138,7 +138,7 @@ export default function PostCard({ post }: PostCardProps) {
           variant="ghost" 
           size="icon" 
           className={cn(
-            "h-8 w-8 p-1.5", // Removed hover:bg-green-400/80 to use conditional hover
+            "h-8 w-8 p-1.5", 
             isLiked ? "text-white hover:bg-white/20" : "text-green-500 hover:bg-green-500/10"
           )} 
           aria-label="Like"
