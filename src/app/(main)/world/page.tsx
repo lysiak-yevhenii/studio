@@ -18,7 +18,7 @@ const myPosts: Post[] = [
     timestamp: "10m ago",
     content: "Just created my first post in 'My Feed'! #NewFeature",
     likes: 5,
-    bookmarks: 1,
+    bookmarks: 2,
     comments: 0,
     shares: 0,
     views: 10,
@@ -125,6 +125,12 @@ export default function WorldPage() {
 
   return (
     <div className="space-y-6">
+      {activeTab === 'my-feed' && (
+        <div className="fixed top-1/4 left-1/2 -translate-x-1/2 z-40 w-full max-w-xl p-4">
+          <CreatePostForm />
+        </div>
+      )}
+
       <Card className="shadow-md">
         <CardHeader className="flex flex-row justify-between items-center">
           <div>
@@ -140,10 +146,7 @@ export default function WorldPage() {
           </Button>
         </CardHeader>
         <CardContent>
-          {/* CreatePostForm is NOT here globally */}
-
           <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as FeedTabValue)} className="w-full">
-            {/* TabsList remains fixed at the bottom */}
             <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
                 <TabsList className="grid grid-cols-4">
                     <TabsTrigger value="my-feed" className="flex items-center gap-2">
@@ -165,12 +168,10 @@ export default function WorldPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>My Posts & Creations</CardTitle>
-                  <CardDescription>Create a new post or view your existing ones.</CardDescription>
+                  <CardDescription>Your personal posts and creations. Use the form to create new content.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="mb-6">
-                     <CreatePostForm /> {/* CreatePostForm is NOW HERE */}
-                  </div>
+                  {/* CreatePostForm is no longer here, it floats */}
                   {myPosts.length > 0 ? (
                     myPosts.map(post => (
                       <PostCard key={post.id} post={post} />
@@ -252,5 +253,3 @@ export default function WorldPage() {
     </div>
   );
 }
-
-    
