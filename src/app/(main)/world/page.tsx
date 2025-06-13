@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PostCard from "@/components/feed/post-card";
 import type { Post } from "@/components/feed/post-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -118,29 +118,30 @@ type FeedTabValue = 'my-feed' | 'mix-feed' | 'friends' | 'world';
 export default function WorldPage() {
   const [activeTab, setActiveTab] = useState<FeedTabValue>('mix-feed');
   const [showCreatePostForm, setShowCreatePostForm] = useState(false);
-  const [myFeedTabLabel, setMyFeedTabLabel] = useState("My Feed");
-
+  const [myFeedTabLabel, setMyFeedTabLabel] = useState("My Feed"); // Initial label
 
   const handleTabChange = (value: string) => {
     const newTab = value as FeedTabValue;
 
     if (newTab === 'my-feed') {
-      // Logic for the first tab (My Feed / Create Post)
+      // User is interacting with the first tab.
       if (myFeedTabLabel === "My Feed") {
-        // Currently labeled "My Feed", form is hidden
-        // Transition to: ("Create Post", Hidden)
+        // Currently labeled "My Feed".
+        // If form is hidden: Change label to "Create Post", keep form hidden.
+        // If form is visible: Change label to "Create Post", HIDE form.
         setMyFeedTabLabel("Create Post");
-        setShowCreatePostForm(false); // Keep form hidden
+        setShowCreatePostForm(false); 
       } else { // myFeedTabLabel === "Create Post"
-        // Currently labeled "Create Post", form is hidden
-        // Transition to: ("My Feed", Visible)
+        // Currently labeled "Create Post". Form is hidden.
+        // Action: Change label to "My Feed". Form becomes visible.
         setMyFeedTabLabel("My Feed");
-        setShowCreatePostForm(true); // Show form
+        setShowCreatePostForm(true);
       }
     } else {
-      // Switched to a tab other than 'my-feed' (e.g., Mix, Friends, World)
-      setMyFeedTabLabel("My Feed"); // Reset first tab's label
-      setShowCreatePostForm(false); // Hide form
+      // User clicked a different tab (Mix, Friends, World).
+      // Reset the first tab's state: label "My Feed", form hidden.
+      setMyFeedTabLabel("My Feed");
+      setShowCreatePostForm(false);
     }
     setActiveTab(newTab);
   };
@@ -162,9 +163,9 @@ export default function WorldPage() {
             </CardTitle>
             <CardDescription>Discover posts from different perspectives or create your own.</CardDescription>
           </div>
-          {/* "Make a Post" button removed from here */}
         </CardHeader>
         <CardContent>
+          
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
             <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
                 <TabsList className="grid grid-cols-4">
@@ -263,4 +264,3 @@ export default function WorldPage() {
     </div>
   );
 }
-
