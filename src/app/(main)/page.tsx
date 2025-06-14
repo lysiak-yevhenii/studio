@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const userProfile = {
   name: "Jane Professional",
   headline: "Senior Product Manager | AI & SaaS Expert",
-  avatarUrl: "https://placehold.co/200x200.png", // Using a square placeholder
+  avatarUrl: "https://placehold.co/160x224.png", // Rectangular placeholder
   bannerUrl: "https://placehold.co/1200x300.png",
   bannerHint: "abstract background",
   location: "San Francisco, CA",
@@ -57,22 +57,27 @@ export default function MyPage() {
           </div>
         </div>
         
-        {/* Profile Info Section: Centered Avatar, Name, Headline, Buttons */}
-        <div className="relative flex flex-col items-center p-6 -mt-20 md:-mt-24">
-          <Avatar className="h-32 w-32 md:h-40 md:w-40 border-4 border-card bg-card ring-2 ring-primary shadow-lg rounded-none">
-            <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="person face" className="object-cover h-full w-full" />
-            <AvatarFallback className="text-4xl h-full w-full flex items-center justify-center rounded-none">{getInitials(userProfile.name)}</AvatarFallback>
-          </Avatar>
-          
-          <div className="mt-4 text-center">
-            <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
-            <p className="text-lg text-primary">{userProfile.headline}</p>
-            <p className="text-sm text-muted-foreground">{userProfile.location}</p>
-          </div>
-          
-          <div className="mt-4 flex space-x-2">
-            <Button className="bg-primary hover:bg-primary/90">Connect</Button>
-            <Button variant="outline">Message</Button>
+        {/* Profile Info Section: Centered, Avatar left, Info/Buttons right */}
+        <div className="relative p-6 -mt-16 md:-mt-20 flex justify-center">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-x-6 w-full max-w-3xl">
+            {/* Rectangular Avatar */}
+            <div className="flex-shrink-0">
+              <Avatar className="h-48 w-36 md:h-56 md:w-40 border-4 border-card bg-card ring-2 ring-primary shadow-lg rounded-none">
+                <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="person portrait" className="object-cover h-full w-full" />
+                <AvatarFallback className="text-3xl h-full w-full flex items-center justify-center rounded-none">{getInitials(userProfile.name)}</AvatarFallback>
+              </Avatar>
+            </div>
+
+            {/* Text info and buttons */}
+            <div className="flex flex-col items-center text-center md:items-start md:text-left mt-4 md:mt-0 flex-grow pt-0 md:pt-6"> {/* Added pt for vertical alignment with taller avatar */}
+              <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
+              <p className="text-lg text-primary">{userProfile.headline}</p>
+              <p className="text-sm text-muted-foreground mt-1">{userProfile.location}</p>
+              <div className="mt-4 flex space-x-2">
+                <Button className="bg-primary hover:bg-primary/90">Connect</Button>
+                <Button variant="outline">Message</Button>
+              </div>
+            </div>
           </div>
         </div>
       </Card>
