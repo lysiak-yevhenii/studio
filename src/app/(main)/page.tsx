@@ -59,7 +59,7 @@ export default function MyPage() {
         
         {/* Profile Info Section: Centered, Avatar left, Info/Buttons right */}
         <div className="relative p-6 -mt-16 md:-mt-20 flex justify-center">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-x-6 w-full max-w-3xl">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-x-6 max-w-3xl"> {/* Removed w-full */}
             {/* Rectangular Avatar */}
             <div className="flex-shrink-0">
               <Avatar className="h-48 w-36 md:h-56 md:w-40 border-4 border-card bg-card ring-2 ring-primary shadow-lg rounded-none">
@@ -69,7 +69,7 @@ export default function MyPage() {
             </div>
 
             {/* Text info and buttons */}
-            <div className="flex flex-col items-center text-center md:items-start md:text-left mt-4 md:mt-0 flex-grow pt-0 md:pt-6"> {/* Added pt for vertical alignment with taller avatar */}
+            <div className="flex flex-col items-center text-center md:items-start md:text-left mt-4 md:mt-0 flex-grow pt-0 md:pt-6">
               <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
               <p className="text-lg text-primary">{userProfile.headline}</p>
               <p className="text-sm text-muted-foreground mt-1">{userProfile.location}</p>
