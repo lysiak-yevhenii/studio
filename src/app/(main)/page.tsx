@@ -66,24 +66,17 @@ export default function MyPage() {
 
         <TabsContent value="user" className="pb-20">
           <Card className="overflow-hidden shadow-lg">
-            <div className="relative h-48 bg-muted"> {/* Banner height reverted to h-48 */}
+            <div className="relative h-48 bg-muted"> {/* Banner height */}
               {userProfile.bannerUrl && (
                 <Image src={userProfile.bannerUrl} alt={`${userProfile.name}'s banner`} layout="fill" objectFit="cover" data-ai-hint={userProfile.bannerHint} />
               )}
             </div>
             
             <CardContent className="relative p-6">
-                {/* Desktop Buttons: Positioned absolutely to the top-right of this p-6 container */}
-                <div className="hidden md:flex md:flex-row md:space-x-2 md:absolute md:top-6 md:right-6 z-10">
-                    <Button className="bg-primary hover:bg-primary/90">Connect</Button>
-                    <Button variant="outline">Message</Button>
-                </div>
-
-                {/* Main Profile Content: Image and Text */}
-                <div className="flex flex-col items-center"> {/* This container ensures image and text below it are centered */}
+                {/* Main Profile Content: Image, Text, and Buttons */}
+                <div className="flex flex-col items-center">
                     {/* Profile Image */}
                     <div className="relative -mt-16 w-40 h-[224px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg">
-                        {/* -mt-16 (pull up 64px), w-40 h-[224px] (160x224px size) for all screens */}
                         <Image
                         src={userProfile.avatarUrl}
                         alt={userProfile.name}
@@ -94,18 +87,29 @@ export default function MyPage() {
                         />
                     </div>
 
-                    {/* User Info Text Block */}
-                    <div className="mt-4 text-center w-full">
-                        <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
-                        <p className="text-lg text-primary">{userProfile.headline}</p>
-                        <p className="text-sm text-muted-foreground">{userProfile.location}</p>
+                    {/* Container for Text block and Desktop buttons */}
+                    <div className="mt-4 w-full">
+                        <div className="md:flex md:items-center md:justify-center md:gap-x-6">
+                            {/* User Info Text Block - centered text content */}
+                            <div className="text-center">
+                                <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
+                                <p className="text-lg text-primary">{userProfile.headline}</p>
+                                <p className="text-sm text-muted-foreground">{userProfile.location}</p>
+                            </div>
+
+                            {/* Desktop Buttons: To the right of text block, visible on md+ */}
+                            <div className="hidden md:flex md:flex-row md:space-x-2">
+                                <Button className="bg-primary hover:bg-primary/90">Connect</Button>
+                                <Button variant="outline">Message</Button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                {/* Mobile Buttons: In normal flow, below image and text, visible only on mobile */}
-                <div className="mt-6 flex flex-col space-y-2 md:hidden">
-                    <Button className="w-full bg-primary hover:bg-primary/90">Connect</Button>
-                    <Button variant="outline" className="w-full">Message</Button>
+                {/* Mobile Buttons: Stacked vertically below text block, visible only on mobile */}
+                <div className="mt-6 flex flex-col items-center space-y-2 md:hidden">
+                    <Button className="w-full max-w-xs bg-primary hover:bg-primary/90">Connect</Button>
+                    <Button variant="outline" className="w-full max-w-xs">Message</Button>
                 </div>
             </CardContent>
           </Card>
