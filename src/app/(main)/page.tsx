@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const userProfile = {
   name: "Jane Professional",
   headline: "Senior Product Manager | AI & SaaS Expert",
-  avatarUrl: "https://placehold.co/128x128.png",
+  avatarUrl: "https://placehold.co/200x200.png", // Using a square placeholder
   bannerUrl: "https://placehold.co/1200x300.png",
   bannerHint: "abstract background",
   location: "San Francisco, CA",
@@ -56,16 +56,20 @@ export default function MyPage() {
             </Button>
           </div>
         </div>
-        <div className="relative p-6 -mt-16 md:-mt-20">
-          <Avatar className="h-32 w-32 md:h-40 md:w-40 border-4 border-card bg-card ring-2 ring-primary">
-            <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="person face" />
-            <AvatarFallback className="text-4xl">{getInitials(userProfile.name)}</AvatarFallback>
+        
+        {/* Profile Info Section: Centered Avatar, Name, Headline, Buttons */}
+        <div className="relative flex flex-col items-center p-6 -mt-20 md:-mt-24">
+          <Avatar className="h-32 w-32 md:h-40 md:w-40 border-4 border-card bg-card ring-2 ring-primary shadow-lg rounded-none">
+            <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="person face" className="object-cover h-full w-full" />
+            <AvatarFallback className="text-4xl h-full w-full flex items-center justify-center rounded-none">{getInitials(userProfile.name)}</AvatarFallback>
           </Avatar>
-          <div className="mt-4">
+          
+          <div className="mt-4 text-center">
             <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
             <p className="text-lg text-primary">{userProfile.headline}</p>
             <p className="text-sm text-muted-foreground">{userProfile.location}</p>
           </div>
+          
           <div className="mt-4 flex space-x-2">
             <Button className="bg-primary hover:bg-primary/90">Connect</Button>
             <Button variant="outline">Message</Button>
