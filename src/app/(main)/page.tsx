@@ -14,7 +14,7 @@ const userProfile = {
   name: "Jane Professional",
   headline: "Senior Product Manager | AI & SaaS Expert",
   avatarUrl: "https://placehold.co/160x224.png",
-  bannerUrl: "https://placehold.co/1200x300.png",
+  bannerUrl: "https://placehold.co/1200x300.png", // Assuming banner should match 1200x240 after adjustments
   bannerHint: "abstract background",
   location: "San Francisco, CA",
   summary: "Dynamic and results-oriented Senior Product Manager with 10+ years of experience in driving product strategy, vision, and execution for AI and SaaS solutions. Proven ability to lead cross-functional teams and deliver innovative products that meet market demands and exceed customer expectations. Passionate about leveraging technology to solve complex problems.",
@@ -66,7 +66,7 @@ export default function MyPage() {
 
         <TabsContent value="user" className="pb-20">
           <Card className="overflow-hidden shadow-lg">
-            <div className="relative h-60 bg-muted"> {/* Banner height: 240px */}
+            <div className="relative h-60 bg-muted"> {/* Banner height: 240px (h-60) */}
               {userProfile.bannerUrl && (
                 <Image src={userProfile.bannerUrl} alt={`${userProfile.name}'s banner`} layout="fill" objectFit="cover" data-ai-hint={userProfile.bannerHint} />
               )}
@@ -90,28 +90,36 @@ export default function MyPage() {
                     />
                 </div>
 
-                {/* User Info Text Block & Desktop Buttons Container */}
+                {/* Container for User Info Text and Buttons */}
                 <div className="mt-4 w-full">
-                    <div className="md:flex md:items-center md:justify-center md:gap-x-6">
-                        {/* User Info Text Block - centered text content */}
-                        <div className="text-center md:flex-grow">
+                    {/* Desktop Layout: Text centered, buttons to the right */}
+                    <div className="hidden md:flex md:items-center md:justify-center md:gap-x-6">
+                        {/* User Info Text Block - text is centered, block takes natural width */}
+                        <div className="text-center"> 
                             <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
                             <p className="text-lg text-primary">{userProfile.headline}</p>
                             <p className="text-sm text-muted-foreground">{userProfile.location}</p>
                         </div>
 
-                        {/* Desktop Buttons: To the right of text block, visible on md+ */}
-                        <div className="hidden md:flex md:flex-row md:space-x-2">
+                        {/* Desktop Buttons: To the right of text block */}
+                        <div className="flex flex-row space-x-2">
                             <Button className="bg-primary hover:bg-primary/90">Connect</Button>
                             <Button variant="outline">Message</Button>
                         </div>
                     </div>
-                </div>
 
-                {/* Mobile Buttons: Stacked vertically below text block, visible only on mobile */}
-                <div className="mt-6 flex flex-col items-center space-y-2 md:hidden">
-                    <Button className="w-full max-w-xs bg-primary hover:bg-primary/90">Connect</Button>
-                    <Button variant="outline" className="w-full max-w-xs">Message</Button>
+                    {/* Mobile Layout: Text centered, then buttons centered and stacked below */}
+                    <div className="md:hidden">
+                        <div className="text-center">
+                            <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
+                            <p className="text-lg text-primary">{userProfile.headline}</p>
+                            <p className="text-sm text-muted-foreground">{userProfile.location}</p>
+                        </div>
+                        <div className="mt-6 flex flex-col items-center space-y-2">
+                            <Button className="w-full max-w-xs bg-primary hover:bg-primary/90">Connect</Button>
+                            <Button variant="outline" className="w-full max-w-xs">Message</Button>
+                        </div>
+                    </div>
                 </div>
             </CardContent>
           </Card>
