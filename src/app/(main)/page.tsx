@@ -73,35 +73,32 @@ export default function MyPage() {
             </div>
             
             <CardContent className="relative p-6">
-                {/* Main Profile Content: Image, Text, and Buttons */}
-                <div className="flex flex-col items-center">
-                    {/* Profile Image */}
-                    <div className="relative -mt-16 w-40 h-[224px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg">
-                        <Image
-                        src={userProfile.avatarUrl}
-                        alt={userProfile.name}
-                        width={160} 
-                        height={224}
-                        className="object-cover w-full h-full"
-                        data-ai-hint="person portrait"
-                        />
-                    </div>
+                {/* Profile Image - Centered */}
+                <div className="relative -mt-16 w-40 h-[224px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg mx-auto">
+                    <Image
+                    src={userProfile.avatarUrl}
+                    alt={userProfile.name}
+                    width={160} 
+                    height={224}
+                    className="object-cover w-full h-full"
+                    data-ai-hint="person portrait"
+                    />
+                </div>
 
-                    {/* Container for Text block and Desktop buttons */}
-                    <div className="mt-4 w-full">
-                        <div className="md:flex md:items-center md:justify-center md:gap-x-6">
-                            {/* User Info Text Block - centered text content */}
-                            <div className="text-center">
-                                <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
-                                <p className="text-lg text-primary">{userProfile.headline}</p>
-                                <p className="text-sm text-muted-foreground">{userProfile.location}</p>
-                            </div>
+                {/* User Info Text Block & Desktop Buttons Container */}
+                <div className="mt-4 w-full">
+                    <div className="md:flex md:items-center md:justify-center md:gap-x-6">
+                        {/* User Info Text Block - centered text content */}
+                        <div className="text-center md:flex-grow">
+                            <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
+                            <p className="text-lg text-primary">{userProfile.headline}</p>
+                            <p className="text-sm text-muted-foreground">{userProfile.location}</p>
+                        </div>
 
-                            {/* Desktop Buttons: To the right of text block, visible on md+ */}
-                            <div className="hidden md:flex md:flex-row md:space-x-2">
-                                <Button className="bg-primary hover:bg-primary/90">Connect</Button>
-                                <Button variant="outline">Message</Button>
-                            </div>
+                        {/* Desktop Buttons: To the right of text block, visible on md+ */}
+                        <div className="hidden md:flex md:flex-row md:space-x-2">
+                            <Button className="bg-primary hover:bg-primary/90">Connect</Button>
+                            <Button variant="outline">Message</Button>
                         </div>
                     </div>
                 </div>
