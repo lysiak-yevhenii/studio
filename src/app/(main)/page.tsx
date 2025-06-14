@@ -78,7 +78,7 @@ export default function MyPage() {
             </div>
             
             <CardContent className="relative p-6">
-                {/* Profile Image - Centered, pulled up */}
+                {/* Profile Image - Centered, pulled up to align bottom with banner bottom */}
                 <div className="relative -mt-56 w-40 h-[224px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg mx-auto">
                     <Image
                     src={userProfile.avatarUrl}
@@ -92,16 +92,17 @@ export default function MyPage() {
 
                 {/* Container for User Info Text and Buttons */}
                 <div className="mt-4 w-full">
-                    {/* Desktop Layout: Text centered, buttons to the right */}
-                    <div className="hidden md:block text-center">
-                        <div className="inline-block text-center align-middle"> 
+                    {/* Desktop Layout: 3-column grid approach */}
+                    <div className="hidden md:grid md:grid-cols-3 md:items-center md:gap-x-4">
+                        <div>{/* Empty first column for left 33% spacing */}</div>
+                        <div className="text-center"> {/* Middle column for text, centered within this column */}
                             <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
                             <p className="text-lg text-primary">{userProfile.headline}</p>
                             <p className="text-sm text-muted-foreground">{userProfile.location}</p>
                         </div>
-                        <div className="inline-block align-middle ml-6">
+                        <div className="flex justify-center items-center gap-x-2"> {/* Right column for buttons, centered within this column */}
                             <Button className="bg-primary hover:bg-primary/90">Connect</Button>
-                            <Button variant="outline" className="ml-2">Message</Button> {/* Use ml-2 for spacing between buttons */}
+                            <Button variant="outline">Message</Button>
                         </div>
                     </div>
 
