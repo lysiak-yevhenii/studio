@@ -66,7 +66,7 @@ export default function MyPage() {
 
         <TabsContent value="user" className="pb-20">
           <Card className="overflow-hidden shadow-lg">
-            <div className="relative h-24 bg-muted"> {/* Banner height: 96px */}
+            <div className="relative h-60 bg-muted"> {/* Banner height: 240px */}
               {userProfile.bannerUrl && (
                 <Image src={userProfile.bannerUrl} alt={`${userProfile.name}'s banner`} layout="fill" objectFit="cover" data-ai-hint={userProfile.bannerHint} />
               )}
@@ -79,7 +79,7 @@ export default function MyPage() {
             
             <CardContent className="relative p-6">
                 {/* Profile Image - Centered, pulled up */}
-                <div className="relative -mt-20 w-40 h-[224px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg mx-auto">
+                <div className="relative -mt-56 w-40 h-[224px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg mx-auto">
                     <Image
                     src={userProfile.avatarUrl}
                     alt={userProfile.name}
