@@ -66,7 +66,7 @@ export default function MyPage() {
 
         <TabsContent value="user" className="pb-20">
           <Card className="overflow-hidden shadow-lg">
-            <div className="relative h-96 bg-muted"> {/* Banner height updated from h-48 to h-96 */}
+            <div className="relative h-48 bg-muted"> {/* Banner height reverted to h-48 */}
               {userProfile.bannerUrl && (
                 <Image src={userProfile.bannerUrl} alt={`${userProfile.name}'s banner`} layout="fill" objectFit="cover" data-ai-hint={userProfile.bannerHint} />
               )}
