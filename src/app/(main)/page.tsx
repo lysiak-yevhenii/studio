@@ -80,32 +80,39 @@ export default function MyPage() {
             </div>
             
             <div className="relative p-6">
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-x-6 gap-y-4">
-
-                <div className="flex flex-row md:flex-col space-x-2 md:space-x-0 md:space-y-3 order-2 md:order-1 w-full md:w-auto justify-center md:justify-start md:pt-32">
-                  <Button className="bg-primary hover:bg-primary/90 flex-1 md:flex-none">Connect</Button>
-                  <Button variant="outline" className="flex-1 md:flex-none">Message</Button>
+                {/* Desktop Buttons: Positioned absolutely to the top-right of this p-6 container */}
+                <div className="hidden md:flex md:flex-col md:space-y-2 md:absolute md:top-6 md:right-6 z-10">
+                    <Button className="bg-primary hover:bg-primary/90">Connect</Button>
+                    <Button variant="outline">Message</Button>
                 </div>
 
-                <div className="flex flex-col items-center order-1 md:order-2 flex-grow w-full md:w-auto">
-                  <div className="relative -mt-20 sm:-mt-24 md:-mt-32 w-40 h-[224px] sm:w-48 sm:h-[269px] md:w-56 md:h-[314px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg">
-                    <Image
-                      src={userProfile.avatarUrl}
-                      alt={userProfile.name}
-                      width={160} 
-                      height={224}
-                      className="object-cover w-full h-full"
-                      data-ai-hint="person portrait"
-                    />
-                  </div>
+                {/* Main Profile Content: Image and Text */}
+                <div className="flex flex-col items-center"> {/* This container ensures image and text below it are centered */}
+                    {/* Profile Image */}
+                    <div className="relative -mt-20 sm:-mt-24 md:-mt-32 w-40 h-[224px] sm:w-48 sm:h-[269px] md:w-56 md:h-[314px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg">
+                        <Image
+                        src={userProfile.avatarUrl}
+                        alt={userProfile.name}
+                        width={160} 
+                        height={224}
+                        className="object-cover w-full h-full"
+                        data-ai-hint="person portrait"
+                        />
+                    </div>
 
-                  <div className="mt-4 text-center w-full">
-                    <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
-                    <p className="text-lg text-primary">{userProfile.headline}</p>
-                    <p className="text-sm text-muted-foreground">{userProfile.location}</p>
-                  </div>
+                    {/* User Info Text Block */}
+                    <div className="mt-4 text-center w-full">
+                        <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
+                        <p className="text-lg text-primary">{userProfile.headline}</p>
+                        <p className="text-sm text-muted-foreground">{userProfile.location}</p>
+                    </div>
                 </div>
-              </div>
+
+                {/* Mobile Buttons: In normal flow, below image and text, visible only on mobile */}
+                <div className="mt-6 flex flex-col space-y-2 md:hidden">
+                    <Button className="w-full bg-primary hover:bg-primary/90">Connect</Button>
+                    <Button variant="outline" className="w-full">Message</Button>
+                </div>
             </div>
           </Card>
         </TabsContent>
