@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const userProfile = {
   name: "Jane Professional",
   headline: "Senior Product Manager | AI & SaaS Expert",
-  avatarUrl: "https://placehold.co/160x224.png", 
+  avatarUrl: "https://placehold.co/160x224.png",
   bannerUrl: "https://placehold.co/1200x300.png",
   bannerHint: "abstract background",
   location: "San Francisco, CA",
@@ -66,15 +66,20 @@ export default function MyPage() {
 
         <TabsContent value="user" className="pb-20">
           <Card className="overflow-hidden shadow-lg">
-            <div className="relative h-48 bg-muted"> {/* Banner height */}
+            <div className="relative h-24 bg-muted"> {/* Banner height: 96px */}
               {userProfile.bannerUrl && (
                 <Image src={userProfile.bannerUrl} alt={`${userProfile.name}'s banner`} layout="fill" objectFit="cover" data-ai-hint={userProfile.bannerHint} />
               )}
+              <div className="absolute top-4 right-4">
+                <Button variant="secondary" size="sm" className="bg-background/70 hover:bg-background">
+                  <Edit3 className="h-4 w-4 mr-2" /> Edit Profile
+                </Button>
+              </div>
             </div>
             
             <CardContent className="relative p-6">
-                {/* Profile Image - Centered */}
-                <div className="relative -mt-16 w-40 h-[224px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg mx-auto">
+                {/* Profile Image - Centered, pulled up */}
+                <div className="relative -mt-20 w-40 h-[224px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg mx-auto">
                     <Image
                     src={userProfile.avatarUrl}
                     alt={userProfile.name}
