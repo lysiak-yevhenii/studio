@@ -14,7 +14,7 @@ const userProfile = {
   name: "Jane Professional",
   headline: "Senior Product Manager | AI & SaaS Expert",
   avatarUrl: "https://placehold.co/160x224.png",
-  bannerUrl: "https://placehold.co/1200x300.png", // Assuming banner should match 1200x240 after adjustments
+  bannerUrl: "https://placehold.co/1200x300.png", 
   bannerHint: "abstract background",
   location: "San Francisco, CA",
   summary: "Dynamic and results-oriented Senior Product Manager with 10+ years of experience in driving product strategy, vision, and execution for AI and SaaS solutions. Proven ability to lead cross-functional teams and deliver innovative products that meet market demands and exceed customer expectations. Passionate about leveraging technology to solve complex problems.",
@@ -93,18 +93,15 @@ export default function MyPage() {
                 {/* Container for User Info Text and Buttons */}
                 <div className="mt-4 w-full">
                     {/* Desktop Layout: Text centered, buttons to the right */}
-                    <div className="hidden md:flex md:items-center md:justify-center md:gap-x-6">
-                        {/* User Info Text Block - text is centered, block takes natural width */}
-                        <div className="text-center"> 
+                    <div className="hidden md:block text-center">
+                        <div className="inline-block text-center align-middle"> 
                             <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
                             <p className="text-lg text-primary">{userProfile.headline}</p>
                             <p className="text-sm text-muted-foreground">{userProfile.location}</p>
                         </div>
-
-                        {/* Desktop Buttons: To the right of text block */}
-                        <div className="flex flex-row space-x-2">
+                        <div className="inline-block align-middle ml-6">
                             <Button className="bg-primary hover:bg-primary/90">Connect</Button>
-                            <Button variant="outline">Message</Button>
+                            <Button variant="outline" className="ml-2">Message</Button> {/* Use ml-2 for spacing between buttons */}
                         </div>
                     </div>
 
