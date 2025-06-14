@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Briefcase, GraduationCap, Award, Edit3, Linkedin, Github, ExternalLink, Mail, Phone, LayoutDashboard, Activity } from "lucide-react";
+import { Briefcase, GraduationCap, Award, Edit3, Linkedin, Github, ExternalLink, Mail, Phone, LayoutDashboard, Activity, UserCircle } from "lucide-react";
 import ProfileForm from "@/components/profile/profile-form";
 import PostCard from '@/components/feed/post-card';
 import type { Post } from '@/components/feed/post-card';
@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const userProfile = {
   name: "Jane Professional",
   headline: "Senior Product Manager | AI & SaaS Expert",
-  avatarUrl: "https://placehold.co/160x224.png", // Rectangular placeholder
+  avatarUrl: "https://placehold.co/160x224.png", // Rectangular placeholder, will be displayed in avatar
   bannerUrl: "https://placehold.co/1200x300.png",
   bannerHint: "abstract background",
   location: "San Francisco, CA",
@@ -45,43 +45,14 @@ const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').to
 export default function MyPage() {
   return (
     <div className="space-y-6">
-      <Card className="overflow-hidden shadow-lg">
-        <div className="relative h-48 md:h-64 bg-muted">
-          {userProfile.bannerUrl && (
-            <Image src={userProfile.bannerUrl} alt={`${userProfile.name}'s banner`} layout="fill" objectFit="cover" data-ai-hint={userProfile.bannerHint} />
-          )}
-          <div className="absolute top-4 right-4">
-            <Button variant="secondary" size="sm">
-              <Edit3 className="h-4 w-4 mr-2" /> Edit Page
-            </Button>
-          </div>
-        </div>
-        
-        <div className="relative p-6 -mt-16 md:-mt-20 flex justify-center">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-x-6 max-w-3xl"> 
-            <div className="flex-shrink-0">
-              <Avatar className="h-48 w-36 md:h-56 md:w-40 border-4 border-card bg-card ring-2 ring-primary shadow-lg rounded-none">
-                <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="person portrait" className="object-cover h-full w-full" />
-                <AvatarFallback className="text-3xl h-full w-full flex items-center justify-center rounded-none">{getInitials(userProfile.name)}</AvatarFallback>
-              </Avatar>
-            </div>
+      {/* Profile Card has been moved into the "User" TabContent below */}
 
-            <div className="flex flex-col items-center text-center md:items-start md:text-left mt-4 md:mt-0 flex-grow pt-0 md:pt-6">
-              <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
-              <p className="text-lg text-primary">{userProfile.headline}</p>
-              <p className="text-sm text-muted-foreground mt-1">{userProfile.location}</p>
-              <div className="mt-4 flex space-x-2">
-                <Button className="bg-primary hover:bg-primary/90">Connect</Button>
-                <Button variant="outline">Message</Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Card>
-
-      <Tabs defaultValue="overview" className="w-full">
+      <Tabs defaultValue="user" className="w-full">
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5"> {/* Updated to 5 columns */}
+                <TabsTrigger value="user" className="flex items-center gap-2">
+                    <UserCircle className="h-4 w-4" /> User
+                </TabsTrigger>
                 <TabsTrigger value="overview" className="flex items-center gap-2">
                     <LayoutDashboard className="h-4 w-4" /> Overview
                 </TabsTrigger>
@@ -96,6 +67,36 @@ export default function MyPage() {
                 </TabsTrigger>
             </TabsList>
         </div>
+
+        <TabsContent value="user" className="pb-20">
+          <Card className="overflow-hidden shadow-lg">
+            <div className="relative h-48 md:h-64 bg-muted">
+              {userProfile.bannerUrl && (
+                <Image src={userProfile.bannerUrl} alt={`${userProfile.name}'s banner`} layout="fill" objectFit="cover" data-ai-hint={userProfile.bannerHint} />
+              )}
+              <div className="absolute top-4 right-4">
+                <Button variant="secondary" size="sm">
+                  <Edit3 className="h-4 w-4 mr-2" /> Edit Profile
+                </Button>
+              </div>
+            </div>
+            <div className="relative p-6 -mt-16 md:-mt-20">
+              <Avatar className="h-32 w-32 md:h-40 md:w-40 border-4 border-card bg-card ring-2 ring-primary">
+                <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="person face" />
+                <AvatarFallback className="text-4xl">{getInitials(userProfile.name)}</AvatarFallback>
+              </Avatar>
+              <div className="mt-4">
+                <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
+                <p className="text-lg text-primary">{userProfile.headline}</p>
+                <p className="text-sm text-muted-foreground">{userProfile.location}</p>
+              </div>
+              <div className="mt-4 flex space-x-2">
+                <Button className="bg-primary hover:bg-primary/90">Connect</Button>
+                <Button variant="outline">Message</Button>
+              </div>
+            </div>
+          </Card>
+        </TabsContent>
 
         <TabsContent value="overview" className="pb-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
