@@ -79,9 +79,9 @@ export default function MyPage() {
               </div>
             </div>
             
-            <div className="relative p-6">
+            <CardContent className="relative p-6">
                 {/* Desktop Buttons: Positioned absolutely to the top-right of this p-6 container */}
-                <div className="hidden md:flex md:flex-col md:space-y-2 md:absolute md:top-6 md:right-6 z-10">
+                <div className="hidden md:flex md:flex-row md:space-x-2 md:absolute md:top-6 md:right-6 z-10">
                     <Button className="bg-primary hover:bg-primary/90">Connect</Button>
                     <Button variant="outline">Message</Button>
                 </div>
@@ -113,7 +113,7 @@ export default function MyPage() {
                     <Button className="w-full bg-primary hover:bg-primary/90">Connect</Button>
                     <Button variant="outline" className="w-full">Message</Button>
                 </div>
-            </div>
+            </CardContent>
           </Card>
         </TabsContent>
 
