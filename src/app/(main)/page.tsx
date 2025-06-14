@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const userProfile = {
   name: "Jane Professional",
   headline: "Senior Product Manager | AI & SaaS Expert",
-  avatarUrl: "https://placehold.co/160x224.png", // Rectangular placeholder, will be displayed in avatar
+  avatarUrl: "https://placehold.co/160x224.png", // Rectangular placeholder for profile image
   bannerUrl: "https://placehold.co/1200x300.png",
   bannerHint: "abstract background",
   location: "San Francisco, CA",
@@ -45,11 +45,9 @@ const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').to
 export default function MyPage() {
   return (
     <div className="space-y-6">
-      {/* Profile Card has been moved into the "User" TabContent below */}
-
       <Tabs defaultValue="user" className="w-full">
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
-            <TabsList className="grid w-full grid-cols-5"> {/* Updated to 5 columns */}
+            <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="user" className="flex items-center gap-2">
                     <UserCircle className="h-4 w-4" /> User
                 </TabsTrigger>
@@ -80,19 +78,33 @@ export default function MyPage() {
                 </Button>
               </div>
             </div>
-            <div className="relative p-6 -mt-16 md:-mt-20">
-              <Avatar className="h-32 w-32 md:h-40 md:w-40 border-4 border-card bg-card ring-2 ring-primary">
-                <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="person face" />
-                <AvatarFallback className="text-4xl">{getInitials(userProfile.name)}</AvatarFallback>
-              </Avatar>
-              <div className="mt-4">
-                <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
-                <p className="text-lg text-primary">{userProfile.headline}</p>
-                <p className="text-sm text-muted-foreground">{userProfile.location}</p>
-              </div>
-              <div className="mt-4 flex space-x-2">
-                <Button className="bg-primary hover:bg-primary/90">Connect</Button>
-                <Button variant="outline">Message</Button>
+            
+            <div className="relative p-6">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-x-6 gap-y-4">
+
+                <div className="flex flex-row md:flex-col space-x-2 md:space-x-0 md:space-y-3 order-2 md:order-1 w-full md:w-auto justify-center md:justify-start md:pt-32">
+                  <Button className="bg-primary hover:bg-primary/90 flex-1 md:flex-none">Connect</Button>
+                  <Button variant="outline" className="flex-1 md:flex-none">Message</Button>
+                </div>
+
+                <div className="flex flex-col items-center order-1 md:order-2 flex-grow w-full md:w-auto">
+                  <div className="relative -mt-20 sm:-mt-24 md:-mt-32 w-40 h-[224px] sm:w-48 sm:h-[269px] md:w-56 md:h-[314px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg">
+                    <Image
+                      src={userProfile.avatarUrl}
+                      alt={userProfile.name}
+                      width={160} 
+                      height={224}
+                      className="object-cover w-full h-full"
+                      data-ai-hint="person portrait"
+                    />
+                  </div>
+
+                  <div className="mt-4 text-center w-full">
+                    <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
+                    <p className="text-lg text-primary">{userProfile.headline}</p>
+                    <p className="text-sm text-muted-foreground">{userProfile.location}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </Card>
