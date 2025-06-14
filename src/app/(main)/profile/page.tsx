@@ -45,34 +45,6 @@ const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').to
 export default function ProfilePage() {
   return (
     <div className="space-y-6">
-      <Card className="overflow-hidden shadow-lg">
-        <div className="relative h-48 md:h-64 bg-muted">
-          {userProfile.bannerUrl && (
-            <Image src={userProfile.bannerUrl} alt={`${userProfile.name}'s banner`} layout="fill" objectFit="cover" data-ai-hint={userProfile.bannerHint} />
-          )}
-          <div className="absolute top-4 right-4">
-            <Button variant="secondary" size="sm">
-              <Edit3 className="h-4 w-4 mr-2" /> Edit Profile
-            </Button>
-          </div>
-        </div>
-        <div className="relative p-6 -mt-16 md:-mt-20">
-          <Avatar className="h-32 w-32 md:h-40 md:w-40 border-4 border-card bg-card ring-2 ring-primary">
-            <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="person face" />
-            <AvatarFallback className="text-4xl">{getInitials(userProfile.name)}</AvatarFallback>
-          </Avatar>
-          <div className="mt-4">
-            <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
-            <p className="text-lg text-primary">{userProfile.headline}</p>
-            <p className="text-sm text-muted-foreground">{userProfile.location}</p>
-          </div>
-          <div className="mt-4 flex space-x-2">
-            <Button className="bg-primary hover:bg-primary/90">Connect</Button>
-            <Button variant="outline">Message</Button>
-          </div>
-        </div>
-      </Card>
-
       <Tabs defaultValue="overview" className="w-full">
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-4">
           <TabsTrigger value="overview">Overview</TabsTrigger>
