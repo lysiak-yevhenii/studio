@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const userProfile = {
   name: "Jane Professional",
   headline: "Senior Product Manager | AI & SaaS Expert",
-  avatarUrl: "https://placehold.co/160x224.png", // Rectangular placeholder for profile image
+  avatarUrl: "https://placehold.co/160x224.png", 
   bannerUrl: "https://placehold.co/1200x300.png",
   bannerHint: "abstract background",
   location: "San Francisco, CA",
@@ -39,8 +39,6 @@ const userProfile = {
     { id: "p2", user: { name: "Jane Professional", avatarUrl: "https://placehold.co/40x40.png", headline: "Senior Product Manager" }, timestamp: "2d ago", content: "Shared some thoughts on leading remote teams effectively. What are your best practices? #RemoteWork #Leadership", likes: 90, bookmarks: 15, comments: 12, shares: 5, views: 220, image: "https://placehold.co/600x300.png", imageHint: "team collaboration" },
   ] as Post[]
 };
-
-const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
 
 export default function MyPage() {
   return (
@@ -68,7 +66,7 @@ export default function MyPage() {
 
         <TabsContent value="user" className="pb-20">
           <Card className="overflow-hidden shadow-lg">
-            <div className="relative h-48 md:h-64 bg-muted">
+            <div className="relative h-48 bg-muted"> {/* Banner height fixed to h-48 (192px) */}
               {userProfile.bannerUrl && (
                 <Image src={userProfile.bannerUrl} alt={`${userProfile.name}'s banner`} layout="fill" objectFit="cover" data-ai-hint={userProfile.bannerHint} />
               )}
@@ -89,7 +87,8 @@ export default function MyPage() {
                 {/* Main Profile Content: Image and Text */}
                 <div className="flex flex-col items-center"> {/* This container ensures image and text below it are centered */}
                     {/* Profile Image */}
-                    <div className="relative -mt-20 sm:-mt-24 md:-mt-32 w-40 h-[224px] sm:w-48 sm:h-[269px] md:w-56 md:h-[314px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg">
+                    <div className="relative -mt-16 w-40 h-[224px] rounded-lg overflow-hidden border-4 border-card bg-card ring-2 ring-primary shadow-lg">
+                        {/* -mt-16 (pull up 64px), w-40 h-[224px] (160x224px size) for all screens */}
                         <Image
                         src={userProfile.avatarUrl}
                         alt={userProfile.name}
