@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Briefcase, GraduationCap, Award, Edit3, Linkedin, Github, ExternalLink, Mail, Phone } from "lucide-react";
+import { Briefcase, GraduationCap, Award, Edit3, Linkedin, Github, ExternalLink, Mail, Phone, LayoutDashboard, Activity } from "lucide-react";
 import ProfileForm from "@/components/profile/profile-form";
 import PostCard from '@/components/feed/post-card';
 import type { Post } from '@/components/feed/post-card';
@@ -57,10 +57,8 @@ export default function MyPage() {
           </div>
         </div>
         
-        {/* Profile Info Section: Centered, Avatar left, Info/Buttons right */}
         <div className="relative p-6 -mt-16 md:-mt-20 flex justify-center">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-x-6 max-w-3xl"> {/* Removed w-full */}
-            {/* Rectangular Avatar */}
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-x-6 max-w-3xl"> 
             <div className="flex-shrink-0">
               <Avatar className="h-48 w-36 md:h-56 md:w-40 border-4 border-card bg-card ring-2 ring-primary shadow-lg rounded-none">
                 <AvatarImage src={userProfile.avatarUrl} alt={userProfile.name} data-ai-hint="person portrait" className="object-cover h-full w-full" />
@@ -68,7 +66,6 @@ export default function MyPage() {
               </Avatar>
             </div>
 
-            {/* Text info and buttons */}
             <div className="flex flex-col items-center text-center md:items-start md:text-left mt-4 md:mt-0 flex-grow pt-0 md:pt-6">
               <h1 className="text-3xl font-bold text-foreground font-headline">{userProfile.name}</h1>
               <p className="text-lg text-primary">{userProfile.headline}</p>
@@ -83,14 +80,24 @@ export default function MyPage() {
       </Card>
 
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-4">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="activity">Activity</TabsTrigger>
-          <TabsTrigger value="experience">Experience</TabsTrigger>
-          <TabsTrigger value="edit">Edit Page</TabsTrigger>
-        </TabsList>
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-1">
+            <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="overview" className="flex items-center gap-2">
+                    <LayoutDashboard className="h-4 w-4" /> Overview
+                </TabsTrigger>
+                <TabsTrigger value="activity" className="flex items-center gap-2">
+                    <Activity className="h-4 w-4" /> Activity
+                </TabsTrigger>
+                <TabsTrigger value="experience" className="flex items-center gap-2">
+                    <Briefcase className="h-4 w-4" /> Experience
+                </TabsTrigger>
+                <TabsTrigger value="edit" className="flex items-center gap-2">
+                    <Edit3 className="h-4 w-4" /> Edit Page
+                </TabsTrigger>
+            </TabsList>
+        </div>
 
-        <TabsContent value="overview">
+        <TabsContent value="overview" className="pb-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-2 space-y-6">
               <Card>
@@ -145,7 +152,7 @@ export default function MyPage() {
           </div>
         </TabsContent>
 
-        <TabsContent value="activity">
+        <TabsContent value="activity" className="pb-20">
             <Card>
                 <CardHeader>
                     <CardTitle className="text-xl">My Posts</CardTitle>
@@ -160,7 +167,7 @@ export default function MyPage() {
             </Card>
         </TabsContent>
 
-        <TabsContent value="experience">
+        <TabsContent value="experience" className="pb-20">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center text-xl"><Briefcase className="mr-2 h-5 w-5 text-primary" /> Professional Experience</CardTitle>
@@ -178,7 +185,7 @@ export default function MyPage() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="edit">
+        <TabsContent value="edit" className="pb-20">
           <ProfileForm />
         </TabsContent>
       </Tabs>
